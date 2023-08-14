@@ -55,12 +55,33 @@ public class WebController {
     public String rdColor(@RequestParam String type)  {
         Color color = new Color();
         try{
-            return color.getRandomColor(type);
+            return getRandomColor(type);
         } catch (IllegalArgumentException e){
             return e.getMessage();
         }
     }
+    public String getRandomColor(String type) throws IllegalArgumentException{
+        Random random = new Random();
 
+        switch (type) {
+            case "1":
+                // random color name
+                String[] colorNames = {"black", "blue", "red", "green"};
+                int randomIndex = random.nextInt(colorNames.length);
+                return colorNames[randomIndex];
 
+            case "2":
+                // random HEX color
+                return "#" + Integer.toHexString(random.nextInt(16777215));
 
+            case "3":
+                // random RGB color
+                int red = random.nextInt(256);
+                int green = random.nextInt(256);
+                int blue = random.nextInt(256);
+                return "rgb(" + red + ", " + green + ", " + blue + ")";
+            default:
+                throw new IllegalArgumentException("Type không hợp lệ");
+        }
+    }
 }
