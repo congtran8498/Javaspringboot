@@ -7,6 +7,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class WebController {
     private List<Job> jobList;
     public WebController(){
