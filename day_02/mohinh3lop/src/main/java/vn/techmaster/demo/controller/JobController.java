@@ -6,10 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.techmaster.demo.modal.Job;
-import vn.techmaster.demo.response.ErrorResponse;
 import vn.techmaster.demo.service.JobService;
-
-import java.util.*;
+import vn.techmaster.demo.service.JobServiceImpl;
 
 @RestController
 @RequestMapping("/api")

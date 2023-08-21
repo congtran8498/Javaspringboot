@@ -1,18 +1,25 @@
 package vn.techmaster.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import vn.techmaster.demo.database.JobDB;
-import vn.techmaster.demo.util.iFileReader;
 
-import java.io.File;
+import java.util.Random;
 
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner {
 	@Autowired
-	private iFileReader fileReader;
+	private Random rd;
+	private User user;
+
+	public DemoApplication(User user) {
+		this.user = user;
+	}
+	@Autowired
+	@Qualifier("bike")
+	private Vehicle vehicle;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
@@ -20,8 +27,8 @@ public class DemoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-//		JobDB.jobList = fileReader.readFile("static/Job.json");
-		String filePath = System.getProperty("user.dir").concat(File.separator).concat("Job.json");
-		JobDB.jobList = fileReader.readFile(filePath);
+		user.work();
+		System.out.println(rd.nextInt(1000));
+		vehicle.move();
 	}
 }
