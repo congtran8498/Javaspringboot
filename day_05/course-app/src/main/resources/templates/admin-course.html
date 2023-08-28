@@ -1,76 +1,65 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layoutAdmin :: admin-layout(~{:: title}, ~{:: #adminCss}, ~{:: #content}, ~{:: #mainjs})}">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>admin-course</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <th:block id="adminCss">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <!-- Link icon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <!-- Link icon -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+              integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+              crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+        <link rel="stylesheet" th:href="@{/css/admin.css}">
+    </th:block>
 
-    <link rel="stylesheet" th:href="@{/css/admin.css}">
 </head>
 
 <body>
-    <div class="header d-flex align-items-center">
-        <div class="container-fluid">
-            <div class="d-flex justify-content-start align-items-center">
-                <div class="logo">
-                    <a href="./course-list.html">
-                        <img src="https://techmaster.vn/resources/image/logo-techmaster/white/white_200x74.png" alt="logo">
-                    </a>
+    <th:block id="content">
+
+        <div class="admin-container mt-5">
+            <div class="container ">
+                <div>
+                    <a href="./create"><button class="btn btn-primary">
+                        <i class="fa-solid fa-plus"></i>
+                        Tạo khóa học</button></a>
+                    <button class="btn btn-info text-white">
+                        <i class="fa-solid fa-rotate-right"></i>
+                        Làm mới</button>
                 </div>
-                <div class="menu">
-                    <a class="text-white text-uppercase ms-5" href="./course">Danh sách khóa học</a>
-                    <a class="text-white text-uppercase ms-3" href="./create">Tạo khóa học</a>
+                <div class="course-table mt-4">
+                    <table style="width: 100%" class="table table-bordered">
+                        <tr>
+                            <th style="width: 10%">STT</th>
+                            <th style="width: 40%">Tên khóa học</th>
+                            <th style="width: 15%">Hình thức</th>
+                            <th style="width: 35%">Chủ đề</th>
+                        </tr>
+                        <tr th:each="course : ${courselist}">
+                            <td th:text="${course.id}"></td>
+                            <td class="text-primary" th:text="${course.name}"></td>
+                            <td th:class="${course.type == 'online' ? 'text-warning' : 'text-info'}" th:text="${course.type == 'online' ? 'online' : 'onlab'}"></td>
+                            <td th:text="${course.topics}"></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="admin-container mt-5">
-        <div class="container ">
-            <div>
-                <a href="./create"><button class="btn btn-primary">
-                    <i class="fa-solid fa-plus"></i>
-                    Tạo khóa học</button></a>
-                <button class="btn btn-info text-white">
-                    <i class="fa-solid fa-rotate-right"></i>
-                    Làm mới</button>
-            </div>
-            <div class="course-table mt-4">
-                <table style="width: 100%" class="table table-bordered">
-                    <tr>
-                        <th style="width: 10%">STT</th>
-                        <th style="width: 40%">Tên khóa học</th>
-                        <th style="width: 15%">Hình thức</th>
-                        <th style="width: 35%">Chủ đề</th>
-                    </tr>
-                    <tr th:each="course : ${courselist}">
-                        <td th:text="${course.id}"></td>
-                        <td class="text-primary" th:text="${course.name}"></td>
-                        <td th:class="${course.type == 'online' ? 'text-warning' : 'text-info'}" th:text="${course.type == 'online' ? 'online' : 'onlab'}"></td>
-                        <td th:text="${course.topics}"></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
+    </th:block>
 
-
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <th:block id="mainjs">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+                crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    </th:block>
 </body>
 
 </html>
