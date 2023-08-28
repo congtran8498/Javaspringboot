@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="header" class="header d-flex align-items-center">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-start align-items-center">
+            <div class="logo">
+                <a href="./course-list.html">
+                    <img src="https://techmaster.vn/resources/image/logo-techmaster/white/white_200x74.png"
+                         alt="logo">
+                </a>
+            </div>
+            <div class="menu">
+                <a class="text-white text-uppercase ms-5" href="./course-onlab-list.html">Phòng lab</a>
+                <a class="text-white text-uppercase ms-3" href="./course-online-list.html">Trực tuyến</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="topics" class="col-md-3">
+    <button class="btn-unfilter btn btn-danger mb-4 px-5 rounded d-none">Bỏ lọc</button>
+    <h2 class="fs-5 mb-4">Chủ đề</h2>
+    <div class="topic-list">
+        <div th:each="topic : ${topicList}" class="topic-item input-group d-flex align-items-center mb-1">
+            <input type="radio" th:value="${topic}" th:id="${topic}" th:name="${topic}">
+            <label th:for="${topic}" class="ms-2 fs-5" th:text="${topic}">Lập trình Backend</label>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="search" class="col-md-4">
+    <div class="seach-form d-flex align-items-center rounded shadow-sm mb-4 pe-3">
+        <input placeholder="Tìm kiếm khóa học" class="form-control border-0 seach-form-input"
+               type="search">
+        <span class="text-black-50 seach-form-button"><i
+                class="fa-solid fa-magnifying-glass"></i></span>
+    </div>
+</div>
+
+<div th:fragment="courseList(course)" class="col-md-4">
+    <a href="./detail.html">
+        <div class="course-item shadow-sm rounded mb-4">
+            <div class="course-item-image">
+                <img th:src="${course.thumbnail}"
+                     th:alt="${course.name}">
+            </div>
+            <div class="course-item-info p-3">
+                <h2 class="fs-5 mb-3 text-dark" th:text="${course.name}"></h2>
+                <p class="type fw-light text-black-50" th:text="${course.type == 'online' ? 'Trực tuyến' : 'Phòng lab'}"></p>
+            </div>
+        </div>
+    </a>
+</div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <ul th:fragment="menu">
+        <li><a href="/">Trang chủ</a></li>
+        <li><a href="/admin">Trang admin</a></li>
+    </ul>
+
+    <ul th:fragment="card(user)">
+        <li th:text="${user.name}"></li>
+        <li th:text="${user.email}"></li>
+    </ul>
+</body>
+</html>

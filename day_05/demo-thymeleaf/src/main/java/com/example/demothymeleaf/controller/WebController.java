@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,5 +25,16 @@ public class WebController {
         model.addAttribute("user", userList.get(0));
         model.addAttribute("userList", userList);
         return "index";
+    }
+
+    @GetMapping("/admin")
+    public String getAdmin(Model model){
+        model.addAttribute("user1", userList.get(0));
+        model.addAttribute("user2", userList.get(1));
+        model.addAttribute("userList", userList);
+
+        LocalDateTime localDateTime = LocalDateTime.now();
+        model.addAttribute("localDateTime", localDateTime);
+        return "admin";
     }
 }

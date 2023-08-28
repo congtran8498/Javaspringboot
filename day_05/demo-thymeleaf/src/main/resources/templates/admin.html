@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: main-layout(~{:: title}, ~{:: #adminCss}, ~{:: #content}, ~{})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin page</title>
+    <th:block id="adminCss">
+        <link rel="stylesheet" href="/css/admin.css">
+    </th:block>
+</head>
+<body>
+
+<th:block id="content">
+    <h1>day la trang admin</h1>
+    <th:block th:replace="~{fragments/fragment :: card(${user1})}"></th:block>
+    <th:block th:replace="~{fragments/fragment :: card(${user2})}"></th:block>
+
+    <th:block th:each="user : ${userList}" th:insert="~{fragments/fragment :: card(user)}"></th:block>
+    <p>--------------</p>
+
+    <p th:text="${#temporals.format(localDateTime, 'dd/MM/yyyy - HH:mm:ss')}"></p>
+</th:block>
+</body>
+</html>

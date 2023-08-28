@@ -61,4 +61,21 @@ public class CourseViewController {
         model.addAttribute("detailCourse", courseDto);
         return "detail";
     }
+
+    @GetMapping("/admin/course")
+    public String getAdminCourse(Model model){
+        List<CourseDto> courseDtoList = courseService.getAllCourse(null, null, null);
+        model.addAttribute("courselist",courseDtoList);
+        return "admin-course";
+    }
+    @GetMapping("/admin/create")
+    public String getAdminCreate(Model model){
+        return "admin-create";
+    }
+    @GetMapping("/admin/course/{id}")
+    public String getAdminDetail(Model model, @PathVariable Integer id){
+        CourseDto courseDto = courseService.getCourseById(id);
+        model.addAttribute("detailAdmin", courseDto);
+        return "admin-detail";
+    }
 }
