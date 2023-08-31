@@ -10,4 +10,6 @@ public interface CourseDAO {
 
     Optional<Course> findById(Integer id);
     List<Course> findByTitleContainsIgnoreCase(String title);
+    void save(Course course);
+    void delete(Course course);
 }

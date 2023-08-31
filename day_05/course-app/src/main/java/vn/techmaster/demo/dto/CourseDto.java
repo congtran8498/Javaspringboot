@@ -17,5 +17,5 @@ public class CourseDto {
     private String type;
     private List<String> topics;
     private String thumbnail;
-    private User user;
+    private User userId;
 }

@@ -46,7 +46,9 @@
                             <td th:text="${course.id}"></td>
                             <td class="text-primary" th:text="${course.name}"></td>
                             <td th:class="${course.type == 'online' ? 'text-warning' : 'text-info'}" th:text="${course.type == 'online' ? 'online' : 'onlab'}"></td>
-                            <td th:text="${course.topics}"></td>
+                            <td>
+                                <span class="bg-secondary text-white" th:each="topic : ${course.topics}" th:text="${topic}"></span>
+                            </td>
                         </tr>
                     </table>
                 </div>

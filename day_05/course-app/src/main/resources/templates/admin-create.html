@@ -45,27 +45,23 @@
                             <label class="form-label fw-bolder mt-2 ms-2">Hình thức học</label>
                             <select class="form-select" aria-label="Default select example">
                                 <option selected>-Chọn hình thức học</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                <option value="Online">Online</option>
+                                <option value="Onlab">Onlab</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-bolder ms-2">Chủ đề</label>
                             <select class="form-select" aria-label="Default select example">
                                 <option selected>-Chọn chủ đề</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                <option th:each="topic : ${topicList}" th:value="${topic}" th:text="${topic}"></option>
+
                             </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-bolder ms-2">Tư vấn viên</label>
                             <select class="form-select" aria-label="Default select example">
                                 <option selected>-Chọn tư vấn viên</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                <option th:each="user : ${userList}" th:value="${user.name}" th:text="${user.name}"></option>
                             </select>
                         </div>
                     </div>

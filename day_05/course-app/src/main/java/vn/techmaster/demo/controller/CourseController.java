@@ -35,4 +35,6 @@ public class CourseController {
     public ResponseEntity<?> searchPost(@RequestParam String keyword) {
         return ResponseEntity.ok(courseService.searchCourse(keyword));
     }
+
+
 }

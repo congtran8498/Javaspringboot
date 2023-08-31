@@ -3,11 +3,14 @@ package vn.techmaster.demo.service;
 import org.springframework.stereotype.Service;
 import vn.techmaster.demo.dao.CourseDAO;
 import vn.techmaster.demo.dao.UserDAO;
+import vn.techmaster.demo.database.CourseDB;
 import vn.techmaster.demo.dto.CourseDto;
 import vn.techmaster.demo.exception.ResouceNotFoundException;
 import vn.techmaster.demo.model.Course;
 import vn.techmaster.demo.model.User;
+import vn.techmaster.demo.request.UpsertCourseRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,6 +48,43 @@ public class CourseServiceImpl implements CourseService {
         return courseDAO.findByTitleContainsIgnoreCase(title);
     }
 
+    @Override
+    public Course createCourse(UpsertCourseRequest request) {
+        Course courseRequest = new Course();
+        Integer id = CourseDB.courseList.get(CourseDB.courseList.size()-1).getId();
+        courseRequest.setId(id+1);
+
+        courseRequest.setName(request.getName());
+        courseRequest.setDescription(request.getDescription());
+        courseRequest.setType(request.getType());
+        courseRequest.setTopics(request.getTopics());
+        courseRequest.setThumbnail(request.getThumbnail());
+        courseRequest.setUserId(request.getUserId());
+        courseDAO.save(courseRequest);
+        return courseRequest;
+    }
+
+    @Override
+    public Course updateCourse(UpsertCourseRequest request, Integer id) {
+        Course course = courseDAO.findById(id)
+                .orElseThrow(() -> new ResouceNotFoundException("Not found course"));
+        course.setName(request.getName());
+        course.setDescription(request.getDescription());
+        course.setType(request.getType());
+        course.setTopics(request.getTopics());
+        course.setThumbnail(request.getThumbnail());
+        course.setUserId(request.getUserId());
+        return course;
+    }
+
+    @Override
+    public void deleteCourse(Integer id) {
+        Course course = courseDAO.findById(id)
+                .orElseThrow(() -> new ResouceNotFoundException("Not found course"));
+        courseDAO.delete(course);
+    }
+
+
     private CourseDto mapToDto(Course course) {
         User user = userDAO.findById(course.getUserId())
                 .orElseThrow(() -> new ResouceNotFoundException("Not found user"));
@@ -55,7 +95,7 @@ public class CourseServiceImpl implements CourseService {
                 .type(course.getType())
                 .topics(course.getTopics())
                 .thumbnail(course.getThumbnail())
-                .user(user)
+                .userId(user)
                 .build();
     }
 }

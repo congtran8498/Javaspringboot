@@ -27,4 +27,14 @@ public class CourseDAOImpl implements CourseDAO{
                 .filter(post -> post.getName().toLowerCase().contains(title.toLowerCase()))
                 .toList();
     }
+
+    @Override
+    public void save(Course course) {
+        CourseDB.courseList.add(course);
+    }
+
+    @Override
+    public void delete(Course course) {
+        CourseDB.courseList.remove(course);
+    }
 }
