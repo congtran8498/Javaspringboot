@@ -1,21 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layoutAdmin :: admin-layout(~{:: title}, ~{:: #adminCss}, ~{:: #content}, ~{:: #mainjs})}">
+      th:replace="~{fragments/layoutAdmin :: admin-layout(~{:: title}, ~{:: #css}, ~{:: #content}, ~{:: #js})}">
 <head>
     <meta charset="UTF-8">
     <title>Tạo khóa học</title>
-    <th:block id="adminCss">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-        <!-- Link icon -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-              integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-              crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-        <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <th:block id="css">
+        <!-- Link select2 -->
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     </th:block>
-
 </head>
 <body>
     <th:block id="content">
@@ -32,34 +24,32 @@
                 <div class="row create-form mt-4 bg-white">
                     <div class="col-md-8 mt-2 mb-2">
                         <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label fw-bolder mt-2 ms-2">Tên khóa học</label>
-                            <input type="email" class="form-control" id="exampleFormControlInput1">
+                            <label for="course-name" class="form-label fw-bolder mt-2 ms-2">Tên khóa học</label>
+                            <input type="text" class="form-control" id="course-name">
                         </div>
                         <div class="mb-3">
-                            <label for="exampleFormControlTextarea1" class="form-label ms-2 fw-bolder">Mô tả</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"></textarea>
+                            <label for="course-description" class="form-label ms-2 fw-bolder">Mô tả</label>
+                            <textarea class="form-control" id="course-description" rows="10"></textarea>
                         </div>
                     </div>
                     <div class="col-md-4 mt-2 mb-2">
                         <div class="mb-3">
-                            <label class="form-label fw-bolder mt-2 ms-2">Hình thức học</label>
-                            <select class="form-select" aria-label="Default select example">
+                            <label for="course-type"  class="form-label fw-bolder mt-2 ms-2">Hình thức học</label>
+                            <select class="form-select" id="course-type">
                                 <option selected>-Chọn hình thức học</option>
                                 <option value="Online">Online</option>
                                 <option value="Onlab">Onlab</option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label fw-bolder ms-2">Chủ đề</label>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>-Chọn chủ đề</option>
+                            <label for="course-topic" class="form-label fw-bolder ms-2">Chủ đề</label>
+                            <select class="form-select" id="course-topic" multiple="multiple">
                                 <option th:each="topic : ${topicList}" th:value="${topic}" th:text="${topic}"></option>
-
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label fw-bolder ms-2">Tư vấn viên</label>
-                            <select class="form-select" aria-label="Default select example">
+                            <label for="course-supporter" class="form-label fw-bolder ms-2">Tư vấn viên</label>
+                            <select class="form-select" id="course-supporter">
                                 <option selected>-Chọn tư vấn viên</option>
                                 <option th:each="user : ${userList}" th:value="${user.name}" th:text="${user.name}"></option>
                             </select>
@@ -70,12 +60,18 @@
         </div>
     </th:block>
 
-    <th:block id="mainjs">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-                crossorigin="anonymous"></script>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    </th:block>
+    <th:block id="js">
+        <!-- select2 -->
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+        <script>
+            const courseTopic = $("#course-topic");
+
+            // Kích hoạt select2
+            courseTopic.select2({
+                placeholder: "- Chọn chủ đề",
+            });
+        </script>
+    </th:block>
 </body>
 </html>

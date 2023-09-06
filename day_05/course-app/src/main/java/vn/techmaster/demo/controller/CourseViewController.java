@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import vn.techmaster.demo.database.TopicDB;
 import vn.techmaster.demo.database.UserDB;
 import vn.techmaster.demo.dto.CourseDto;
+import vn.techmaster.demo.model.Course;
 import vn.techmaster.demo.request.UpsertCourseRequest;
 import vn.techmaster.demo.service.CourseService;
 
@@ -83,6 +84,8 @@ public class CourseViewController {
         CourseDto courseDto = courseService.getCourseById(id);
         model.addAttribute("detailAdmin", courseDto);
         model.addAttribute("topicList", TopicDB.topicList);
+        model.addAttribute("userList", UserDB.userList);
+
 
         return "admin-detail";
     }
@@ -108,14 +111,19 @@ public class CourseViewController {
         return ResponseEntity.ok(courseService.getCourseById(id));
     }
 
+    //4. Sua khoa hoc
     @PutMapping("/api/v1/admin/courses/{id}")
     public ResponseEntity<?> updateCourse(@Valid @RequestBody UpsertCourseRequest request, @PathVariable Integer id){
         return ResponseEntity.ok(courseService.updateCourse(request,id));
     }
 
+    //5. Xoa khoa hoc
     @DeleteMapping("/api/v1/admin/courses/{id}")
     public ResponseEntity<?> deleteCourse(@PathVariable Integer id){
         courseService.deleteCourse(id);
         return ResponseEntity.noContent().build();
     }
+
+
+
 }
