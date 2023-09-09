@@ -19,4 +19,20 @@ public interface UserService {
     void updateAvatar(Integer id, UpdateAvatarRequest request);
     void updatePassword(Integer id, UpdatePasswordRequest request);
     String forgotPassword(Integer id);
+
+    //JPA
+
+    void save_all_user();
+    List<UserDto> get_all_user();
+    List<UserDto> get_by_name(String name);
+    UserDto get_by_id(Integer id);
+    UserDto create_user(CreateUserRequest request);
+    UserDto update_user(Integer id, UpdateUserRequest request);
+    void delete_user(Integer id);
+    void update_avatar(Integer id, UpdateAvatarRequest request);
+    void  update_password(Integer id, UpdatePasswordRequest request);
+    String forgot_password(Integer id);
+
+
+
 }
