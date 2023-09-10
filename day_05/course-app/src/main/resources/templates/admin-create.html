@@ -14,7 +14,7 @@
         <div class="create-container mt-5">
             <div class="container">
                 <div>
-                    <a href="./create"><button class="btn btn-primary">
+                    <a><button id="create-btn" class="btn btn-primary">
                         <i class="fa-solid fa-plus"></i>
                         Tạo</button></a>
                     <button class="btn btn-info text-white">
@@ -64,13 +64,57 @@
         <!-- select2 -->
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-        <script>
+        <script th:inline="javascript">
             const courseTopic = $("#course-topic");
 
             // Kích hoạt select2
             courseTopic.select2({
                 placeholder: "- Chọn chủ đề",
             });
+
+            // Tạo khóa học
+            const createBtn = document.querySelector("#create-btn");
+            const courseName = document.querySelector("#course-name");
+            const courseDes = document.querySelector("#course-description");
+            const courseType = document.querySelector("#course-type");
+            const courseSup = document.querySelector("#course-supporter");
+            let userList = [[${userList}]];
+
+            console.log(createBtn)
+            createBtn.addEventListener("click", async (e) =>{
+                let courseCreate = {
+                    name: courseName.value,
+                    description: courseDes.value,
+                    type: courseType.value,
+                    topics: getSelectedValues(),
+                    thumbnail: null,
+                    userId: getUserId()
+                }
+                try{
+                    const res = await axios.post(`/api/v1/admin/courses`,courseCreate)
+                    console.log(res.data)
+                }catch (e){
+                    console.log(e)
+                }
+            })
+            function getSelectedValues() {
+                let selectedOptions = [];
+                let topic = courseTopic.select2('data')
+                topic.forEach((e) => {
+                    selectedOptions.push(e.text)
+                })
+                return selectedOptions;
+            }
+            function getUserId(){
+                let userName = courseSup.value;
+                let userId = 0;
+                userList.forEach(e => {
+                    if(e.name === userName) userId=e.id;
+                });
+                return userId;
+            }
+
+
         </script>
     </th:block>
 </body>
