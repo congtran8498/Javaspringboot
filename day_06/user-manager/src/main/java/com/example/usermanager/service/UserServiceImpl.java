@@ -12,6 +12,7 @@ import com.example.usermanager.request.UpdateAvatarRequest;
 import com.example.usermanager.request.UpdatePasswordRequest;
 import com.example.usermanager.request.UpdateUserRequest;
 import com.github.javafaker.Faker;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

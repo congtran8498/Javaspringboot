@@ -33,6 +33,7 @@ public interface UserService {
     void  update_password(Integer id, UpdatePasswordRequest request);
     String forgot_password(Integer id);
 
+    // local
 
 
 }

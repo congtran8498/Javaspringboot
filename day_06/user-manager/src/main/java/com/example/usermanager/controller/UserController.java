@@ -35,7 +35,7 @@ public class UserController {
     }
 
     //2. Tìm kiếm user theo tên
-    @GetMapping("search")
+    @GetMapping("users/search")
     public ResponseEntity<?> getUserByName(@RequestParam String name){
         return ResponseEntity.ok(userService.get_by_name(name));
     }
