@@ -82,6 +82,99 @@
         const addressEl = document.querySelector("#address")
         const passwordEl = document.querySelector("#password")
 
+        // Lấy các phần tử select
+        const provinceSelect = document.getElementById('province');
+        const districtSelect = document.getElementById('district');
+        const wardSelect = document.getElementById('ward');
+
+        // Gửi yêu cầu API để lấy danh sách tỉnh
+        fetch('https://provinces.open-api.vn/api/p')
+            .then(response => response.json())
+            .then(data => {
+                // Duyệt qua danh sách tỉnh và thêm tùy chọn vào select
+                data.forEach(province => {
+                    const option = document.createElement('option');
+                    option.value = province.code;
+                    option.textContent = province.name;
+                    provinceSelect.appendChild(option);
+                });
+            });
+
+        // Gửi yêu cầu API để lấy danh sách huyện khi người dùng chọn tỉnh
+        provinceSelect.addEventListener('change', () => {
+            const selectedProvinceId = provinceSelect.value;
+            districtSelect.innerHTML = '<option value="">Chọn huyện</option>'; // Xóa các tùy chọn huyện hiện tại
+            wardSelect.innerHTML = '<option value="">Chọn xã/phường</option>';
+
+            if (selectedProvinceId) {
+                fetch(`https://provinces.open-api.vn/api/p/${selectedProvinceId}?depth=2`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data)
+                        // Duyệt qua danh sách huyện và thêm tùy chọn vào select
+                        data.districts.forEach(district => {
+                            const option = document.createElement('option');
+                            option.value = district.code;
+                            option.textContent = district.name;
+                            districtSelect.appendChild(option);
+                        });
+                    });
+            }
+        });
+
+        // Gửi yêu cầu API để lấy danh sách xã/phường khi người dùng chọn huyện
+        districtSelect.addEventListener('change', () => {
+            const selectedDistrictId = districtSelect.value;
+            wardSelect.innerHTML = '<option value="">Chọn xã/phường</option>'; // Xóa các tùy chọn xã/phường hiện tại
+
+            if (selectedDistrictId) {
+                fetch(`https://provinces.open-api.vn/api/d/${selectedDistrictId}?depth=2`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Duyệt qua danh sách xã/phường và thêm tùy chọn vào select
+                        data.wards.forEach(ward => {
+                            const option = document.createElement('option');
+                            option.value = ward.id;
+                            option.textContent = ward.name;
+                            wardSelect.appendChild(option);
+                        });
+                    });
+            }
+        });
+
+        // Tao user
+        const saveBtn = document.querySelector("#btn-save")
+        // Lấy giá trị của tỉnh khi chọn xong
+        provinceSelect.addEventListener('change', () => {
+            const selectedProvince = provinceSelect.value;
+            console.log('Tỉnh được chọn:', selectedProvince);
+        });
+
+        // Lấy giá trị của huyện khi chọn xong
+        districtSelect.addEventListener('change', () => {
+            const selectedDistrict = districtSelect.value;
+            console.log('Huyện được chọn:', selectedDistrict);
+        });
+
+        // Lấy giá trị của xã/phường khi chọn xong
+        wardSelect.addEventListener('change', () => {
+            const selectedWard = wardSelect.value;
+            console.log('Xã/Phường được chọn:', selectedWard);
+        });
+
+
+        saveBtn.addEventListener("click", () => {
+            // let updateRequest = {
+            //     name : nameEl.value,
+            //     email : emailEl.value,
+            //     phone: phoneEl.value,
+            //     address: ,
+            //     password: passwordEl.value
+            // }
+            console.log(districtSelect.value)
+
+        })
+
     </script>
 </body>
 
