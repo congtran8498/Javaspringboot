@@ -25,10 +25,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="file : ${files}">
+                <tr th:each="file : ${files}" th:id="|file-${file.id}|">
                     <td th:text="${file.id}">1</td>
                     <td th:text="${file.type}"></td>
-                    <td th:text="${file.createdAt}"></td>
+                    <td th:text="${#temporals.format(file.createdAt, 'dd/MM/yyyy')}"></td>
                     <td><a th:href="@{|/api/files/${file.id}|}" target="_blank" class="btn btn-success">Xem chi tiet</a></td>
                     <td><button th:onclick="|deleteFile(${file.id})|" class="btn btn-danger">Delete</button></td>
                 </tr>
@@ -46,9 +46,14 @@
     // Xoa file
     const API_URL = "http://localhost:8080/api/files"
     const deleteFile = async (id) => {
+        const isConfirm = window.confirm("ban co chac chan muon xoa file nay khong")
+        if(!isConfirm) return
         try {
             const res = await axios.delete(`${API_URL}/${id}`)
-            location.reload()
+            console.log(res)
+            const curr = document.querySelector(`#file-${id}`);
+            curr.parentElement.removeChild(curr);
+            // location.reload()
         } catch (e) {
             console.log(e)
         }
@@ -58,21 +63,48 @@
     let userId = [[${userId}]];
     console.log(userId)
     const uploadBtn = document.querySelector("#user-image-input");
+    const tbody = document.querySelector("tbody")
+
     uploadBtn.addEventListener("change",async (e) => {
         const file = e.target.files[0];
-        console.log(file)
 
         const formData = new FormData();
         formData.append("file", file);
 
         try{
             const res = await axios.post(`http://localhost:8080/api/users/${userId}/files`, formData);
-            location.reload()
+            const trEl = document.createElement("tr")
             console.log(res)
+
+            trEl.setAttribute("id",`file-${res.data.id}`)
+            trEl.innerHTML = `
+                    <td>${res.data.id}</td>
+                    <td>${res.data.type}</td>
+                    <td>${formatDate(res.data.createdAt)}</td>
+                    <td><a href="/api/files/${res.data.id}" target="_blank" class="btn btn-success">Xem chi tiet</a></td>
+                    <td><button onclick="deleteFile(${res.data.id})" class="btn btn-danger">Delete</button></td>`
+            tbody.prepend(trEl)
+            // location.reload()
+
         }catch (e){
             console.log(e)
         }
     })
+
+    function formatDate(dataString){
+        // Tạo một đối tượng Date từ chuỗi đầu vào
+        let date = new Date(dataString);
+
+
+        let day = date.getDate();
+        let month = date.getMonth() + 1; // Tháng tính từ 0 đến 11, nên cần +1
+        let year = date.getFullYear();
+
+        // Định dạng lại thành chuỗi "dd/mm/yyyy"
+        return day + "/" + month + "/" + year
+    }
+
+
 </script>
 </body>
 </html>
