@@ -17,7 +17,7 @@ public interface BlogRepository extends JpaRepository<Blog, Integer> {
     Page<Blog> findByStatus(Boolean status, Pageable pageable);
 
     // 2. Tìm kiếm blog theo từ khóa chứa trong title
-    List<Blog> findByTitleContainingIgnoreCase(String title);
+    List<Blog> findByTitleContainingIgnoreCaseAndStatusTrue(String title);
 
     // 5.Lấy danh sách bài viết áp dụng category name và status = true và sắp xếp theo publishedAt giảm dần (mới nhất trước)
     @Query("""
