@@ -1,5 +1,6 @@
 package com.example.blogdemo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,12 +29,13 @@ public class Blog {
     private LocalDateTime createdAt;
     private LocalDateTime publishedAt;
     private LocalDateTime updatedAt;
-    private String status;
+    private Boolean status;
 
     @ManyToMany
     @JoinTable(name = "blog_category",
             joinColumns =@JoinColumn( name = "blog_id"),
                 inverseJoinColumns =@JoinColumn(name = "category_id"))
+    @JsonIgnore
     private List<Category> categoryList = new ArrayList<>();
 
     @ManyToOne
@@ -43,14 +45,13 @@ public class Blog {
     @PrePersist
     public void prePersist(){
         createdAt = LocalDateTime.now();
+        updatedAt = createdAt;
+        if(status) publishedAt = createdAt;
     }
 
-    @PostPersist
-    public void prePersistPublished(){
-        publishedAt = LocalDateTime.now();
-    }
     @PreUpdate
     public void preUpdate(){
         updatedAt = LocalDateTime.now();
+        if(status) publishedAt = updatedAt;
     }
 }

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="vi" dir="auto" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="IE=edge" />
+        <meta
+            name="viewport"
+            content="width=device-width,initial-scale=1,shrink-to-fit=no"
+        />
+        <title>Search | Kong's Blog</title>
+        <link rel=icon href=/img/umaru.PNG> <link rel=icon type=image/png
+        sizes=16x16 href=/img/umaru.PNG> <link rel=icon type=image/png
+        sizes=32x32 href=/img/umaru.PNG>
+        <link rel="stylesheet" href="/css/style.css" />
+    </head>
+
+    <body class="list" id="top">
+        <header class="header">
+            <nav class="nav">
+                <div class="logo">
+                    <a href="/">Kong.dev</a>
+                </div>
+                <ul id="menu">
+                    <li>
+                        <a href="/search"><span>Search</span></a>
+                    </li>
+                    <li>
+                        <a href="/categories"><span>Tags</span></a>
+                    </li>
+                    <li>
+                        <a href="project.html"><span>Projects</span></a>
+                    </li>
+                    <li>
+                        <a href="slide.html"><span>Slides</span></a>
+                    </li>
+                    <li>
+                        <a href="about.html"><span>About</span></a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <main class="main">
+            <header class="page-header">
+                <h1>
+                    Search
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="28"
+                        height="28"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentcolor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                </h1>
+                <div class="post-description">Tìm kiếm bài viết</div>
+                <div class="post-meta"></div>
+            </header>
+            <div id="searchbox">
+                <input
+                    id="searchInput"
+                    autofocus
+                    placeholder="Tìm kiếm bài viết"
+                    type="search"
+                    autocomplete="off"
+                />
+                <ul id="searchResults">
+                    <li class="post-entry">
+                        <header class="entry-header">
+                            Truyền dữ liệu giữa React Components&nbsp;»
+                        </header>
+                        <a
+                            href="./blogdetail.html"
+                        ></a>
+                    </li>
+
+                </ul>
+            </div>
+        </main>
+
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script>
+            const API_URL = "http://localhost:8080/api/v1"
+            const searchInputEl = document.querySelector("#searchInput")
+            const searchResultsEl = document.querySelector("#searchResults")
+            searchInputEl.addEventListener("input",async () => {
+                let value = searchInputEl.value
+                if(value.length){
+                    try {
+                        const res = await axios.get(`${API_URL}/search?term=${value}`)
+                        console.log(res.data)
+                        renderBlog(res.data)
+                    } catch (e) {
+                        console.log(e)
+                    }
+                }
+
+            })
+            const renderBlog = (blogList) => {
+                if(blogList.length){
+                    let html= ""
+                    blogList.forEach(b =>{
+                        html += ` <li class="post-entry">
+                                    <header class="entry-header">
+                                        ${b.title}&nbsp;»
+                                    </header>
+                                    <a
+                                        href="/blogs/${b.id}/${b.slug}"
+                                    ></a>
+                                </li>`
+                    })
+                    searchResultsEl.innerHTML = html
+                }
+            }
+        </script>
+    </body>
+</html>
