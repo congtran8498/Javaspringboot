@@ -20,6 +20,6 @@ public interface CategoryRepository extends JpaRepository<Category,Integer> {
 """)
     List<CategoryDto> getAllCategoryDto();
 
-
+    List<Category> findByIdIn(List<Integer> list);
 
 }

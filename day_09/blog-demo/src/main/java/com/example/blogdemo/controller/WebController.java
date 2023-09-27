@@ -3,10 +3,8 @@ package com.example.blogdemo.controller;
 import com.example.blogdemo.entity.Blog;
 import com.example.blogdemo.model.dto.CategoryDto;
 import com.example.blogdemo.service.BlogService;
-import com.example.blogdemo.service.BlogServiceImpl;
 import com.example.blogdemo.service.CategoryService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +27,7 @@ public class WebController {
         model.addAttribute("currentPage", 1);
         model.addAttribute("pageData", pageData);
         model.addAttribute("categoryDto", categoryDtos);
-        return "main";
+        return "web/main";
     }
 
     @GetMapping("/page/{pageNumber}")
@@ -40,19 +38,19 @@ public class WebController {
         model.addAttribute("currentPage", pageNumber);
         model.addAttribute("pageData", pageData);
         model.addAttribute("categoryDto", categoryDtos);
-        return "page";
+        return "web/page";
     }
 
     @GetMapping("search")
     public String searchBlog() {
-        return "search";
+        return "web/search";
     }
 
     @GetMapping("categories")
     public String getAllCategory(Model model) {
         List<CategoryDto> categoryDtos = categoryService.getAllCategory();
         model.addAttribute("categoryList", categoryDtos);
-        return "tag";
+        return "web/tag";
     }
 
     @GetMapping("categories/{categoryName}")
@@ -60,14 +58,14 @@ public class WebController {
         List<Blog> blogs = blogService.findBlogByCategory(categoryName);
         model.addAttribute("blogs",blogs);
         model.addAttribute("categoryName",categoryName);
-        return "tagDetail";
+        return "web/tagDetail";
     }
 
     @GetMapping("blogs/{blogId}/{blogSlug}")
     public String getBlogDetail(Model model, @PathVariable Integer blogId, @PathVariable String blogSlug) {
         Blog blog = blogService.findBlogByIdAndSlug(blogId,blogSlug);
         model.addAttribute("blog", blog);
-        return "blogdetail";
+        return "web/blogdetail";
     }
 
 }

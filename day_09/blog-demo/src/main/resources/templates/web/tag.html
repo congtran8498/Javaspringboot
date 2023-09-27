@@ -5,18 +5,19 @@
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
-    <title>Kong's Blog</title>
+    <title>Tags | Kong's Blog</title>
+    <link crossorigin="anonymous" href="/css/style.css"
+        rel="preload stylesheet" as="style" />
     <link rel=icon href=/img/umaru.PNG>
     <link rel=icon type=image/png sizes=16x16 href=/img/umaru.PNG>
     <link rel=icon type=image/png sizes=32x32 href=/img/umaru.PNG>
-    <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body class="list" id="top">
     <header class="header">
         <nav class="nav">
             <div class="logo">
-                <a href="/">Kong.dev</a>
+                <a href="/static">Kong.dev</a>
             </div>
             <ul id="menu">
                 <li>
@@ -28,26 +29,16 @@
             </ul>
         </nav>
     </header>
-    <main class="main">
-        <header class="entry-header">
-            <h1 style="margin-bottom: 1rem;">Tag : <th:block th:text="${categoryName}"></th:block></h1>
+    <main class="main" >
+        <header class="page-header">
+            <h1>Tags</h1>
         </header>
-
-        <article class="post-entry" th:each="blog : ${blogs}">
-            <header class="entry-header">
-                <h2 th:text="${blog.title}">
-                </h2>
-            </header>
-            <div class="entry-content">
-                <p th:text="${blog.content}">
-                </p>
-            </div>
-            <footer class="entry-footer">
-                <span th:text="${#temporals.format(blog.publishedAt, 'dd/MM/yyyy')}">01/02/2023</span>
-            </footer>
-            <a class="entry-link"
-               th:href="@{|/blogs/${blog.id}/${blog.slug}|}"></a>
-        </article>
+        <ul class="terms-tags">
+            <li th:each="tag : ${categoryList}">
+                <a th:href="@{|categories/${tag.name}|}"> <th:block th:text="${tag.name}"></th:block>
+                    <sup><strong><sup><th:block th:text="${tag.used}"></th:block></sup></strong></sup></a>
+            </li>
+        </ul>
     </main>
 </body>
 
