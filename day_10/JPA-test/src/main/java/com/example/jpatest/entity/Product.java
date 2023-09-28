@@ -1,4 +1,4 @@
-package com.example.relationshipdemo.entity;
+package com.example.jpatest.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,19 +8,24 @@ import lombok.Setter;
 
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table
-public class Author {
+
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "author")
-    private List<Book> bookList;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
+
+    @ManyToMany(mappedBy = "productList")
+    private List<Tag> tagList;
 }

@@ -74,6 +74,10 @@ class RelationshipDemoApplicationTests {
             }
         }
     }
+    @Test
+    void delete(){
+        authorRepository.deleteById(1);
+    }
 
     @Test
     void get_book_by_id(){
