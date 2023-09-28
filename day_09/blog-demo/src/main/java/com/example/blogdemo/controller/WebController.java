@@ -68,4 +68,31 @@ public class WebController {
         return "web/blogdetail";
     }
 
+
+    // admin view
+    @GetMapping("/admin")
+    public String getAdminPage(){
+        return "admin/blog/index";
+    }
+
+    @GetMapping("/admin/create")
+    public String createBlogPage(){
+        return "admin/blog/blog-create";
+    }
+
+    @GetMapping("/admin/detail")
+    public String getDetailBlogPage(){
+        return "admin/blog/blog-detail";
+    }
+
+    @GetMapping("/admin/blogs")
+    public String getAllBlogPage(){
+        return "admin/blog/blog-index";
+    }
+
+    @GetMapping("/admin/blogs-yourelf")
+    public String getOwnsBlogPage(){
+        return "admin/blog/blog-yourself";
+    }
+
 }
