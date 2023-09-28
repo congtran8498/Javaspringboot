@@ -143,7 +143,58 @@ Có 3 Entity Product.java và Category.java và Tag.java
 * Hãy bổ sung định nghĩa quan hệ Many to Many giữa bảng Tag(Many) – Product(Many).
 #### Trả lời:
 
+```java
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table
+public class Category {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    @OneToMany(mappedBy = "category")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Product> productList = new ArrayList<>();
+}
+```
+```java
+public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+
+    @ManyToMany(mappedBy = "productList")
+    private List<Tag> tagList;
+}
+
+```
+```java
+@Entity
+@Table
+public class Tag {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+
+    @ManyToMany
+    @JoinTable(
+            name = "tag_product",
+            joinColumns = @JoinColumn(name = "tag_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private List<Product> productList;
+}
+```
 ### Câu 12:
 * method query: Tìm các User qua method query rồi map qua userDto
 ```java
