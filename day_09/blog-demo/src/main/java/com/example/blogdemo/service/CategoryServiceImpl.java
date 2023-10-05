@@ -1,5 +1,6 @@
 package com.example.blogdemo.service;
 
+import com.example.blogdemo.entity.Category;
 import com.example.blogdemo.model.dto.CategoryDto;
 import com.example.blogdemo.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,8 @@ public class CategoryServiceImpl implements CategoryService{
 
     public List<CategoryDto> getAllCategory(){
         return categoryRepository.getAllCategoryDto();
+    }
+    public List<Category> findAll(){
+        return categoryRepository.findAll();
     }
 }

@@ -35,7 +35,6 @@ public class Blog {
     @JoinTable(name = "blog_category",
             joinColumns =@JoinColumn( name = "blog_id"),
                 inverseJoinColumns =@JoinColumn(name = "category_id"))
-    @JsonIgnore
     private List<Category> categoryList = new ArrayList<>();
 
     @ManyToOne

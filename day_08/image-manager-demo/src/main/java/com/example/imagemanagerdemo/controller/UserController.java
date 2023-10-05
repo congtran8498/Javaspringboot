@@ -44,4 +44,9 @@ public class UserController {
     public ResponseEntity<?> uploadFile(@PathVariable Integer id, @RequestParam("file") MultipartFile file) {
         return ResponseEntity.ok(fileService.uploadFile(id,file));
     }
+
+    @GetMapping("/api/users/{id}")
+    public ResponseEntity<?> getAllFileByUser(@PathVariable Integer id){
+        return ResponseEntity.ok(fileService.getFileByUserIdOrderByCreatedAt(id));
+    }
 }

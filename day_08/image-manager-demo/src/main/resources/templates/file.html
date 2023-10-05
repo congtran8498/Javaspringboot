@@ -70,7 +70,7 @@
 
         const formData = new FormData();
         formData.append("file", file);
-
+        console.log(formData)
         try{
             const res = await axios.post(`http://localhost:8080/api/users/${userId}/files`, formData);
             const trEl = document.createElement("tr")

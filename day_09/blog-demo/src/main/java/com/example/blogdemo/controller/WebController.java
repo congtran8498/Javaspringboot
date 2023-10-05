@@ -1,15 +1,19 @@
 package com.example.blogdemo.controller;
 
 import com.example.blogdemo.entity.Blog;
+import com.example.blogdemo.entity.Category;
+import com.example.blogdemo.entity.Image;
 import com.example.blogdemo.model.dto.CategoryDto;
 import com.example.blogdemo.service.BlogService;
 import com.example.blogdemo.service.CategoryService;
+import com.example.blogdemo.service.ImageService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -18,6 +22,7 @@ import java.util.List;
 public class WebController {
     private final BlogService blogService;
     private final CategoryService categoryService;
+    private final ImageService imageService;
 
     @GetMapping("/")
     public String getHome(Model model) {
@@ -70,28 +75,47 @@ public class WebController {
 
 
     // admin view
-    @GetMapping("/admin")
-    public String getAdminPage(){
+    @GetMapping("/admin/blogs")
+    public String getAdminPage(
+            @RequestParam(required = false, defaultValue = "1") Integer page,
+            @RequestParam(required = false, defaultValue = "10") Integer pageSize,
+            Model model){
+        Page<Blog> pageData = blogService.findAll(page,pageSize);
+        model.addAttribute("pageData", pageData);
+        model.addAttribute("currentPage", page);
         return "admin/blog/index";
     }
 
-    @GetMapping("/admin/create")
+    @GetMapping("/admin/blogs/create")
     public String createBlogPage(){
         return "admin/blog/blog-create";
     }
 
-    @GetMapping("/admin/detail")
-    public String getDetailBlogPage(){
+    @GetMapping("/admin/blogs/{id}/detail")
+    public String getDetailBlogPage(@PathVariable Integer id, Model model){
+        Blog blog = blogService.findById(id);
+        List<Category> categoryList = categoryService.findAll();
+        List<Image> images = imageService.getFilesOfCurrentUser();
+
+        model.addAttribute("categoryList",categoryList);
+        model.addAttribute("blog",blog);
+        model.addAttribute("images", images);
         return "admin/blog/blog-detail";
     }
 
-    @GetMapping("/admin/blogs")
+    @GetMapping("/admin/blogs/blogs")
     public String getAllBlogPage(){
         return "admin/blog/blog-index";
     }
 
-    @GetMapping("/admin/blogs-yourelf")
-    public String getOwnsBlogPage(){
+    @GetMapping("/blogs/own-blogs")
+    public String getOwnsBlogPage(
+            @RequestParam(required = false, defaultValue = "1") Integer page,
+            @RequestParam(required = false, defaultValue = "10") Integer pageSize,
+            Model model){
+        Page<Blog> pageData = blogService.getAllBlogsOfCurrentUser(page,pageSize);
+        model.addAttribute("pageData", pageData);
+        model.addAttribute("currentPage", page);
         return "admin/blog/blog-yourself";
     }
 

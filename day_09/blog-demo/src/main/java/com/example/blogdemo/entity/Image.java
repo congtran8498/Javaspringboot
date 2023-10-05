@@ -18,6 +18,9 @@ public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] data;
     private String type;
     private LocalDateTime createdAt;
