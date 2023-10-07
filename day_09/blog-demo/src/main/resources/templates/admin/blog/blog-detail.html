@@ -61,7 +61,7 @@
                                     <a href="#">Dashboard</a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="#">Blog</a>
+                                    <a href="/admin/blogs">Blog</a>
                                 </li>
                                 <li class="breadcrumb-item active" th:text="${blog.title}">
                                     Thực hành làm ứng dụng Meal Finder API
@@ -81,7 +81,7 @@
                             <button type="button" class="btn btn-default">
                                 <i class="fas fa-chevron-left"></i> Quay lại
                             </button>
-                            <button type="button" class="btn btn-info px-4">
+                            <button id="save" type="button" class="btn btn-info px-4">
                                 Lưu
                             </button>
                             <button type="button" class="btn btn-primary px-4">
@@ -90,9 +90,12 @@
                         </div>
 
                         <div class="col-6 d-flex justify-content-end">
-                            <button type="button" class="btn btn-danger px-4">
-                                Xóa
-                            </button>
+<!--                            <a href="/admin/blogs">-->
+                                <button id="delete-blog" type="button" class="btn btn-danger px-4">
+                                    Xóa
+                                </button>
+<!--                            </a>-->
+
                         </div>
                     </div>
 
@@ -121,11 +124,11 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Trạng thái</label>
-                                                <select id="status" class="form-control" th:selected="not ${blog.status}">
-                                                    <option value="0">
+                                                <select id="status" class="form-control" >
+                                                    <option value="false" th:selected="not ${blog.status}">
                                                         Nháp
                                                     </option>
-                                                    <option value="1" th:selected="not ${blog.status}">
+                                                    <option value="true" th:selected="${blog.status}">
                                                         Công khai
                                                     </option>
                                                 </select>
@@ -214,7 +217,8 @@
         <script th:inline="javascript">
 
             //Initialize Select2 Elements
-            $(".select2").select2();
+            const categoryEl = $("#category")
+            categoryEl.select2();
 
             // Initialize editor
             const easyMDE = new EasyMDE({
@@ -225,8 +229,6 @@
                     codeSyntaxHighlighting: true,
                 },
             });
-
-
 
             // render image
             const imageContainer = document.querySelector(".image-container")
@@ -319,6 +321,57 @@
                 const imageId = selectedEl.dataset.id;
                 thumbnailEl.src = `/api/v1/images/${imageId}`
                 closeBtn.click()
+            })
+            // xoa blog
+            const deleteBlogBtn =  document.querySelector("#delete-blog")
+            const blog = [[${blog}]]
+            console.log(blog.id)
+            deleteBlogBtn.addEventListener("click", async ()=>{
+                const isDelete = confirm("ban chac chan muon xoa")
+                if(!isDelete) return
+                try{
+                    const res = await axios.delete(`/api/admin/blogs/${blog.id}`)
+                    console.log(res)
+                    if (res.status === 204) {
+                        toastr.success("xoa blog thanh cong")
+                        setTimeout(() => {
+                            window.location.href = `/admin/blogs`
+                        }, 1500)
+                    }
+                }catch (e){
+                    console.log(e)
+                    toastr.error(e.response.data.message)
+                }
+            })
+
+            // update blog
+            const saveBtn = document.querySelector("#save")
+            const titleEl = document.querySelector("#title")
+            const descriptionEl = document.querySelector("#description")
+            const statusEl = document.querySelector("#status")
+
+            saveBtn.addEventListener("click", async ()=>{
+                let blogUpdate = {
+                    title: titleEl.value,
+                    description: descriptionEl.value,
+                    content: easyMDE.value(),
+                    thumbnail: thumbnailEl.src,
+                    status: statusEl.value === "true",
+                    categoryIds: categoryEl.val().map(id => Number(id))
+                }
+                console.log(blogUpdate)
+
+                try{
+                    const res = await axios.put(`/api/admin/blogs/${blog.id}`, blogUpdate)
+                    if (res.status === 200) {
+                        toastr.success("cap nhat blog thanh cong")
+                        setTimeout(() => {
+                            window.location.href = `/admin/blogs/${res.data.id}/detail`
+                        }, 1500)
+                    }
+                } catch (e) {
+                    toastr.error(e.response.data.message)
+                }
             })
 
         </script>

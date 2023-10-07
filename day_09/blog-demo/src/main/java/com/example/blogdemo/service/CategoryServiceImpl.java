@@ -1,8 +1,11 @@
 package com.example.blogdemo.service;
 
 import com.example.blogdemo.entity.Category;
+import com.example.blogdemo.exception.BadRequestException;
+import com.example.blogdemo.exception.NotFoundException;
 import com.example.blogdemo.model.dto.CategoryDto;
 import com.example.blogdemo.repository.CategoryRepository;
+import com.example.blogdemo.request.UpsertCategoryRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +37,40 @@ public class CategoryServiceImpl implements CategoryService{
     }
     public List<Category> findAll(){
         return categoryRepository.findAll();
+    }
+
+
+    // xoa category
+    public void deleteCategory(Integer id){
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(()-> new NotFoundException("not found"));
+        if(!category.getBlogList().isEmpty()) throw new BadRequestException("category nay dang duoc su dung");
+        categoryRepository.delete(category);
+    }
+
+    // tao category
+    public Category createCategory(UpsertCategoryRequest request){
+        List<Category> categoryList = categoryRepository.findAll();
+        for (Category value : categoryList) {
+            if (value.getName().equalsIgnoreCase(request.getName().trim())) throw new BadRequestException("category da ton tai");
+        }
+        Category category = new Category();
+        category.setName(request.getName());
+        categoryRepository.save(category);
+        return category;
+    }
+
+    // cap nhat category
+    public Category updateCategory(Integer id,UpsertCategoryRequest request){
+        List<Category> categoryList = categoryRepository.findAll();
+        for (Category value : categoryList) {
+            if (value.getName().equalsIgnoreCase(request.getName().trim())) throw new BadRequestException("category da ton tai");
+        }
+
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(()-> new NotFoundException("not found"));
+        category.setName(request.getName());
+        categoryRepository.save(category);
+        return category;
     }
 }

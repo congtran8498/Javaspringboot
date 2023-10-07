@@ -30,7 +30,7 @@
                     <a href="#">Dashboard</a>
                   </li>
                   <li class="breadcrumb-item">
-                    <a href="#">Blog</a>
+                    <a href="/admin/blogs">Blog</a>
                   </li>
                   <li class="breadcrumb-item active">
                     Tạo bài viết
@@ -49,7 +49,7 @@
                 <button type="button" class="btn btn-default">
                   <i class="fas fa-chevron-left"></i> Quay lại
                 </button>
-                <button type="button" class="btn btn-info px-4">
+                <button id="save" type="button" class="btn btn-info px-4">
                   Lưu
                 </button>
                 <button type="button" class="btn btn-primary px-4">
@@ -90,10 +90,10 @@
                         <div class="form-group">
                           <label>Trạng thái</label>
                           <select id="status" class="form-control">
-                            <option value="0">
+                            <option value="false">
                               Nháp
                             </option>
-                            <option value="1">
+                            <option value="true">
                               Công khai
                             </option>
                           </select>
@@ -102,26 +102,8 @@
                           <label>Danh mục</label>
                           <div class="select2-purple">
                             <select class="select2 form-control" multiple="multiple" id="category">
-                              <option>
+                              <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">
                                 Java
-                              </option>
-                              <option>
-                                Golang
-                              </option>
-                              <option>
-                                React
-                              </option>
-                              <option>
-                                Lập trình web
-                              </option>
-                              <option>
-                                Database
-                              </option>
-                              <option>
-                                Tips Trick
-                              </option>
-                              <option>
-                                Devops
                               </option>
                             </select>
                           </div>
@@ -175,10 +157,13 @@
     <script src="https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js"></script>
 
     <script src="/plugins/select2/js/select2.full.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-    <script>
+    <script th:inline="javascript">
       //Initialize Select2 Elements
-      $(".select2").select2();
+      const categoryEl = $("#category")
+      categoryEl.select2();
+      // $(".select2").select2();
 
       // Initialize editor
       const easyMDE = new EasyMDE({
@@ -189,6 +174,38 @@
           codeSyntaxHighlighting: true,
         },
       });
+
+      //tao bai viet
+      const saveBtn = document.querySelector("#save")
+      const titleEl = document.querySelector("#title")
+      const descriptionEl = document.querySelector("#description")
+      const statusEl = document.querySelector("#status")
+
+
+      saveBtn.addEventListener("click", async ()=>{
+        let blogCreate = {
+          title: titleEl.value,
+          description: descriptionEl.value,
+          content: easyMDE.value(),
+          thumbnail: null,
+          status: statusEl.value === "true",
+          categoryIds: categoryEl.val().map(id => Number(id))
+        }
+        console.log(blogCreate)
+
+        try{
+          const res = await axios.post(`/api/admin/blogs`, blogCreate)
+          if (res.status === 201) {
+            toastr.success("tao blog thanh cong")
+            setTimeout(() => {
+              window.location.href = `/admin/blogs/${res.data.id}/detail`
+            }, 1500)
+          }
+        } catch (e) {
+          toastr.error(e.response.data.message)
+        }
+
+      })
     </script>
   </th:block>
 

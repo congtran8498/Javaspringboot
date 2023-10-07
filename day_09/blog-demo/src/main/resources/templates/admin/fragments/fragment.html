@@ -67,19 +67,19 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="./blog-index.html" class="nav-link">
+                                    <a th:href="@{/admin/blogs}"  class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Tất cả bài viết</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="./blog-yourself.html" class="nav-link">
+                                    <a th:href="@{/blogs/own-blogs}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Bài viết của tôi</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="./blog-create.html" class="nav-link">
+                                    <a th:href="@{/admin/blogs/create}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Tạo bài viết</p>
                                     </a>
@@ -105,6 +105,29 @@
                                     <a href="" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Tạo user</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-tree"></i>
+                                <p>
+                                    Quản lý Category
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/admin/categories" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Danh sách Category</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/admin/categories/create" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Tạo Category</p>
                                     </a>
                                 </li>
                             </ul>

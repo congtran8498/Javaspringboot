@@ -93,7 +93,7 @@ public class BlogServiceImpl implements BlogService{
     public void deleteBlog(Integer id){
         Blog blog = blogRepository.findById(id)
                 .orElseThrow(()-> new NotFoundException("not found"));
-        blogRepository.deleteById(id);
+        blogRepository.delete(blog);
 
     }
 

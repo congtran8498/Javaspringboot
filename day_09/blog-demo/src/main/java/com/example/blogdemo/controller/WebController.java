@@ -87,7 +87,9 @@ public class WebController {
     }
 
     @GetMapping("/admin/blogs/create")
-    public String createBlogPage(){
+    public String createBlogPage(Model model){
+        List<Category> categoryList = categoryService.findAll();
+        model.addAttribute("categories", categoryList);
         return "admin/blog/blog-create";
     }
 
