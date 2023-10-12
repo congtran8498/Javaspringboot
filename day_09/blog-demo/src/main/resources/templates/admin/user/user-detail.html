@@ -61,11 +61,11 @@
                                     <a href="#">Dashboard</a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="/admin/blogs">Blog</a>
+                                    <a href="/admin/users">User</a>
                                 </li>
-                                <li class="breadcrumb-item active" th:text="${blog.title}">
+                                <li class="breadcrumb-item active" >
                                     Thực hành làm ứng dụng Meal Finder API
-                                    với Javascript (Phần 2)
+
                                 </li>
                             </ol>
                         </div>
@@ -82,10 +82,10 @@
                                 <i class="fas fa-chevron-left"></i> Quay lại
                             </button>
                             <button id="save" type="button" class="btn btn-info px-4">
-                                Lưu
+                                Cập nhật
                             </button>
                             <button type="button" class="btn btn-primary px-4">
-                                Preview
+                                Reset mật khẩu
                             </button>
                         </div>
 
@@ -107,18 +107,24 @@
                                         <div class="col-md-8">
                                             <form id="form">
                                                 <div class="form-group">
-                                                    <label>Tiêu đề</label>
-                                                    <input type="text" name="title" class="form-control" id="title" th:value="${blog.title}" />
+                                                    <label>Họ tên</label>
+                                                    <input type="text" name="name" class="form-control" id="name" value="abc"/>
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>Nội dung</label>
-                                                    <textarea id="content" name="content" th:text="${blog.content}"></textarea>
+                                                    <label>Email</label>
+                                                    <input id="email" name="email" class="form-control" value="abc@gmail.com"/>
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>Mô tả ngắn</label>
-                                                    <textarea id="description" name="description" class="form-control" rows="3" th:text="${blog.description}"></textarea>
+                                                    <label>Quyền</label>
+                                                    <div class="select2-purple">
+                                                        <select id="role" name="role" class="select2 form-control" multiple="multiple">
+                                                            <option>admin</option>
+                                                            <option>user</option>
+                                                        </select>
+                                                    </div>
+
                                                 </div>
                                             </form>
 
@@ -126,31 +132,9 @@
 
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Trạng thái</label>
-                                                <select id="status" class="form-control" >
-                                                    <option value="false" th:selected="not ${blog.status}">
-                                                        Nháp
-                                                    </option>
-                                                    <option value="true" th:selected="${blog.status}">
-                                                        Công khai
-                                                    </option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Danh mục</label>
-                                                <div class="select2-purple">
-                                                    <select class="select2 form-control" multiple="multiple"
-                                                            id="category">
-                                                        <option th:each="category : ${categoryList}"
-                                                                th:selected="${blog.categoryList.contains(category)}"
-                                                                th:value="${category.id}"
-                                                                th:text="${category.name}">Java</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
+                                                <label>Avatar</label>
                                                 <div class="thumbnail-preview-container mb-3">
-                                                    <img th:src="${blog.thumbnail != null ? blog.thumbnail : 'https://placehold.co/600x400'}" alt="" id="thumbnail"/>
+                                                    <img th:src="'https://placehold.co/600x400'" alt="" id="thumbnail"/>
                                                 </div>
                                                 <button type="button" class="btn btn-info btn-flat" data-toggle="modal"
                                                         data-target="#modal-xl">
@@ -259,8 +243,8 @@
             });
 
             //Initialize Select2 Elements
-            const categoryEl = $("#category")
-            categoryEl.select2();
+            const roleEl = $("#role")
+            roleEl.select2();
 
             // Initialize editor
             const easyMDE = new EasyMDE({

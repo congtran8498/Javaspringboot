@@ -30,10 +30,10 @@
                     <a href="#">Dashboard</a>
                   </li>
                   <li class="breadcrumb-item">
-                    <a href="/admin/blogs">Blog</a>
+                    <a href="/admin/users">User</a>
                   </li>
                   <li class="breadcrumb-item active">
-                    Tạo bài viết
+                    Tạo user
                   </li>
                 </ol>
               </div>
@@ -44,20 +44,17 @@
         <!-- Main content -->
         <section class="content">
           <div class="container-fluid">
-            <div class="row py-2">
-              <div class="col-6">
+            <div class="row py-2 " >
+              <div class="col-md-4">
                 <button type="button" class="btn btn-default">
                   <i class="fas fa-chevron-left"></i> Quay lại
                 </button>
                 <button id="save" type="button" class="btn btn-info px-4">
                   Lưu
                 </button>
-                <button type="button" class="btn btn-primary px-4">
-                  Preview
-                </button>
               </div>
 
-              <div class="col-6 d-flex justify-content-end">
+              <div class="col-md-4 d-flex justify-content-end">
                 <button type="button" class="btn btn-danger px-4">
                   Xóa
                 </button>
@@ -65,65 +62,38 @@
             </div>
 
             <div class="row">
-              <div class="col-12">
+              <div class="col-md-8">
                 <div class="card">
                   <div class="card-body">
-                    <div class="row">
-                      <div class="col-md-8">
                         <form id="form">
+                          <p style="font-style: italic" class="text-secondary">Mật khẩu mặc định 123</p>
                           <div class="form-group">
-                            <label>Tiêu đề</label>
-                            <input type="text" name="title" class="form-control" id="title" />
+                            <label>Họ tên</label>
+                            <input type="text" name="title" class="form-control" id="name" />
                           </div>
 
                           <div class="form-group">
-                            <label>Nội dung</label>
-                            <textarea id="content" name="content"></textarea>
+                            <label>Email</label>
+                            <input class="form-control" id="email" name="email"></input>
                           </div>
 
                           <div class="form-group">
-                            <label>Mô tả ngắn</label>
-                            <textarea id="description" name="description" class="form-control" rows="3"></textarea>
+                            <label>Quyền</label>
+                            <div class="select2-purple">
+                              <select class="select2 form-control" name="role" id="role" multiple>
+                                <option>chon role</option>
+                                <option>admin</option>
+                                <option>user</option>
+                              </select>
+                            </div>
+
                           </div>
                         </form>
                       </div>
 
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label>Trạng thái</label>
-                          <select id="status" class="form-control">
-                            <option value="false">
-                              Nháp
-                            </option>
-                            <option value="true">
-                              Công khai
-                            </option>
-                          </select>
-                        </div>
-                        <div class="form-group">
-                          <label>Danh mục</label>
-                          <div class="select2-purple">
-                            <select class="select2 form-control" multiple="multiple" id="category">
-                              <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">
-                                Java
-                              </option>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <div class="thumbnail-preview-container mb-3">
-                            <img src="" alt="" id="thumbnail" />
-                          </div>
-                          <button type="button" class="btn btn-info btn-flat" data-toggle="modal" data-target="#modal-xl">
-                            Chọn hình ảnh
-                          </button>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
-            </div>
           </div>
         </section>
 
@@ -203,8 +173,8 @@
 
 
       //Initialize Select2 Elements
-      const categoryEl = $("#category")
-      categoryEl.select2();
+      const roleEl = $("#role")
+      roleEl.select2();
       // $(".select2").select2();
 
       // Initialize editor

@@ -1,5 +1,6 @@
 package com.example.blogdemo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,6 +21,8 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-
+    @ManyToMany(mappedBy = "roleList")
+    @JsonIgnore
+    private List<User> userList = new ArrayList<>();
 
 }
