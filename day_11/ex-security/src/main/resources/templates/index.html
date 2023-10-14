@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+<body>
+<h1>Home Page</h1>
+<th:block sec:authorize="not isAuthenticated()">
+    <button>
+        <a href="/login">Dang nhap</a>
+    </button>
+</th:block>
+
+
+<th:block sec:authorize="isAuthenticated()">
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Dang xuat</button>
+    </form>
+
+    <h2>hello <th:block sec:authentication="name"></th:block></h2>
+
+    <ul>
+        <li><a href="/">Home page</a></li>
+        <li sec:authorize="hasRole('ROLE_USER')"><a href="/profile">Profile</a></li>
+        <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/user-management">user</a></li>
+        <li sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SALE', 'ROLE_AUTHOR')"><a href="/blog">blog</a></li>
+        <li sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SALE')"><a href="/admin/brand">brand</a></li>
+        <li sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SALE')"><a href="/admin/dashboard">dashboard</a></li>
+        <li sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SALE')"><a href="/admin/category">category</a></li>
+        <li sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SALE')"><a href="/admin/order">order</a></li>
+        <li sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_SALE')"><a href="/admin/product">product</a></li>
+    </ul>
+</th:block>
+</body>
+</html>

@@ -57,18 +57,17 @@
                       </tr>
                       </thead>
                       <tbody>
-                      <tr>
+                      <tr th:each="user : ${users}">
                         <td>
-                          <a >Khai giảng khóa
-                            Java Spring Boot 12A
+                          <a th:text="${user.name}">
                          </a>
                         </td>
                         <td>
-                          <a >John Doe@gmail.com</a>
+                          <a th:text="${user.email}">John Doe@gmail.com</a>
                         </td>
                         <td>
-                          <span class="badge bg-secondary me-2">
-                            Admin
+                          <span class="badge bg-secondary me-2" th:each="role : ${user.getRoleList()}" th:text="${role.name}">
+
                           </span>
                         </td>
 
