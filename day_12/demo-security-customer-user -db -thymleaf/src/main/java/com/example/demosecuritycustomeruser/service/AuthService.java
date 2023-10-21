@@ -70,7 +70,7 @@ public class AuthService {
         return "kiem tra email cua ban de kich hoat tai khoan";
     }
 
-    public String forgotPassWordToken(ForgotPasswordRequest request){
+    public String forgotPassWordToken(ForgotPasswordRequest request) throws MessagingException {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new BadRequestException("email khong ton tai"));
 
@@ -81,7 +81,9 @@ public class AuthService {
         tokenConfirm.setCreatedAt(LocalDateTime.now());
         tokenConfirm.setExpiredAt(LocalDateTime.now().plusMinutes(20));
         tokenConfirmRepository.save(tokenConfirm);
-        return "http://localhost:8080/forgot-password/confirm?token=" + tokenConfirm.getToken();
+        String url =  "http://localhost:8080/forgot-password/confirm?token=" + tokenConfirm.getToken();
+        emailService.sendVerificationEmail(user, url);
+        return "kiem tra email cua ban";
     }
 
 //    public String changePassword(ChangePassword request){

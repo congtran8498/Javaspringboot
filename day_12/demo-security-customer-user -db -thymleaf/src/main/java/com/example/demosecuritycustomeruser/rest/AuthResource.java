@@ -28,7 +28,7 @@ public class AuthResource {
 //    }
 
     @PostMapping("forgot-password")
-    public ResponseEntity<?> forgotPassword(@RequestBody ForgotPasswordRequest request){
+    public ResponseEntity<?> forgotPassword(@RequestBody ForgotPasswordRequest request) throws MessagingException {
         return new ResponseEntity<>(authService.forgotPassWordToken(request), HttpStatus.CREATED);
     }
 
