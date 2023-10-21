@@ -86,9 +86,6 @@ public class AuthService {
         return "kiem tra email cua ban";
     }
 
-//    public String changePassword(ChangePassword request){
-//
-//    }
 
     // isValid: true/false   message: thong bao
     public Map<String, Object> confirm(String token){
