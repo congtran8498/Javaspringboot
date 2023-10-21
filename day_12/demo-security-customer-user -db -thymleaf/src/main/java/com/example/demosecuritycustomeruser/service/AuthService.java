@@ -8,8 +8,11 @@ import com.example.demosecuritycustomeruser.exception.NotFoundException;
 import com.example.demosecuritycustomeruser.repository.RoleRepository;
 import com.example.demosecuritycustomeruser.repository.TokenConfirmRepository;
 import com.example.demosecuritycustomeruser.repository.UserRepository;
+import com.example.demosecuritycustomeruser.request.ChangePassword;
 import com.example.demosecuritycustomeruser.request.CreateUserRequest;
+import com.example.demosecuritycustomeruser.request.ForgotPasswordRequest;
 import com.example.demosecuritycustomeruser.request.LoginRequest;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,8 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class AuthService {
@@ -37,8 +39,10 @@ public class AuthService {
     private HttpSession httpSession;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private EmailService emailService;
 
-    public String register(CreateUserRequest request) {
+    public String register(CreateUserRequest request) throws MessagingException {
         if(userRepository.existsByEmail(request.getEmail())) throw new BadRequestException("da ton tai email nay");
 
         // get role user
@@ -60,14 +64,53 @@ public class AuthService {
         tokenConfirm.setCreatedAt(LocalDateTime.now());
         tokenConfirm.setExpiredAt(LocalDateTime.now().plusMinutes(20));
         tokenConfirmRepository.save(tokenConfirm);
-        return "http://localhost:8080/api/v1/auth/confirm?token=" + tokenConfirm.getToken();
+
+        String url = "http://localhost:8080/confirm?token=" + tokenConfirm.getToken();
+        emailService.sendVerificationEmail(user,url);
+        return "kiem tra email cua ban de kich hoat tai khoan";
     }
 
-    public String confirm(String token){
-        TokenConfirm tokenConfirm = tokenConfirmRepository.findByToken(token)
-                .orElseThrow(() ->  new BadRequestException("khong ton tai token"));
-        if(tokenConfirm.getConfirmedAt() != null) throw new BadRequestException("da xac nhan");
-        if(tokenConfirm.getExpiredAt().isBefore(LocalDateTime.now())) throw new BadRequestException("het thoi han");
+    public String forgotPassWordToken(ForgotPasswordRequest request){
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new BadRequestException("email khong ton tai"));
+
+        TokenConfirm tokenConfirm = new TokenConfirm();
+        UUID uuid = UUID.randomUUID();
+        tokenConfirm.setToken(uuid.toString());
+        tokenConfirm.setUser(user);
+        tokenConfirm.setCreatedAt(LocalDateTime.now());
+        tokenConfirm.setExpiredAt(LocalDateTime.now().plusMinutes(20));
+        tokenConfirmRepository.save(tokenConfirm);
+        return "http://localhost:8080/forgot-password/confirm?token=" + tokenConfirm.getToken();
+    }
+
+//    public String changePassword(ChangePassword request){
+//
+//    }
+
+    // isValid: true/false   message: thong bao
+    public Map<String, Object> confirm(String token){
+        Map<String, Object> data = new HashMap<>();
+
+        Optional<TokenConfirm> tokenConfirmOptional = tokenConfirmRepository.findByToken(token);
+        if(tokenConfirmOptional.isEmpty()){
+            data.put("isValid", false);
+            data.put("message", "Token khong ton tai");
+            return data;
+        }
+        TokenConfirm tokenConfirm = tokenConfirmOptional.get();
+
+        if(tokenConfirm.getConfirmedAt() != null){
+            data.put("isValid", false);
+            data.put("message", "Token da xac nhan");
+            return data;
+        }
+
+        if(tokenConfirm.getExpiredAt().isBefore(LocalDateTime.now())){
+            data.put("isValid", false);
+            data.put("message", "Token da het han");
+            return data;
+        }
 
         tokenConfirm.setConfirmedAt(LocalDateTime.now());
         tokenConfirm.getUser().setIsEnabled(true);
@@ -75,7 +118,9 @@ public class AuthService {
         tokenConfirmRepository.save(tokenConfirm);
         userRepository.save(tokenConfirm.getUser());
 
-        return "xac nhan thanh cong";
+        data.put("isValid", true);
+        data.put("message", "Xac thuc thanh cong");
+        return data;
     }
 
     public String login(LoginRequest request) {

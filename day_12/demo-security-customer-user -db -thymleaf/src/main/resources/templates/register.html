@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>register</title>
+</head>
+<body>
+<h1>form register</h1>
+<form id="form-register">
+    <div>
+        <label>
+            Username
+            <input type="text" name="name" id="name"/>
+        </label>
+    </div>
+    <div>
+        <label>
+            Email
+            <input type="text" name="email" id="email"/>
+        </label>
+    </div>
+    <div>
+        <label>
+            Password
+            <input type="password" name="password" id="password"/>
+        </label>
+    </div>
+    <div>
+        <button type="submit">Dang ki</button>
+    </div>
+</form>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+    const formRegister = document.querySelector("#form-register")
+    const nameEl = document.querySelector("#name")
+    const emailEl = document.querySelector("#email")
+    const passwordEl = document.querySelector("#password")
+
+    formRegister.addEventListener("submit", async (e) =>{
+        e.preventDefault()
+
+        const data = {
+            name: nameEl.value,
+            email: emailEl.value,
+            password: passwordEl.value
+        }
+        try{
+            const res = await axios.post("http://localhost:8080/api/v1/auth/register", data)
+
+            if(res.status === 201){
+                console.log(res.data)
+            }else {
+                alert("dang ki that bai")
+            }
+        }catch (e) {
+            alert(e.response.data.message)
+        }
+    })
+</script>
+
+</body>
+</html>
