@@ -86,7 +86,6 @@ public class AuthService {
         return "kiem tra email cua ban";
     }
 
-
     // isValid: true/false   message: thong bao
     public Map<String, Object> confirm(String token){
         Map<String, Object> data = new HashMap<>();
@@ -143,5 +142,14 @@ public class AuthService {
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
+    }
+
+    public String updatePassword(ChangePassword request) {
+        TokenConfirm tokenConfirm = tokenConfirmRepository.findByToken(request.getToken())
+                .orElseThrow(()-> new BadRequestException("not found"));
+        User user = tokenConfirm.getUser();
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
+        return "doi mat khau thanh cong";
     }
 }

@@ -12,4 +12,5 @@ import lombok.Setter;
 
 public class ChangePassword {
     private String newPassword;
+    private String token;
 }

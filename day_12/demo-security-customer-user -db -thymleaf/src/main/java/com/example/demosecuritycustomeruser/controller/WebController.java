@@ -50,4 +50,6 @@ public class WebController {
         model.addAttribute("data", authService.confirm(token));
         return "confirm-forgot-password";
     }
+
+
 }

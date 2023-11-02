@@ -26,8 +26,9 @@ public class User {
     private String avatar;
     private String address;
     private String password;
+    private Boolean isEnabled;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),

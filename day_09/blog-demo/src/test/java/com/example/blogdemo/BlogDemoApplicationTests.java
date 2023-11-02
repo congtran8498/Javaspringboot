@@ -1,12 +1,14 @@
 package com.example.blogdemo;
 
 import com.example.blogdemo.entity.*;
+import com.example.blogdemo.exception.BadRequestException;
 import com.example.blogdemo.repository.*;
 import com.github.javafaker.Faker;
 import com.github.slugify.Slugify;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,30 +28,20 @@ class BlogDemoApplicationTests {
     private CommentRepository commentRepository;
     @Autowired
     private ImageRepository imageRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     @Test
     void save_user_role(){
-        Role role1 = new Role();
-        Role role2 = new Role();
-        Role role3 = new Role();
-        role1.setName("user");
-        role2.setName("admin");
-        role3.setName("author");
-        roleRepository.save(role1);
-        roleRepository.save(role2);
-        roleRepository.save(role3);
-
-
-        Faker faker = new Faker();
-        Random random = new Random();
-        List<User> users = List.of(
-                new User(null, faker.name().fullName(), faker.internet().emailAddress(), faker.address().streetAddress(), null, List.of(role2, role1)),
-                new User(null, faker.name().fullName(), faker.internet().emailAddress(), faker.address().streetAddress(), null, List.of(role1)),
-                new User(null, faker.name().fullName(), faker.internet().emailAddress(), faker.address().streetAddress(), null, List.of(role3, role1))
-        );
-
-        userRepository.saveAll(users);
+        User user = new User();
+        Role role = roleRepository.findById(3)
+                        .orElseThrow(() -> new BadRequestException("not found"));
+        user.setEmail("test@gmail.com");
+        user.getRoleList().add(role);
+        user.setPassword(passwordEncoder.encode("123"));
+        user.setIsEnabled(true);
+        userRepository.save(user);
     }
     @Test
     void save_blog_category_comment(){

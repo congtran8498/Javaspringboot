@@ -356,7 +356,7 @@
                 const isDelete = confirm("ban chac chan muon xoa")
                 if(!isDelete) return
                 try{
-                    const res = await axios.delete(`/api/admin/blogs/${blog.id}`)
+                    const res = await axios.delete(`/api/v1/admin/blogs/${blog.id}`)
                     console.log(res)
                     if (res.status === 204) {
                         toastr.success("xoa blog thanh cong")
@@ -388,7 +388,7 @@
                 console.log(blogUpdate)
 
                 try{
-                    const res = await axios.put(`/api/admin/blogs/${blog.id}`, blogUpdate)
+                    const res = await axios.put(`/api/v1/admin/blogs/${blog.id}`, blogUpdate)
                     if (res.status === 200) {
                         toastr.success("cap nhat blog thanh cong")
                         setTimeout(() => {

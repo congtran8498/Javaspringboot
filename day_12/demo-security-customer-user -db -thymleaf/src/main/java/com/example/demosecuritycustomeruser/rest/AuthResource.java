@@ -37,5 +37,10 @@ public class AuthResource {
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));
     }
+
+    @PostMapping("update-password")
+    public ResponseEntity<?> updatePassword(@RequestBody ChangePassword request){
+        return ResponseEntity.ok(authService.updatePassword(request));
+    }
 }
 

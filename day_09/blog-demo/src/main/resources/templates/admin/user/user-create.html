@@ -209,7 +209,7 @@
         console.log(blogCreate)
 
         try{
-          const res = await axios.post(`/api/admin/blogs`, blogCreate)
+          const res = await axios.post(`/api/v1/admin/blogs`, blogCreate)
           if (res.status === 201) {
             toastr.success("tao blog thanh cong")
             setTimeout(() => {
