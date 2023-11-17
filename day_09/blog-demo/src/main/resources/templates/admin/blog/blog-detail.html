@@ -3,15 +3,15 @@
       th:replace="~{/admin/layout/admin-layout :: admin-layout(~{:: title}, ~{:: #css}, ~{:: #content}, ~{:: #js})}">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>AdminLTE 3 | Dashboard</title>
 
     <th:block id="css">
-        <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css" />
+        <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css"/>
 
-        <link rel="stylesheet" href="/plugins/select2/css/select2.min.css" />
+        <link rel="stylesheet" href="/plugins/select2/css/select2.min.css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.6.0/pagination.min.css"
               integrity="sha512-K1k7jSn9RDKEcn/ugqVVvWYu0bcS3q1w6m/5pQSnrj0bCfIqF6Wk49lkmckSb4wglvTP9V17LtS0q0XxYccXbg=="
               crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -33,7 +33,7 @@
             }
 
             .image-item.selected {
-                border-color: #28a745!important;
+                border-color: #28a745 !important;
                 border-width: 4px !important;
             }
 
@@ -49,114 +49,118 @@
 
 <body class="hold-transition sidebar-mini layout-fixed">
 
-    <th:block id="content">
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <div class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-12">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item">
-                                    <a href="#">Dashboard</a>
-                                </li>
-                                <li class="breadcrumb-item">
-                                    <a href="/admin/blogs">Blog</a>
-                                </li>
-                                <li class="breadcrumb-item active" th:text="${blog.title}">
-                                    Thực hành làm ứng dụng Meal Finder API
-                                    với Javascript (Phần 2)
-                                </li>
-                            </ol>
-                        </div>
+<th:block id="content">
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="#">Dashboard</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="/admin/blogs">Blog</a>
+                            </li>
+                            <li class="breadcrumb-item active" th:text="${blog.title}">
+                                Thực hành làm ứng dụng Meal Finder API
+                                với Javascript (Phần 2)
+                            </li>
+                        </ol>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Main content -->
-            <section class="content">
-                <div class="container-fluid">
-                    <div class="row py-2">
-                        <div class="col-6">
-                            <button type="button" class="btn btn-default">
-                                <i class="fas fa-chevron-left"></i> Quay lại
-                            </button>
-                            <button id="save" type="button" class="btn btn-info px-4">
-                                Lưu
-                            </button>
-                            <button type="button" class="btn btn-primary px-4">
-                                Preview
-                            </button>
-                        </div>
-
-                        <div class="col-6 d-flex justify-content-end">
-<!--                            <a href="/admin/blogs">-->
-                                <button id="delete-blog" type="button" class="btn btn-danger px-4">
-                                    Xóa
-                                </button>
-<!--                            </a>-->
-
-                        </div>
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row py-2">
+                    <div class="col-6">
+                        <button type="button" class="btn btn-default">
+                            <i class="fas fa-chevron-left"></i> Quay lại
+                        </button>
+                        <button id="save" type="button" class="btn btn-info px-4">
+                            Lưu
+                        </button>
+                        <button type="button" class="btn btn-primary px-4">
+                            Preview
+                        </button>
                     </div>
 
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <form id="form">
-                                                <div class="form-group">
-                                                    <label>Tiêu đề</label>
-                                                    <input type="text" name="title" class="form-control" id="title" th:value="${blog.title}" />
-                                                </div>
+                    <div class="col-6 d-flex justify-content-end">
+                        <!--                            <a href="/admin/blogs">-->
+                        <button id="delete-blog" type="button" class="btn btn-danger px-4">
+                            Xóa
+                        </button>
+                        <!--                            </a>-->
 
-                                                <div class="form-group">
-                                                    <label>Nội dung</label>
-                                                    <textarea id="content" name="content" th:text="${blog.content}"></textarea>
-                                                </div>
+                    </div>
+                </div>
 
-                                                <div class="form-group">
-                                                    <label>Mô tả ngắn</label>
-                                                    <textarea id="description" name="description" class="form-control" rows="3" th:text="${blog.description}"></textarea>
-                                                </div>
-                                            </form>
-
-                                        </div>
-
-                                        <div class="col-md-4">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <form id="form">
                                             <div class="form-group">
-                                                <label>Trạng thái</label>
-                                                <select id="status" class="form-control" >
-                                                    <option value="false" th:selected="not ${blog.status}">
-                                                        Nháp
-                                                    </option>
-                                                    <option value="true" th:selected="${blog.status}">
-                                                        Công khai
+                                                <label>Tiêu đề</label>
+                                                <input type="text" name="title" class="form-control" id="title"
+                                                       th:value="${blog.title}"/>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Nội dung</label>
+                                                <textarea id="content" name="content"
+                                                          th:text="${blog.content}"></textarea>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Mô tả ngắn</label>
+                                                <textarea id="description" name="description" class="form-control"
+                                                          rows="3" th:text="${blog.description}"></textarea>
+                                            </div>
+                                        </form>
+
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Trạng thái</label>
+                                            <select id="status" class="form-control">
+                                                <option value="false" th:selected="not ${blog.status}">
+                                                    Nháp
+                                                </option>
+                                                <option value="true" th:selected="${blog.status}">
+                                                    Công khai
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Danh mục</label>
+                                            <div class="select2-purple">
+                                                <select class="select2 form-control" multiple="multiple"
+                                                        id="category">
+                                                    <option th:each="category : ${categoryList}"
+                                                            th:selected="${blog.categoryList.contains(category)}"
+                                                            th:value="${category.id}"
+                                                            th:text="${category.name}">Java
                                                     </option>
                                                 </select>
                                             </div>
-                                            <div class="form-group">
-                                                <label>Danh mục</label>
-                                                <div class="select2-purple">
-                                                    <select class="select2 form-control" multiple="multiple"
-                                                            id="category">
-                                                        <option th:each="category : ${categoryList}"
-                                                                th:selected="${blog.categoryList.contains(category)}"
-                                                                th:value="${category.id}"
-                                                                th:text="${category.name}">Java</option>
-                                                    </select>
-                                                </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="thumbnail-preview-container mb-3">
+                                                <img th:src="${blog.thumbnail != null ? blog.thumbnail : 'https://placehold.co/600x400'}"
+                                                     alt="" id="thumbnail"/>
                                             </div>
-                                            <div class="form-group">
-                                                <div class="thumbnail-preview-container mb-3">
-                                                    <img th:src="${blog.thumbnail != null ? blog.thumbnail : 'https://placehold.co/600x400'}" alt="" id="thumbnail"/>
-                                                </div>
-                                                <button type="button" class="btn btn-info btn-flat" data-toggle="modal"
-                                                        data-target="#modal-xl">
-                                                    Chọn hình ảnh
-                                                </button>
-                                            </div>
+                                            <button type="button" class="btn btn-info btn-flat" data-toggle="modal"
+                                                    data-target="#modal-xl">
+                                                Chọn hình ảnh
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -164,260 +168,262 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <div class="modal fade" id="modal-xl" aria-hidden="true">
-                <div class="modal-dialog modal-xl">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Danh sách ảnh</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
+        <div class="modal fade" id="modal-xl" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Danh sách ảnh</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <button class="btn btn-success" id="btn-chose-image" disabled>Chọn ảnh</button>
+
+                                <label for="avatar" class="btn btn-warning mb-0">Upload ảnh</label>
+                                <input type="file" id="avatar" class="d-none">
+                            </div>
+                            <div>
+                                <button class="btn btn-danger" id="btn-delete-image" disabled>Xóa ảnh</button>
+                            </div>
                         </div>
-                        <div class="modal-body">
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    <button class="btn btn-success" id="btn-chose-image" disabled>Chọn ảnh</button>
-
-                                    <label for="avatar" class="btn btn-warning mb-0">Upload ảnh</label>
-                                    <input type="file" id="avatar" class="d-none">
-                                </div>
-                                <div>
-                                    <button class="btn btn-danger" id="btn-delete-image" disabled>Xóa ảnh</button>
-                                </div>
+                        <!-- Hiển thị danh sách ảnh -->
+                        <div class="image-container mt-4 mb-4">
+                            <div class="image-item">
+                                <img src="https://images.unsplash.com/photo-1656918931725-2f9d9fce4acb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw4fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
+                                     alt="">
                             </div>
-                            <!-- Hiển thị danh sách ảnh -->
-                            <div class="image-container mt-4 mb-4">
-                                <div class="image-item">
-                                    <img src="https://images.unsplash.com/photo-1656918931725-2f9d9fce4acb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw4fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-                                         alt="">
-                                </div>
-                            </div>
+                        </div>
 
-                            <!-- Hiển thị phần phân trang -->
-                            <div class="pagination-container d-flex justify-content-center">
+                        <!-- Hiển thị phần phân trang -->
+                        <div class="pagination-container d-flex justify-content-center">
 
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </th:block>
+    </div>
+</th:block>
 
 
-    <th:block id="js">
-        <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js"></script>
+<th:block id="js">
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js"></script>
 
-        <script src="/plugins/select2/js/select2.full.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.6.0/pagination.min.js"
-                integrity="sha512-GzbaI5EsNzdEUq6/2XLYpr1y9CUZRIVsUeWTAFgULtQa5jZ3Nug8i0nZKM6jp9NffBCZhymPPQFcF0DK+JkRpw=="
-                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/plugins/select2/js/select2.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.6.0/pagination.min.js"
+            integrity="sha512-GzbaI5EsNzdEUq6/2XLYpr1y9CUZRIVsUeWTAFgULtQa5jZ3Nug8i0nZKM6jp9NffBCZhymPPQFcF0DK+JkRpw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-        <script th:inline="javascript">
+    <script th:inline="javascript">
+        const blogDetail = [[${blog}]]
+        console.log(blogDetail)
+        // validation
+        const form = document.querySelector("#form")
 
-            // validation
-            const form = document.querySelector("#form")
-
-            $('#form').validate({
-                rules: {
-                    title: {
-                        required: true
-                    },
-                    content: {
-                        required: true
-                    },
-                    description: {
-                        required: true
-                    },
+        $('#form').validate({
+            rules: {
+                title: {
+                    required: true
                 },
-                messages: {
-                    title: {
-                        required: "Title không được để trống"
-                    },
-                    content: {
-                        required: "Content không được để trống"
-                    },
-                    description: {
-                        required: "Description không được để trống"
-                    },
+                content: {
+                    required: true
                 },
-                errorElement: 'span',
-                errorPlacement: function (error, element) {
-                    error.addClass('invalid-feedback');
-                    element.closest('.form-group').append(error);
+                description: {
+                    required: true
                 },
-                highlight: function (element, errorClass, validClass) {
-                    $(element).addClass('is-invalid');
+            },
+            messages: {
+                title: {
+                    required: "Title không được để trống"
                 },
-                unhighlight: function (element, errorClass, validClass) {
-                    $(element).removeClass('is-invalid');
-                }
-            });
-
-            //Initialize Select2 Elements
-            const categoryEl = $("#category")
-            categoryEl.select2();
-
-            // Initialize editor
-            const easyMDE = new EasyMDE({
-                element: document.getElementById("content"),
-                spellChecker: false,
-                maxHeight: "500px",
-                renderingConfig: {
-                    codeSyntaxHighlighting: true,
+                content: {
+                    required: "Content không được để trống"
                 },
-            });
+                description: {
+                    required: "Description không được để trống"
+                },
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
 
-            // render image
-            const imageContainer = document.querySelector(".image-container")
-            const choseImageBtn = document.querySelector("#btn-chose-image")
-            const deleteImageBtn = document.querySelector("#btn-delete-image")
-            const thumbnailEl = document.querySelector("#thumbnail")
+        //Initialize Select2 Elements
+        const categoryEl = $("#category")
+        categoryEl.select2();
+
+        // Initialize editor
+        const easyMDE = new EasyMDE({
+            element: document.getElementById("content"),
+            spellChecker: false,
+            maxHeight: "500px",
+            renderingConfig: {
+                codeSyntaxHighlighting: true,
+            },
+        });
+
+        // render image
+        const imageContainer = document.querySelector(".image-container")
+        const choseImageBtn = document.querySelector("#btn-chose-image")
+        const deleteImageBtn = document.querySelector("#btn-delete-image")
+        const thumbnailEl = document.querySelector("#thumbnail")
 
 
-            const renderImage = (images) => {
-                let html = "";
-                images.forEach(image => {
-                    html += `
+        const renderImage = (images) => {
+            let html = "";
+            images.forEach(image => {
+                html += `
                     <div class="image-item" onclick="choseImage(this)" data-id="${image.id}">
                         <img src="/api/v1/images/${image.id}" alt="">
                     </div>
                 `
-                })
-                imageContainer.innerHTML = html;
+            })
+            imageContainer.innerHTML = html;
+        }
+        let imageList = [[${images}]]
+        console.log(imageList)
+
+        const renderPagination = (imageList) => {
+            console.log("Render Pagination : ", imageList)
+            $('.pagination-container').pagination({
+                dataSource: imageList,
+                pageSize: 8,
+                callback: function (data, pagination) {
+                    renderImage(data);
+                }
+            })
+        }
+        renderPagination(imageList);
+
+        // upload file
+        const upLoadBtn = document.querySelector("#avatar");
+        upLoadBtn.addEventListener("change", async (e) => {
+            const file = e.target.files[0];
+
+            const formData = new FormData();
+            formData.append("file", file)
+            try {
+                const res = await axios.post("http://localhost:8080/api/v1/admin/images", formData)
+                imageList.unshift(res.data)
+                renderPagination(imageList)
+                console.log(res.data)
+            } catch (e) {
+                console.log(e)
             }
-            let imageList = [[${images}]]
-            console.log(imageList)
+        })
 
-            const renderPagination = (imageList) => {
-                console.log("Render Pagination : ", imageList)
-                $('.pagination-container').pagination({
-                    dataSource: imageList,
-                    pageSize: 8,
-                    callback: function (data, pagination) {
-                        renderImage(data);
-                    }
-                })
+        // Xu li anh
+        const choseImage = el => {
+            const selectedEl = document.querySelector('.image-item.selected');
+            if (selectedEl) {
+                selectedEl.classList.remove('selected');
             }
-            renderPagination(imageList);
+            el.classList.add('selected');
 
-            // upload file
-            const upLoadBtn = document.querySelector("#avatar");
-            upLoadBtn.addEventListener("change", async (e) => {
-                const file = e.target.files[0];
+            choseImageBtn.disabled = false;
+            deleteImageBtn.disabled = false;
+        }
 
-                const formData = new FormData();
-                formData.append("file", file)
-                try{
-                    const res = await axios.post("http://localhost:8080/api/v1/admin/images", formData)
-                    imageList.unshift(res.data)
-                    renderPagination(imageList)
-                    console.log(res.data)
-                }catch (e){
-                    console.log(e)
-                }
-            })
+        // Xóa ảnh
+        deleteImageBtn.addEventListener('click', async () => {
+            const selectedEl = document.querySelector('.image-item.selected');
+            const imageId = selectedEl.dataset.id;
+            console.log(typeof imageId)
 
-            // Xu li anh
-            const choseImage = el => {
-                const selectedEl = document.querySelector('.image-item.selected');
-                if (selectedEl) {
-                    selectedEl.classList.remove('selected');
-                }
-                el.classList.add('selected');
+            try {
+                const res = await axios.delete(`/api/v1/admin/images/${imageId}`)
+                console.log("Before", imageList)
+                imageList = imageList.filter(image => image.id !== Number(imageId));
+                console.log("After", imageList)
+                renderPagination(imageList);
 
-                choseImageBtn.disabled = false;
-                deleteImageBtn.disabled = false;
+                choseImageBtn.disabled = true;
+                deleteImageBtn.disabled = true;
+            } catch (error) {
+                console.log(error)
             }
+        })
 
-            // Xóa ảnh
-            deleteImageBtn.addEventListener('click', async () => {
-                const selectedEl = document.querySelector('.image-item.selected');
-                const imageId = selectedEl.dataset.id;
-                console.log(typeof imageId)
+        // Chon anh
+        const modalEl = document.querySelector("#modal-xl")
+        const closeBtn = document.querySelector(".close")
 
-                try {
-                    const res = await axios.delete(`http://localhost:8080/api/v1/admin/images/${imageId}`)
-                    console.log("Before", imageList)
-                    imageList = imageList.filter(image => image.id !== Number(imageId));
-                    console.log("After", imageList)
-                    renderPagination(imageList);
-
-                    choseImageBtn.disabled = true;
-                    deleteImageBtn.disabled = true;
-                } catch (error) {
-                    console.log(error)
+        choseImageBtn.addEventListener("click", () => {
+            const selectedEl = document.querySelector('.image-item.selected');
+            const imageId = selectedEl.dataset.id;
+            thumbnailEl.src = `/api/v1/images/${imageId}`
+            closeBtn.click()
+        })
+        // xoa blog
+        const deleteBlogBtn = document.querySelector("#delete-blog")
+        const blog = [[${blog}]]
+        console.log(blog.id)
+        deleteBlogBtn.addEventListener("click", async () => {
+            const isDelete = confirm("ban chac chan muon xoa")
+            if (!isDelete) return
+            try {
+                const res = await axios.delete(`/api/v1/admin/blogs/${blog.id}`)
+                console.log(res)
+                if (res.status === 204) {
+                    toastr.success("xoa blog thanh cong")
+                    setTimeout(() => {
+                        window.location.href = `/admin/blogs`
+                    }, 1500)
                 }
-            })
+            } catch (e) {
+                console.log(e)
+                toastr.error(e.response.data.message)
+            }
+        })
 
-            // Chon anh
-            const modalEl = document.querySelector("#modal-xl")
-            const closeBtn = document.querySelector(".close")
+        // update blog
+        const saveBtn = document.querySelector("#save")
+        const titleEl = document.querySelector("#title")
+        const descriptionEl = document.querySelector("#description")
+        const statusEl = document.querySelector("#status")
 
-            choseImageBtn.addEventListener("click", () =>{
-                const selectedEl = document.querySelector('.image-item.selected');
-                const imageId = selectedEl.dataset.id;
-                thumbnailEl.src = `/api/v1/images/${imageId}`
-                closeBtn.click()
-            })
-            // xoa blog
-            const deleteBlogBtn =  document.querySelector("#delete-blog")
-            const blog = [[${blog}]]
-            console.log(blog.id)
-            deleteBlogBtn.addEventListener("click", async ()=>{
-                const isDelete = confirm("ban chac chan muon xoa")
-                if(!isDelete) return
-                try{
-                    const res = await axios.delete(`/api/v1/admin/blogs/${blog.id}`)
-                    console.log(res)
-                    if (res.status === 204) {
-                        toastr.success("xoa blog thanh cong")
-                        setTimeout(() => {
-                            window.location.href = `/admin/blogs`
-                        }, 1500)
-                    }
-                }catch (e){
-                    console.log(e)
-                    toastr.error(e.response.data.message)
+        saveBtn.addEventListener("click", async () => {
+            let blogUpdate = {
+                title: titleEl.value,
+                description: descriptionEl.value,
+                content: easyMDE.value(),
+                thumbnail: thumbnailEl.src,
+                status: statusEl.value === "true",
+                categoryIds: categoryEl.val().map(id => Number(id))
+            }
+            console.log(blogUpdate)
+
+            try {
+                const res = await axios.put(`/api/v1/admin/blogs/${blog.id}`, blogUpdate)
+                if (res.status === 200) {
+                    toastr.success("cap nhat blog thanh cong")
+                    setTimeout(() => {
+                        window.location.href = `/admin/blogs/${res.data.id}/detail`
+                    }, 1500)
                 }
-            })
+            } catch (e) {
+                toastr.error(e.response.data.message)
+            }
+        })
 
-            // update blog
-            const saveBtn = document.querySelector("#save")
-            const titleEl = document.querySelector("#title")
-            const descriptionEl = document.querySelector("#description")
-            const statusEl = document.querySelector("#status")
-
-            saveBtn.addEventListener("click", async ()=>{
-                let blogUpdate = {
-                    title: titleEl.value,
-                    description: descriptionEl.value,
-                    content: easyMDE.value(),
-                    thumbnail: thumbnailEl.src,
-                    status: statusEl.value === "true",
-                    categoryIds: categoryEl.val().map(id => Number(id))
-                }
-                console.log(blogUpdate)
-
-                try{
-                    const res = await axios.put(`/api/v1/admin/blogs/${blog.id}`, blogUpdate)
-                    if (res.status === 200) {
-                        toastr.success("cap nhat blog thanh cong")
-                        setTimeout(() => {
-                            window.location.href = `/admin/blogs/${res.data.id}/detail`
-                        }, 1500)
-                    }
-                } catch (e) {
-                    toastr.error(e.response.data.message)
-                }
-            })
-
-        </script>
-    </th:block>
+    </script>
+</th:block>
 
 </body>
 

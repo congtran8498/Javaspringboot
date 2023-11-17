@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      th:replace="~{/admin/layout/admin-layout :: admin-layout(~{:: title}, ~{:: #css}, ~{:: #content}, ~{:: #js})}">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>AdminLTE 3 | Dashboard</title>
+
+    <th:block id="css">
+        <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css"/>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.6.0/pagination.min.css"
+              integrity="sha512-K1k7jSn9RDKEcn/ugqVVvWYu0bcS3q1w6m/5pQSnrj0bCfIqF6Wk49lkmckSb4wglvTP9V17LtS0q0XxYccXbg=="
+              crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+        <link rel="stylesheet" href="/admin/plugins/select2/css/select2.min.css"/>
+        <link rel="stylesheet" href="/admin/dist/css/style.css">
+        <style>
+            .modal-dialog {
+                max-width: 1000px;
+            }
+
+            .image-container {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-gap: 10px;
+            }
+
+            .image-item {
+                height: 150px;
+                border: 2px solid #eee;
+            }
+
+            .image-item.selected {
+                border-color: #28a745 !important;
+                border-width: 4px !important;
+            }
+
+            .image-item img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            img {
+                max-width: 100%;
+                display: block;
+                margin: auto;
+            }
+        </style>
+    </th:block>
+
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+<th:block id="content">
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="#">Dashboard</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="/admin/blogs">Product</a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                Tạo sản phẩm
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row py-2">
+                    <div class="col-6">
+                        <button type="button" class="btn btn-default">
+                            <i class="fas fa-chevron-left"></i> Quay lại
+                        </button>
+                        <button id="save" type="button" class="btn btn-info px-4">
+                            Lưu
+                        </button>
+                        <button type="button" class="btn btn-primary px-4">
+                            Preview
+                        </button>
+                    </div>
+
+                    <div class="col-6 d-flex justify-content-end">
+                        <button type="button" class="btn btn-danger px-4">
+                            Xóa
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form id="form">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label>Tên sản phẩm</label>
+                                                <input th:value="${product.name}" type="text" name="name" class="form-control" id="name"/>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Mô tả</label>
+                                                <textarea th:text="${product.description}" id="description" name="description" class="form-control"
+                                                          rows="3"></textarea>
+                                            </div>
+
+                                            <form id="form-size">
+                                                <div class="row">
+                                                    <div class="form-group col-md-6">
+                                                        <label>Lựa chọn kích cỡ</label>
+                                                        <div class="select2-purple">
+                                                            <select class="select2 form-control" id="size">
+                                                                <!--                                                        <option>Lựa chọn size</option>-->
+                                                                <option th:each="size : ${sizeList}" th:value="${size.id}"
+                                                                        th:text="${size.name}" th:attr="data-name=${size.name}">
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label>Giá</label>
+                                                        <input id="price-size" type="text" name="priceSize" class="form-control mb-3"/>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <button id="addButton" class="btn btn-info btn-flat align-content-end">
+                                                            Thêm
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                            <div class="col-md-6">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <table id="table-size" class="table table-bordered table-hover">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Size</th>
+                                                                <th>Giá</th>
+                                                                <th></th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr th:each="sizePrice : ${product.getProductSizeList()}">
+                                                                <td th:text="${sizePrice.size.name}"></td>
+                                                                <td th:text="${#numbers.formatCurrency(sizePrice.price)}"></td>
+                                                                <td> <button class="btn btn-danger btn-sm" onclick="deleteRow(this)">Xóa</button></td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Danh mục</label>
+                                                <div class="select2-purple">
+                                                    <select class="select2 form-control" multiple="multiple" id="category" name="category">
+
+                                                        <option th:each="category : ${categories}"
+                                                                th:selected="${product.categoryList.contains(category)}"
+                                                                th:value="${category.id}"
+                                                                th:text="${category.name}">Java</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="thumbnail-preview-container mb-3">
+                                                    <img th:attr="data-id=${product.image.id}" th:src="${product.image.id != null ? '/api/v1/admin/image/' + product.image.id : 'https://placehold.co/600x400'}" alt="" id="thumbnail"/>
+                                                </div>
+                                                <!--                                            <button id="image-btn"-->
+                                                <!--                                                    th:attr="data-id=${#authentication.principal.getUserId()}"-->
+                                                <!--                                                    type="submit" class="btn btn-info btn-flat" data-toggle="modal"-->
+                                                <!--                                                    data-target="#modal-xl">-->
+                                                <!--                                                Chọn hình ảnh-->
+                                                <!--                                            </button>-->
+                                                <label for="image-btn" class="btn btn-warning">Chọn hình ảnh</label>
+                                                <input th:attr="data-id=${#authentication.principal.getUserId()}" type="file" id="image-btn" class="d-none"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="modal fade" id="modal-xl" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Danh sách ảnh</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <button class="btn btn-success" id="btn-chose-image" disabled>Chọn ảnh</button>
+
+                                <label for="avatar" class="btn btn-warning mb-0">Upload ảnh</label>
+                                <input type="file" id="avatar" class="d-none">
+                            </div>
+                            <div>
+                                <button class="btn btn-danger" id="btn-delete-image" disabled>Xóa ảnh</button>
+                            </div>
+                        </div>
+                        <!-- Hiển thị danh sách ảnh -->
+                        <div class="image-container mt-4 mb-4">
+                            <div class="image-item">
+                                <img src="https://images.unsplash.com/photo-1656918931725-2f9d9fce4acb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw4fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
+                                     alt="">
+                            </div>
+                        </div>
+
+                        <!-- Hiển thị phần phân trang -->
+                        <div class="pagination-container d-flex justify-content-center">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block id="js">
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js"></script>
+
+    <script src="/admin/plugins/select2/js/select2.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.6.0/pagination.min.js"
+            integrity="sha512-GzbaI5EsNzdEUq6/2XLYpr1y9CUZRIVsUeWTAFgULtQa5jZ3Nug8i0nZKM6jp9NffBCZhymPPQFcF0DK+JkRpw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script th:inline="javascript">
+        // validation
+        const form = document.querySelector("#form")
+
+
+        $('#form').validate({
+            rules: {
+                name: {
+                    required: true
+                },
+                description: {
+                    required: true
+                },
+                category: {
+                    required: true
+                },
+            },
+            messages: {
+                name: {
+                    required: "tên không được để trống"
+                },
+                description: {
+                    required: "Description không được để trống"
+                },
+                category: {
+                    required: "Category không được để trống"
+                },
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+        const formSize = document.querySelector("#form-size")
+
+        $('#form-size').validate({
+            rules: {
+                priceSize: {
+                    required: true
+                },
+
+            },
+            messages: {
+                priceSize: {
+                    required: "Giá không được để trống"
+                },
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        });
+
+
+        //Initialize Select2 Elements
+        const categoryEl = $("#category")
+        categoryEl.select2();
+
+        //update bai viet
+        const saveBtn = document.querySelector("#save")
+        const titleEl = document.querySelector("#name")
+        const descriptionEl = document.querySelector("#description")
+        const img = document.querySelector("#thumbnail")
+
+        const product = [[${product}]]
+        console.log(product)
+        const psList  = product.productSizeList
+        const sizeData = []
+        psList.forEach((e)=>{
+            const data = {
+                sizeId: e.size.id,
+                price: e.price
+            }
+            sizeData.push(data)
+        })
+        console.log(sizeData)
+
+
+        saveBtn.addEventListener("click", async () => {
+            // valid
+            if (!$('#form').valid()) return
+
+            let productCreate = {
+                name: titleEl.value,
+                description: descriptionEl.value,
+                categoryIds: categoryEl.val().map(id => Number(id)),
+                imageId: Number(img.getAttribute("data-id")),
+                productSizeDtoList: sizeData,
+            }
+            console.log(productCreate)
+
+            try {
+                const res = await axios.put(`/api/v1/admin/product/${product.id}`, productCreate)
+                if (res.status === 200) {
+                    toastr.success("cập nhật sản phẩm thành công")
+                    setTimeout(() => {
+                        window.location.href = `/admin-page/product`
+                    }, 1500)
+                }
+            } catch (e) {
+                toastr.error(e.response.data.message)
+            }
+
+        })
+
+        // tạo size - giá
+
+        document.getElementById("addButton").addEventListener("click", function (e) {
+            // // valid
+            // if (!$('#form-size').valid()) return
+            e.preventDefault()
+
+            const sizeSelect = document.getElementById("size"); // Lấy giá trị được chọn từ trường "Size"
+            const selectedOptionIndex = sizeSelect.selectedIndex;
+            const selectedOption = sizeSelect.options[selectedOptionIndex];
+            const size = selectedOption.getAttribute("data-name");
+            const sizeId = selectedOption.value
+
+            const price = document.getElementById("price-size").value; // Lấy giá trị từ trường "Giá"
+
+            if (size !== "" && price !== "") {
+                const table = document.getElementById("table-size"); // Lấy bảng dữ liệu
+                const newRow = table.insertRow(); // Thêm một hàng mới vào bảng
+
+                const cell1 = newRow.insertCell(0); // Thêm ô (cell) đầu tiên (cột "Size")
+                cell1.innerHTML = size; // Gán giá trị vào ô đầu tiên
+                cell1.setAttribute("data-id", sizeId);
+
+                const cell2 = newRow.insertCell(1); // Thêm ô (cell) thứ hai (cột "Giá")
+                cell2.innerHTML = formatPrice(price); // Gán giá trị vào ô thứ hai
+
+                const cell3 = newRow.insertCell(2); // Thêm ô (cell) thứ ba (cột "Xóa")
+                cell3.innerHTML = "<button class='btn btn-danger btn-sm' onclick='deleteRow(this)'>Xóa</button>"; // Gán nút xóa vào ô thứ ba
+
+                // Xóa giá trị trong trường "Size" và "Giá"
+                sizeSelect.value = "";
+                document.getElementById("price-size").value = "";
+                // Thêm dữ liệu vào mảng
+                const rowData = {
+                    sizeId: Number(sizeId),
+                    price: Number(price)
+                };
+                sizeData.push(rowData);
+
+            }
+            console.log(sizeData)
+        });
+        function formatPrice(price) {
+            const formattedPrice = new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(price);
+
+            return formattedPrice;
+        }
+
+
+
+        function deleteRow(button) {
+            const row = button.parentNode.parentNode; // Lấy hàng chứa nút xóa
+            const rowIndex = row.rowIndex; // Lấy chỉ số hàng
+            sizeData.splice(rowIndex - 1, 1); // Xóa dữ liệu tương ứng khỏi mảng
+            row.parentNode.removeChild(row); // Xóa hàng khỏi bảng
+            console.log(sizeData)
+        }
+
+        // render image
+        const imageContainer = document.querySelector(".image-container")
+        const choseImageBtn = document.querySelector("#btn-chose-image")
+        const deleteImageBtn = document.querySelector("#btn-delete-image")
+        const thumbnailEl = document.querySelector("#thumbnail")
+        const imageBtn = document.querySelector("#image-btn")
+        let idUser = imageBtn.getAttribute("data-id")
+
+        imageBtn.addEventListener("change", async (e) => {
+            const file = e.target.files[0];
+
+            const formData = new FormData();
+            formData.append("file", file);
+            console.log(formData)
+
+            try {
+                const res = await axios.post(`/api/v1/user/${idUser}/images`, formData)
+                console.log(res.data)
+                thumbnailEl.src = `/api/v1/admin/image/${res.data.id}`
+                thumbnailEl.setAttribute("data-id", res.data.id)
+            } catch (e) {
+                console.log(e)
+            }
+        })
+
+
+        const renderImage = (images) => {
+
+            let html = "";
+            images.forEach(image => {
+                html += `
+                    <div class="image-item" onclick="choseImage(this)" data-id="${image.id}">
+                        <img src="/api/v1/admin/image/${image.id}" alt="">
+                    </div>
+                `
+            })
+            imageContainer.innerHTML = html;
+        }
+
+
+        const renderPagination = (imageList) => {
+            $('.pagination-container').pagination({
+                dataSource: imageList,
+                pageSize: 8,
+                callback: function (data, pagination) {
+                    renderImage(data);
+                }
+            })
+        }
+
+
+        // upload file
+        const upLoadBtn = document.querySelector("#avatar");
+        upLoadBtn.addEventListener("change", async (e) => {
+            const file = e.target.files[0];
+
+            const formData = new FormData();
+            formData.append("file", file)
+            try {
+                const res = await axios.post(`/api/v1/user/${idUser}/images`, formData)
+                imageList.unshift(res.data)
+                renderPagination(imageList)
+                console.log(res.data)
+            } catch (e) {
+                console.log(e)
+            }
+        })
+        // Xu li anh
+        const choseImage = el => {
+            const selectedEl = document.querySelector('.image-item.selected');
+            if (selectedEl) {
+                selectedEl.classList.remove('selected');
+            }
+            el.classList.add('selected');
+
+            choseImageBtn.disabled = false;
+            deleteImageBtn.disabled = false;
+        }
+        // Xóa ảnh
+        deleteImageBtn.addEventListener('click', async () => {
+            const selectedEl = document.querySelector('.image-item.selected');
+            const imageId = selectedEl.dataset.id;
+            console.log(typeof imageId)
+
+            try {
+                const res = await axios.delete(`/api/v1/admin/image/${imageId}`)
+                console.log("Before", imageList)
+                imageList = imageList.filter(image => image.id !== Number(imageId));
+                console.log("After", imageList)
+                renderPagination(imageList);
+
+                choseImageBtn.disabled = true;
+                deleteImageBtn.disabled = true;
+            } catch (error) {
+                console.log(error)
+            }
+        })
+
+
+        // Chon anh
+        const modalEl = document.querySelector("#modal-xl")
+        const closeBtn = document.querySelector(".close")
+
+        choseImageBtn.addEventListener("click", () => {
+            const selectedEl = document.querySelector('.image-item.selected');
+            const imageId = selectedEl.dataset.id;
+            thumbnailEl.src = `/api/v1/admin/image/${imageId}`
+            thumbnailEl.setAttribute("data-id", imageId)
+            closeBtn.click()
+        })
+
+
+    </script>
+
+</th:block>
+
+
+</body>
+
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 | Forgot Password</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="/web/css/style.css">
+</head>
+<body class="bg-gradient-primary">
+<div class="container" style="width: 1000px">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <div class="text-center mt-5">
+                <h4 class="text-gray-900 mb-4">🍕🍕ĐĂNG KÍ!</h4>
+            </div>
+            <!-- Nested Row within Card Body -->
+            <form id="form-register">
+                <div class="row mb-4">
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3 ms-5" >
+                            <label class="form-label mb-0 fw-semibold fs14">Tên <span class="text-danger">*</span></label>
+                            <input name="name" id="name" type="text" class="form-control">
+                        </div>
+                        <div class="form-group mb-3 ms-5 fw-semibold fs14" >
+                            <label class="form-label mb-0">Địa chỉ Email <span class="text-danger">*</span></label>
+                            <input name="email" id="email" type="email" class="form-control">
+                        </div>
+                        <div class="form-group mb-3 ms-5 fw-semibold fs14" >
+                            <label class="form-label mb-0">Số điện thoại <span class="text-danger">*</span></label>
+                            <input name="phone" id="phone" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group mb-3 me-5" >
+                            <label class="form-label mb-0 fw-semibold fs14">Mật khẩu <span class="text-danger">*</span></label>
+                            <input name="password" id="password" type="password" class="form-control">
+                        </div>
+                        <div class="form-group mb-3 me-5 fw-semibold fs14" >
+                            <label class="form-label mb-0">Xác nhận mật khẩu <span class="text-danger">*</span></label>
+                            <input name="confirmPassword" id="confirmPassword" type="password" class="form-control">
+                        </div>
+                        <div class="form-group mb-3 me-5 fw-semibold fs14" >
+                            <label class="form-label mb-0">Địa chỉ <span class="text-danger">*</span></label>
+                            <input name="address" id="address" type="text" class="form-control">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="d-flex justify-content-center mb-4">
+                    <button type="submit" class="btn btn-primary" style="width: 50%">
+                        ĐĂNG KÍ
+                    </button>
+                </div>
+                <div class="mb-5" id="error-message" style="display: none; color: red; text-align: center"></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
+        integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"
+        integrity="sha512-TiQST7x/0aMjgVTcep29gi+q5Lk5gVTUPE9XgN0g96rwtjEjLpod4mlBRKWHeBcvGBAEvJBmfDqh2hfMMmg+5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+
+    //validate
+    $('#form-register').validate({
+        rules: {
+            name: {
+                required: true,
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            phone: {
+                required: true,
+                phoneVN:true
+            },
+            password: {
+                required: true,
+                minlength: 5
+            },
+            confirmPassword: {
+                required: true,
+                equalTo: '#password'
+            },
+            address: {
+                required: true
+            },
+        },
+        messages: {
+            name: {
+                required: "tên không được để trống",
+            },
+            email: {
+                required: "email không được để trống",
+                email: "email không hợp lệ"
+            },
+            phone: {
+                required: "sđt không được để trống",
+                phoneVN: "sđt không hợp lệ"
+            },
+            password: {
+                required: "mật khẩu không được để trống",
+                minlength: "mật khẩu không được ít hơn 5 kí tự"
+            },
+            confirmPassword: {
+                required: "xác nhận mật khẩu không được để trống",
+                equalTo: "mật khẩu và xác nhận mật khẩu không khớp"
+            },
+            address: {
+                required: "địa chỉ không được để trống",
+            },
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+    $.validator.addMethod(
+        "phoneVN",
+        function(value, element) {
+            return this.optional(element) || /^(0[2-9]|1[2-9]|84[2-9])(\d{8}|\d{9})$/.test(value);
+        },
+        "Vui lòng nhập số điện thoại hợp lệ"
+    );
+
+    //register
+    const formRegister = document.querySelector("#form-register")
+    const nameEl = document.querySelector("#name")
+    const emailEl = document.querySelector("#email")
+    const phoneEl = document.querySelector("#phone")
+    const passwordEl = document.querySelector("#password")
+    const addressEl = document.querySelector("#address")
+
+    formRegister.addEventListener("submit", async (e) =>{
+        e.preventDefault()
+
+        const data = {
+            name: nameEl.value,
+            email: emailEl.value,
+            phone: phoneEl.value,
+            password: passwordEl.value,
+            address: addressEl.value
+        }
+        console.log(data)
+        try{
+            const res = await axios.post("/api/v1/auth/register", data)
+            console.log(res)
+            if(res.status === 201){
+                alert(res.data)
+                setTimeout(()=>{
+                    window.location.href = "/"
+                },1000)
+            }else {
+                alert("đăng kí thất bại")
+            }
+        }catch (e) {
+            showErrorMessage(e.response.data.message)
+        }
+    })
+    function showErrorMessage(text) {
+        let errorMessage = document.getElementById("error-message");
+        errorMessage.innerText = text
+        errorMessage.style.display = "block";
+    }
+
+
+</script>
+</body>
+
+</html>

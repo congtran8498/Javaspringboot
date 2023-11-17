@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/admin/layout/admin-layout :: admin-layout(~{:: title}, ~{}, ~{:: #content}, ~{:: #js})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<th:block id="content">
+    <div class="content-wrapper">
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="#">Dashboard</a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                Danh sách size
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row py-2">
+                    <div class="col-12">
+                        <button id="create-btn" type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#modal-default1">
+                            <i class="fas fa-plus"></i> Tạo danh mục
+                        </button>
+                        <button type="button" class="btn btn-info">
+                            <i class="fas fa-redo"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Size</th>
+                                        <th>Topping</th>
+                                        <th>Giá</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="sizeTopping : ${sizeToppingList}">
+                                        <td th:text="${sizeTopping.id}">
+                                        </td>
+                                        <td th:text="${sizeTopping.size.name}">pizza
+                                        </td>
+                                        <td th:text="${sizeTopping.topping.name}">pizza
+                                        </td>
+                                        <td th:text="${#numbers.formatCurrency(sizeTopping.price)}">pizza
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-warning" data-toggle="modal"
+                                                    data-target="#modal-default" th:attr="onclick=|openModal('${sizeTopping.size.name}','${sizeTopping.topping.name}','${sizeTopping.price}','${sizeTopping.id}')|">
+                                                Edit
+                                            </button>
+                                            <button class="btn btn-danger" th:attr="onclick=|deleteSize('${sizeTopping.id}')|">
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="modal fade" id="modal-default" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Cập nhật Size Topping</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Lựa chọn topping</label>
+                        <div class="select2-purple">
+                            <select class="select2 form-control" id="topping-update">
+                                <!--                                                        <option>Lựa chọn topping</option>-->
+                                <option th:each="topping : ${toppingList}" th:value="${topping.id}"
+                                        th:text="${topping.name}" th:attr="data-name=${topping.name}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Kích cỡ</label>
+                        <div class="select2-purple">
+                            <select class="select2 form-control" id="size-topping-update">
+                                <option th:each="size : ${sizeList}" th:value="${size.id}"
+                                        th:text="${size.name}" th:attr="data-name=${size.name}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Giá</label>
+                        <input id="price-topping-update" type="text" name="price-topping" class="form-control mb-3"/>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button id="update" type="button" class="btn btn-primary">Xác nhận</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="modal fade" id="modal-default1" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tạo Size Topping</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Lựa chọn topping</label>
+                        <div class="select2-purple">
+                            <select class="select2 form-control" id="topping">
+                                <!--                                                        <option>Lựa chọn topping</option>-->
+                                <option th:each="topping : ${toppingList}" th:value="${topping.id}"
+                                        th:text="${topping.name}" th:attr="data-name=${topping.name}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Kích cỡ</label>
+                        <div class="select2-purple">
+                            <select class="select2 form-control" id="size-topping">
+                                <option th:each="size : ${sizeList}" th:value="${size.id}"
+                                        th:text="${size.name}" th:attr="data-name=${size.name}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Giá</label>
+                        <input id="price-topping" type="text" name="price-topping" class="form-control mb-3"/>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button id="create" type="button" class="btn btn-primary">Xác nhận</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</th:block>
+<th:block id="js">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script th:inline="javascript">
+        // Cap nhat
+        const selectTopping = document.querySelector("#topping-update")
+        const selectSize= document.querySelector("#size-topping-update")
+        const priceUpdate= document.querySelector("#price-topping-update")
+        const updateBtn = document.querySelector("#update")
+        let idSize
+
+        function openModal(size,topping,price,id) {
+            oldValue(selectTopping,topping)
+            oldValue(selectSize,size)
+            priceUpdate.value = price
+            idSize = id
+            console.log(idSize)
+        }
+        function oldValue(selectEl,name){
+            let options = selectEl.options
+            for (let i = 0; i < options.length; i++) {
+                // Lấy giá trị của thuộc tính data-name
+                let dataName = options[i].getAttribute("data-name");
+
+                if (dataName === name) {
+                    // Thiết lập thuộc tính selected cho option tương ứng
+                    options[i].selected = true;
+                    break; // Thoát khỏi vòng lặp sau khi tìm thấy option
+                }
+            }
+        }
+
+        updateBtn.addEventListener("click", async () => {
+            const selectedOptionIndex = selectTopping.selectedIndex;
+            const selectedOption = selectTopping.options[selectedOptionIndex];
+            const topping = selectedOption.getAttribute("data-name");
+            const toppingId = selectedOption.value
+
+            const price = document.getElementById("price-topping-update").value; // Lấy giá trị từ trường "Giá"
+
+            const selectedOptionIndex2= selectSize.selectedIndex;
+            const selectedOption2 = selectSize.options[selectedOptionIndex2];
+            const sizeTopping = selectedOption2.getAttribute("data-name");
+            const sizeToppingId = selectedOption2.value
+
+            const request = {
+                toppingId: Number(toppingId),
+                sizeId: Number(sizeToppingId),
+                price: Number(price)
+            }
+            console.log(request)
+            try {
+                const res = await axios.put(`/api/v1/admin/size-topping/${idSize}`, request)
+                console.log(res)
+                if (res.status === 200) {
+                    toastr.success("Thay doi thanh cong")
+                    setTimeout(() => {
+                        window.location.href = "/admin-page/size-topping"
+                    }, 1500)
+                }
+            } catch (e) {
+                toastr.error(e.response.data.message)
+            }
+        })
+
+        //Tao chu de
+        const saveCreateBtn = document.querySelector("#create")
+        const priceInput = document.getElementById("price-topping")
+        const createBtn = document.querySelector("#create-btn")
+        createBtn.addEventListener("click", () => {
+            priceInput.value = ""
+        })
+
+        saveCreateBtn.addEventListener("click", async () => {
+            const toppingSelect = document.getElementById("topping"); // Lấy giá trị được chọn từ trường "Size"
+            const selectedOptionIndex = toppingSelect.selectedIndex;
+            const selectedOption = toppingSelect.options[selectedOptionIndex];
+            const topping = selectedOption.getAttribute("data-name");
+            const toppingId = selectedOption.value
+
+            const price = document.getElementById("price-topping").value; // Lấy giá trị từ trường "Giá"
+
+            const sizeToppingSelect = document.getElementById("size-topping")
+            const selectedOptionIndex2= sizeToppingSelect.selectedIndex;
+            const selectedOption2 = sizeToppingSelect.options[selectedOptionIndex2];
+            const sizeTopping = selectedOption2.getAttribute("data-name");
+            const sizeToppingId = selectedOption2.value
+
+            const request = {
+                toppingId: Number(toppingId),
+                sizeId: Number(sizeToppingId),
+                price: Number(price)
+            }
+            console.log(request)
+
+            try {
+                const res = await axios.post(`/api/v1/admin/size-topping`, request)
+                console.log(res)
+                if (res.status === 201) {
+                    toastr.success("Thay doi thanh cong")
+                    setTimeout(() => {
+                        window.location.href = "/admin-page/size-topping"
+                    }, 1500)
+                }
+            } catch (e) {
+                toastr.error(e.response.data.message)
+            }
+        })
+
+        // Xoa chu de
+        async function deleteSize(id) {
+            const isDelete = confirm("ban chac chan muon xoa?")
+            if (!isDelete) return
+
+            try {
+                const res = await axios.delete(`/api/v1/admin/size-topping/${id}`)
+                console.log(res)
+                if (res.status === 204) {
+                    toastr.success("Xoa thanh cong")
+                    setTimeout(() => {
+                        window.location.href = "/admin-page/size-topping"
+                    }, 1500)
+                }
+            } catch (e) {
+                toastr.error(e.response.data.message)
+            }
+
+        }
+    </script>
+</th:block>
+</body>
+</html>

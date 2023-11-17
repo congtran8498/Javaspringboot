@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/admin/layout/admin-layout :: admin-layout(~{:: title}, ~{}, ~{:: #content}, ~{:: #js})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<th:block id="content">
+    <div class="content-wrapper">
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="#">Dashboard</a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                Danh sách size
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row py-2">
+                    <div class="col-12">
+                        <button id="create-btn" type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#modal-default1">
+                            <i class="fas fa-plus"></i> Tạo danh mục
+                        </button>
+                        <button type="button" class="btn btn-info">
+                            <i class="fas fa-redo"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Tên chủ đề</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="size : ${sizeList}">
+                                        <td th:text="${size.id}">
+                                            1
+                                        </td>
+                                        <td th:text="${size.name}">pizza
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-warning" data-toggle="modal"
+                                                    data-target="#modal-default" th:attr="onclick=|openModal('${size.name}','${size.id}')|">
+                                                Edit
+                                            </button>
+                                            <button class="btn btn-danger" th:attr="onclick=|deleteSize('${size.id}')|">
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="modal fade" id="modal-default" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Cập nhật Size</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body input-group">
+                    <span id="old-name" class="input-group-text"></span>
+                    <input id="new-name" type="text" class="form-control">
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button id="update" type="button" class="btn btn-primary">Xác nhận</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="modal fade" id="modal-default1" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tạo size</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input id="create-input" type="text" class="form-control">
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button id="create" type="button" class="btn btn-primary">Xác nhận</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</th:block>
+<th:block id="js">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script th:inline="javascript">
+        // Cap nhat
+        const oldName = document.querySelector("#old-name")
+        const updateBtn = document.querySelector("#update")
+        const inputName = document.querySelector("#new-name")
+        let idSize
+
+        function openModal(name, id) {
+            oldName.textContent = name
+            inputName.value = ""
+            idSize = id
+            console.log(idSize)
+        }
+
+        updateBtn.addEventListener("click", async () => {
+            let newName = inputName.value
+            const request = {
+                name: newName
+            }
+            try {
+                const res = await axios.put(`/api/v1/admin/size/${idSize}`, request)
+                console.log(res)
+                if (res.status === 200) {
+                    toastr.success("Thay doi thanh cong")
+                    setTimeout(() => {
+                        window.location.href = "/admin-page/size"
+                    }, 1500)
+                }
+            } catch (e) {
+                toastr.error(e.response.data.message)
+            }
+        })
+
+        //Tao chu de
+        const saveCreateBtn = document.querySelector("#create")
+        const createInput = document.querySelector("#create-input")
+        const createBtn = document.querySelector("#create-btn")
+        createBtn.addEventListener("click", () => {
+            createInput.value = ""
+        })
+
+        saveCreateBtn.addEventListener("click", async () => {
+            let createName = createInput.value
+            const request = {
+                name: createName
+            }
+            try {
+                const res = await axios.post(`/api/v1/admin/size`, request)
+                console.log(res)
+                if (res.status === 201) {
+                    toastr.success("Thay doi thanh cong")
+                    setTimeout(() => {
+                        window.location.href = "/admin-page/size"
+                    }, 1500)
+                }
+            } catch (e) {
+                toastr.error(e.response.data.message)
+            }
+        })
+
+        // Xoa chu de
+        async function deleteSize(id) {
+            const isDelete = confirm("ban chac chan muon xoa?")
+            if (!isDelete) return
+
+            try {
+                const res = await axios.delete(`/api/v1/admin/size/${id}`)
+                console.log(res)
+                if (res.status === 204) {
+                    toastr.success("Xoa thanh cong")
+                    setTimeout(() => {
+                        window.location.href = "/admin-page/size"
+                    }, 1500)
+                }
+            } catch (e) {
+                toastr.error(e.response.data.message)
+            }
+
+        }
+    </script>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/admin/layout/admin-layout :: admin-layout(~{:: title}, ~{}, ~{:: #content}, ~{:: #js})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<th:block id="content">
+    <div class="content-wrapper">
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="#">Dashboard</a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                Danh sách category
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row py-2">
+                    <div class="col-12">
+                        <button id="create-btn" type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#modal-default1">
+                            <i class="fas fa-plus"></i> Tạo danh mục
+                        </button>
+                        <button type="button" class="btn btn-info">
+                            <i class="fas fa-redo"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Voucher code</th>
+                                        <th>Giá trị(%)</th>
+                                        <th>Ngày hết hạn</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="voucher : ${voucherList}">
+                                        <td th:text="${voucher.id}">
+                                            1
+                                        </td>
+                                        <td th:text="${voucher.code}">piZZA
+                                        </td>
+                                        <td th:text="${voucher.discount}">50
+                                        </td>
+                                        <td th:text="${#temporals.format(voucher.expired_at, 'dd/MM/yyyy')}">
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-warning" data-toggle="modal"
+                                                    data-target="#modal-default" th:attr="onclick=|openModal('${voucher.discount}','${#temporals.format(voucher.expired_at, 'dd/MM/yyyy')}','${voucher.id}')|">
+                                                Edit
+                                            </button>
+                                            <button class="btn btn-danger" th:attr="onclick=|deleteVoucher('${voucher.id}')|">
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="modal fade" id="modal-default" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Cập nhật voucher</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label>Giá trị(%):</label>
+                    <div class=" input-group">
+<!--                        <span id="old-discountValue" class="input-group-text"></span>-->
+                        <input id="new-discountValue" type="text" class="form-control">
+                    </div>
+                    <label>Ngày hết hạn:</label>
+                    <div class=" input-group">
+<!--                        <span id="old-expired" class="input-group-text"></span>-->
+                        <input id="new-expired" type="text" class="form-control">
+                    </div>
+
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button id="update" type="button" class="btn btn-primary">Xác nhận</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="modal fade" id="modal-default1" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Tạo voucher</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label>Ngày hết hạn</label>
+                    <input id="expired"  type="text" class="form-control">
+                    <label>Giá trị(%)</label>
+                    <input id="discountValue" type="text" class="form-control">
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button id="create" type="button" class="btn btn-primary">Xác nhận</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</th:block>
+<th:block id="js">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script th:inline="javascript">
+        // Cap nhat
+        const oldDiscountValue = document.querySelector("#old-discountValue")
+        const oldExpired = document.querySelector("#old-expired")
+        const updateBtn = document.querySelector("#update")
+        const newDiscountValue = document.querySelector("#new-discountValue")
+        const newExpired = document.querySelector("#new-expired")
+        let idVoucher
+
+        function openModal(discount,expired,id) {
+            // oldDiscountValue.textContent = discount
+            // oldExpired.textContent = expired
+            newDiscountValue.value = discount
+            newExpired.value = expired
+            idVoucher = id
+            console.log(idVoucher)
+        }
+
+        updateBtn.addEventListener("click", async () => {
+
+            const request = {
+                discount: newDiscountValue.value,
+                expired_at: newExpired.value
+            }
+            try {
+                const res = await axios.put(`/api/v1/admin/voucher/${idVoucher}`, request)
+                console.log(res)
+                if (res.status === 200) {
+                    toastr.success("Thay doi thanh cong")
+                    setTimeout(() => {
+                        window.location.href = "/admin-page/voucher"
+                    }, 1500)
+                }
+            } catch (e) {
+                toastr.error(e.response.data.message)
+            }
+        })
+
+        //Tao chu de
+        const saveCreateBtn = document.querySelector("#create")
+        const expired = document.querySelector("#expired")
+        const discountValue = document.querySelector("#discountValue")
+        const createBtn = document.querySelector("#create-btn")
+        createBtn.addEventListener("click", () => {
+            expired.value = ""
+            discountValue.value = ""
+        })
+
+        saveCreateBtn.addEventListener("click", async () => {
+
+            const request = {
+                discount: discountValue.value,
+                expired_at: expired.value
+            }
+            console.log(request)
+            try {
+                const res = await axios.post(`/api/v1/admin/voucher`, request)
+                console.log(res)
+                if (res.status === 201) {
+                    toastr.success("Thay doi thanh cong")
+                    setTimeout(() => {
+                        window.location.href = "/admin-page/voucher"
+                    }, 1500)
+                }
+            } catch (e) {
+                toastr.error(e.response.data.message)
+            }
+        })
+
+        // Xoa chu de
+        async function deleteVoucher(id) {
+            const isDelete = confirm("ban chac chan muon xoa?")
+            if (!isDelete) return
+
+            try {
+                const res = await axios.delete(`/api/v1/admin/voucher/${id}`)
+                console.log(res)
+                if (res.status === 204) {
+                    toastr.success("Xoa thanh cong")
+                    setTimeout(() => {
+                        window.location.href = "/admin-page/voucher"
+                    }, 1500)
+                }
+            } catch (e) {
+                toastr.error(e.response.data.message)
+            }
+
+        }
+    </script>
+</th:block>
+</body>
+</html>
