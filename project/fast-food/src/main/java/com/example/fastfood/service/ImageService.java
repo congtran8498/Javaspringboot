@@ -27,14 +27,30 @@ public class ImageService {
                 .orElseThrow(() -> new NotFoundException("user not found"));
         Image fileServer = new Image();
         fileServer.setType(file.getContentType());
+        fileServer.setImageFor("product");
         try {
             fileServer.setData(file.getBytes());
         } catch (IOException e) {
-            throw new BadRequestException("image khong hop le");
+            throw new BadRequestException("image không hợp lệ");
         }
         fileServer.setUser(user);
         imageRepository.save(fileServer);
 
+        return fileServer;
+    }
+    public Image uploadFileAvatar(Long userId, MultipartFile file){
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("user not found"));
+        Image fileServer = new Image();
+        fileServer.setType(file.getContentType());
+        fileServer.setImageFor("avatar");
+        try {
+            fileServer.setData(file.getBytes());
+        } catch (IOException e) {
+            throw new BadRequestException("image không hợp lệ");
+        }
+        fileServer.setUser(user);
+        imageRepository.save(fileServer);
         return fileServer;
     }
 

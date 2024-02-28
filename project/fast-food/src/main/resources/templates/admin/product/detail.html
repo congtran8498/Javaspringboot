@@ -68,10 +68,10 @@
                                 <a href="#">Dashboard</a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="/admin/blogs">Product</a>
+                                <a href="/admin-page/product">Sản phẩm</a>
                             </li>
                             <li class="breadcrumb-item active">
-                                Tạo sản phẩm
+                                Chi tiết sản phẩm
                             </li>
                         </ol>
                     </div>
@@ -96,7 +96,7 @@
                     </div>
 
                     <div class="col-6 d-flex justify-content-end">
-                        <button type="button" class="btn btn-danger px-4">
+                        <button id="delete-btn" type="button" class="btn btn-danger px-4">
                             Xóa
                         </button>
                     </div>
@@ -120,30 +120,30 @@
                                                           rows="3"></textarea>
                                             </div>
 
-                                            <form id="form-size">
-                                                <div class="row">
-                                                    <div class="form-group col-md-6">
-                                                        <label>Lựa chọn kích cỡ</label>
-                                                        <div class="select2-purple">
-                                                            <select class="select2 form-control" id="size">
-                                                                <!--                                                        <option>Lựa chọn size</option>-->
-                                                                <option th:each="size : ${sizeList}" th:value="${size.id}"
-                                                                        th:text="${size.name}" th:attr="data-name=${size.name}">
-                                                                </option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label>Giá</label>
-                                                        <input id="price-size" type="text" name="priceSize" class="form-control mb-3"/>
-                                                    </div>
-                                                    <div class="form-group col-md-6">
-                                                        <button id="addButton" class="btn btn-info btn-flat align-content-end">
-                                                            Thêm
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </form>
+<!--                                            <form id="form-size">-->
+<!--                                                <div class="row">-->
+<!--                                                    <div class="form-group col-md-6">-->
+<!--                                                        <label>Lựa chọn kích cỡ</label>-->
+<!--                                                        <div class="select2-purple">-->
+<!--                                                            <select class="select2 form-control" id="size">-->
+<!--                                                                &lt;!&ndash;                                                        <option>Lựa chọn size</option>&ndash;&gt;-->
+<!--                                                                <option th:each="size : ${sizeList}" th:value="${size.id}"-->
+<!--                                                                        th:text="${size.name}" th:attr="data-name=${size.name}">-->
+<!--                                                                </option>-->
+<!--                                                            </select>-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="form-group col-md-6">-->
+<!--                                                        <label>Giá</label>-->
+<!--                                                        <input id="price-size" type="text" name="priceSize" class="form-control mb-3"/>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="form-group col-md-6">-->
+<!--                                                        <button id="addButton" class="btn btn-info btn-flat align-content-end">-->
+<!--                                                            Thêm-->
+<!--                                                        </button>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </form>-->
 
                                             <div class="col-md-6">
                                                 <div class="card">
@@ -153,14 +153,14 @@
                                                             <tr>
                                                                 <th>Size</th>
                                                                 <th>Giá</th>
-                                                                <th></th>
+<!--                                                                <th></th>-->
                                                             </tr>
                                                             </thead>
                                                             <tbody>
                                                             <tr th:each="sizePrice : ${product.getProductSizeList()}">
                                                                 <td th:text="${sizePrice.size.name}"></td>
                                                                 <td th:text="${#numbers.formatCurrency(sizePrice.price)}"></td>
-                                                                <td> <button class="btn btn-danger btn-sm" onclick="deleteRow(this)">Xóa</button></td>
+<!--                                                                <td> <button class="btn btn-danger btn-sm" onclick="deleteRow(this)">Xóa</button></td>-->
                                                             </tr>
                                                             </tbody>
                                                         </table>
@@ -182,6 +182,13 @@
                                                                 th:text="${category.name}">Java</option>
                                                     </select>
                                                 </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Trạng thái</label>
+                                                <select class="status form-control">
+                                                    <option th:each="status : ${statusList}" th:value="${status}"
+                                                            th:text="${status}" th:selected="${status == product.status.value}"></option>
+                                                </select>
                                             </div>
                                             <div class="form-group">
                                                 <div class="thumbnail-preview-container mb-3">
@@ -259,6 +266,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script th:inline="javascript">
+
         // validation
         const form = document.querySelector("#form")
 
@@ -335,6 +343,7 @@
         const titleEl = document.querySelector("#name")
         const descriptionEl = document.querySelector("#description")
         const img = document.querySelector("#thumbnail")
+        const status = document.querySelector(".status")
 
         const product = [[${product}]]
         console.log(product)
@@ -360,6 +369,7 @@
                 categoryIds: categoryEl.val().map(id => Number(id)),
                 imageId: Number(img.getAttribute("data-id")),
                 productSizeDtoList: sizeData,
+                status: status.value
             }
             console.log(productCreate)
 
@@ -379,46 +389,47 @@
 
         // tạo size - giá
 
-        document.getElementById("addButton").addEventListener("click", function (e) {
-            // // valid
-            // if (!$('#form-size').valid()) return
-            e.preventDefault()
+        // document.getElementById("addButton").addEventListener("click", function (e) {
+        //     // // valid
+        //     // if (!$('#form-size').valid()) return
+        //     e.preventDefault()
+        //
+        //     const sizeSelect = document.getElementById("size"); // Lấy giá trị được chọn từ trường "Size"
+        //     const selectedOptionIndex = sizeSelect.selectedIndex;
+        //     const selectedOption = sizeSelect.options[selectedOptionIndex];
+        //     const size = selectedOption.getAttribute("data-name");
+        //     const sizeId = selectedOption.value
+        //
+        //     const price = document.getElementById("price-size").value; // Lấy giá trị từ trường "Giá"
+        //
+        //     if (size !== "" && price !== "") {
+        //         const table = document.getElementById("table-size"); // Lấy bảng dữ liệu
+        //         const newRow = table.insertRow(); // Thêm một hàng mới vào bảng
+        //
+        //         const cell1 = newRow.insertCell(0); // Thêm ô (cell) đầu tiên (cột "Size")
+        //         cell1.innerHTML = size; // Gán giá trị vào ô đầu tiên
+        //         cell1.setAttribute("data-id", sizeId);
+        //
+        //         const cell2 = newRow.insertCell(1); // Thêm ô (cell) thứ hai (cột "Giá")
+        //         cell2.innerHTML = formatPrice(price); // Gán giá trị vào ô thứ hai
+        //
+        //         const cell3 = newRow.insertCell(2); // Thêm ô (cell) thứ ba (cột "Xóa")
+        //         cell3.innerHTML = "<button class='btn btn-danger btn-sm' onclick='deleteRow(this)'>Xóa</button>"; // Gán nút xóa vào ô thứ ba
+        //
+        //         // Xóa giá trị trong trường "Size" và "Giá"
+        //         sizeSelect.value = "";
+        //         document.getElementById("price-size").value = "";
+        //         // Thêm dữ liệu vào mảng
+        //         const rowData = {
+        //             sizeId: Number(sizeId),
+        //             price: Number(price)
+        //         };
+        //         sizeData.push(rowData);
+        //
+        //     }
+        //     console.log(sizeData)
+        // });
 
-            const sizeSelect = document.getElementById("size"); // Lấy giá trị được chọn từ trường "Size"
-            const selectedOptionIndex = sizeSelect.selectedIndex;
-            const selectedOption = sizeSelect.options[selectedOptionIndex];
-            const size = selectedOption.getAttribute("data-name");
-            const sizeId = selectedOption.value
-
-            const price = document.getElementById("price-size").value; // Lấy giá trị từ trường "Giá"
-
-            if (size !== "" && price !== "") {
-                const table = document.getElementById("table-size"); // Lấy bảng dữ liệu
-                const newRow = table.insertRow(); // Thêm một hàng mới vào bảng
-
-                const cell1 = newRow.insertCell(0); // Thêm ô (cell) đầu tiên (cột "Size")
-                cell1.innerHTML = size; // Gán giá trị vào ô đầu tiên
-                cell1.setAttribute("data-id", sizeId);
-
-                const cell2 = newRow.insertCell(1); // Thêm ô (cell) thứ hai (cột "Giá")
-                cell2.innerHTML = formatPrice(price); // Gán giá trị vào ô thứ hai
-
-                const cell3 = newRow.insertCell(2); // Thêm ô (cell) thứ ba (cột "Xóa")
-                cell3.innerHTML = "<button class='btn btn-danger btn-sm' onclick='deleteRow(this)'>Xóa</button>"; // Gán nút xóa vào ô thứ ba
-
-                // Xóa giá trị trong trường "Size" và "Giá"
-                sizeSelect.value = "";
-                document.getElementById("price-size").value = "";
-                // Thêm dữ liệu vào mảng
-                const rowData = {
-                    sizeId: Number(sizeId),
-                    price: Number(price)
-                };
-                sizeData.push(rowData);
-
-            }
-            console.log(sizeData)
-        });
         function formatPrice(price) {
             const formattedPrice = new Intl.NumberFormat('vi-VN', {
                 style: 'currency',
@@ -547,6 +558,20 @@
             thumbnailEl.src = `/api/v1/admin/image/${imageId}`
             thumbnailEl.setAttribute("data-id", imageId)
             closeBtn.click()
+        })
+
+        //delete
+        const deleteBtn = document.querySelector("#delete-btn")
+        deleteBtn.addEventListener("click",async ()=>{
+            let id = product.id
+            console.log(id)
+            try{
+                const res = await axios.delete(`/api/v1/admin/product/${id}`)
+                console.log(res)
+                toastr.success("Xóa sản phẩm thành công")
+            }catch (e){
+                console.log(e)
+            }
         })
 
 

@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ProductController {
@@ -34,7 +36,7 @@ public class ProductController {
             @RequestParam(required = false, defaultValue = "1") Integer page,
             @RequestParam(required = false, defaultValue = "5") Integer pageSize,
             Model model){
-        Page<Product> pageData = productService.findAll(page,pageSize);
+        Page<Product> pageData = productService.getAllProduct(page,pageSize);
         List<ProductSize> productSizeList = productSizeService.getAll();
 
         model.addAttribute("pageData", pageData);
@@ -60,9 +62,14 @@ public class ProductController {
         Product product = productService.findById(id);
         List<Category> categoryList = categoryService.getAllCategory();
         List<Size> sizeList = sizeService.getAllSize();
+        List<String> statusList = Arrays.stream(Product.Status.values())
+                .map(Product.Status::getValue)
+                .collect(Collectors.toList());
+
         model.addAttribute("product",product);
         model.addAttribute("categories", categoryList);
         model.addAttribute("sizeList", sizeList);
+        model.addAttribute("statusList",statusList);
         return "admin/product/detail";
     }
 }

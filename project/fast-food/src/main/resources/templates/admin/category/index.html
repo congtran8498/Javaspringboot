@@ -3,7 +3,7 @@
       th:replace="~{/admin/layout/admin-layout :: admin-layout(~{:: title}, ~{}, ~{:: #content}, ~{:: #js})}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Category</title>
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -48,6 +48,7 @@
                                     <tr>
                                         <th>STT</th>
                                         <th>Tên chủ đề</th>
+                                        <th>Trạng thái</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -59,12 +60,22 @@
                                         <td th:text="${category.name}">pizza
                                         </td>
                                         <td>
+                                            <span th:switch="${category.status.value}">
+                                                    <span th:case="'Đang sử dụng'" class="badge badge-success" th:text="${category.status.value}"></span>
+                                                    <span th:case="'Ngừng sử dụng'" class="badge badge-danger" th:text="${category.status.value}"></span>
+                                                    <span th:case="*" class="badge" th:text="${category.status.value}"></span>
+                                            </span>
+                                        </td>
+                                        <td>
                                             <button class="btn btn-warning" data-toggle="modal"
                                                     data-target="#modal-default" th:attr="onclick=|openModal('${category.name}','${category.id}')|">
                                                 Edit
                                             </button>
-                                            <button class="btn btn-danger" th:attr="onclick=|deleteCategory('${category.id}')|">
+                                            <button th:if="${category.status.value == 'Đang sử dụng'}" class="btn btn-danger" th:attr="onclick=|deleteCategory('${category.id}')|">
                                                 Delete
+                                            </button>
+                                            <button th:if="${category.status.value == 'Ngừng sử dụng'}" class="btn btn-info" th:attr="onclick=|openCategory('${category.id}')|">
+                                                Open
                                             </button>
                                         </td>
                                     </tr>
@@ -148,7 +159,7 @@
                 const res = await axios.put(`/api/v1/admin/categories/${idCategory}`, request)
                 console.log(res)
                 if (res.status === 200) {
-                    toastr.success("Thay doi thanh cong")
+                    toastr.success("Thay đổi thành công")
                     setTimeout(() => {
                         window.location.href = "/admin-page/categories"
                     }, 1500)
@@ -187,17 +198,37 @@
 
         // Xoa chu de
         async function deleteCategory(id) {
-            const isDelete = confirm("ban chac chan muon xoa?")
+            const isDelete = confirm("bạn chắc chắn muốn xóa?")
             if (!isDelete) return
 
             try {
                 const res = await axios.delete(`/api/v1/admin/categories/${id}`)
                 console.log(res)
                 if (res.status === 204) {
-                    toastr.success("Xoa thanh cong")
+                    toastr.success("Xóa thành công")
                     setTimeout(() => {
                         window.location.href = "/admin-page/categories"
-                    }, 1500)
+                    }, 1000)
+                }
+            } catch (e) {
+                toastr.error(e.response.data.message)
+            }
+
+        }
+
+        // mo lai chu de
+        async function openCategory(id) {
+            const isDelete = confirm("Bạn chắc chắn muốn mở lại")
+            if (!isDelete) return
+
+            try {
+                const res = await axios.put(`/api/v1/admin/categories/status/${id}`)
+                console.log(res)
+                if (res.status === 204) {
+                    toastr.success("Mở lại thành công")
+                    setTimeout(() => {
+                        window.location.href = "/admin-page/categories"
+                    }, 1000)
                 }
             } catch (e) {
                 toastr.error(e.response.data.message)

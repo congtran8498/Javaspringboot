@@ -42,8 +42,10 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable());
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/","/api/v1/**","/login","/register","register/confirm","forgot-password","forgot-password/confirm","/admin/**","/web/**","/admin-page/**").permitAll()
-//                        .requestMatchers("/admin-page/**").hasRole("USER")
+                        .requestMatchers("/","/api/v1/**","/login","/register","register/confirm","forgot-password",
+                                "forgot-password/confirm","/admin/**","/web/**","/admin-page/**","/cart/**","cart-finish","/order",
+                                "/change-password","/product-detail/**","myprofile","contact","/menu").permitAll()
+//                        .requestMatchers().hasRole("USER")
                         .anyRequest().authenticated()
                 );
         http.logout(logout -> logout

@@ -17,6 +17,7 @@ public class CategoryService {
 
     // lay danh sach category
     public List<Category> getAllCategory(){
+//        Category.Status status = Category.Status.ACTIVE;
         return categoryRepository.findAll();
     }
 
@@ -28,6 +29,7 @@ public class CategoryService {
         }
         Category category = new Category();
         category.setName(request.getName());
+        category.setStatus(Category.Status.ACTIVE);
         categoryRepository.save(category);
         return category;
     }
@@ -49,7 +51,15 @@ public class CategoryService {
     public void deleteCategory(Long id){
         Category category = categoryRepository.findById(id)
                 .orElseThrow(()-> new NotFoundException("not found"));
-        if(!category.getProductList().isEmpty()) throw new BadRequestException("category nay dang duoc su dung");
-        categoryRepository.delete(category);
+        category.setStatus(Category.Status.BLOCK);
+        categoryRepository.save(category);
+    }
+
+    // mo lai categoy
+    public void openCategory(Long id){
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(()-> new NotFoundException("not found"));
+        category.setStatus(Category.Status.ACTIVE);
+        categoryRepository.save(category);
     }
 }

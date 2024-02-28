@@ -6,6 +6,7 @@ import com.example.fastfood.request.LoginUserRequest;
 import com.example.fastfood.request.RecoverPasswordRequest;
 import com.example.fastfood.service.AuthService;
 import jakarta.mail.MessagingException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class AuthResource {
 
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginUserRequest request) {
+    public ResponseEntity<?> login(@Valid @RequestBody LoginUserRequest request) {
         return ResponseEntity.ok(authService.login(request));
     }
 

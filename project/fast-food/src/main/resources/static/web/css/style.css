@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap");
 body {
   font-family: "Open Sans", sans-serif;
-  color: #0c0c0c;
+  /*color: #0c0c0c;*/
   background-color: #ffffff;
   overflow-x: hidden;
 }
@@ -1041,4 +1041,243 @@ a:focus {
 .fs14{
   font-size: 14px;
 }
+
+/*.description-long {*/
+/*  max-height: 45px; !* Đặt chiều cao tối đa cho phần mô tả dài *!*/
+/*  overflow: hidden; !* Ẩn phần dư thừa *!*/
+/*  position: relative; !* Để dễ dàng xác định vị trí của nút "xem thêm" *!*/
+/*}*/
+
+/*.description-long::after {*/
+/*  content: ""; !* Tạo một phần tử giả để tạo nút "xem thêm" *!*/
+/*  display: block; !* Hiển thị như một phần tử gốc *!*/
+/*  position: absolute; !* Đặt vị trí tuyệt đối *!*/
+/*  bottom: 0; !* Đặt ở phía dưới *!*/
+/*  right: 0; !* Đặt ở phía bên phải *!*/
+/*  background-color: #2c313a;; !* Màu nền cho nút "xem thêm" *!*/
+/*  width: 100%; !* Chiều rộng bằng 100% của phần tử cha *!*/
+/*  height: 40px; !* Chiều cao của nút "xem thêm" *!*/
+/*}*/
+
+/*.description-long::before {*/
+/*  content: "...Xem thêm";*/
+/*  display: inline-block;*/
+/*  position: absolute;*/
+/*  bottom: -12px;*/
+/*  right: -2px;*/
+/*  margin: 10px;*/
+/*  padding: 0 10px;*/
+/*  background-color: #2c313a;*/
+/*  font-weight: bold;*/
+/*  cursor: pointer;*/
+/*}*/
+
+/*.description-long.opened {*/
+/*  max-height: none; !* Khi được mở, cho phép mô tả dài hiển thị toàn bộ *!*/
+/*}*/
+
+/*.description-long.opened::after {*/
+/*  display: none; !* Ẩn nút "xem thêm" khi mô tả được mở *!*/
+/*}*/
 /*# sourceMappingURL=style.css.map */
+
+/*quantity*/
+.quantity-field {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 40px;
+}
+
+.quantity-field .value-button{
+  border: 1px solid #ddd;
+  margin: 0;
+  width: 40px;
+  height: 100%;
+  padding: 0;
+  background: #eee;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.quantity-field .value-button:hover {
+  background: rgb(230, 230, 230);
+}
+
+.quantity-field .value-button:active{
+  background: rgb(210, 210, 210);
+}
+
+.quantity-field .decrease-button {
+  margin-right: -4px;
+  border-radius: 8px 0 0 8px;
+}
+
+.quantity-field .increase-button {
+  margin-left: -4px;
+  border-radius: 0 8px 8px 0;
+}
+
+.quantity-field .number{
+  display: inline-block;
+  text-align: center;
+  border: none;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  margin: 0px;
+  width: 40px;
+  height: 100%;
+  line-height: 40px;
+  font-size: 11pt;
+  box-sizing: border-box;
+  background: white;
+  font-family: calibri;
+}
+
+.quantity-field .number::selection{
+  background: none;
+}
+.disabledbutton {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/*cart notice*/
+.cart-notice{
+  position: absolute;
+  padding: 1px 7px;
+  background-color: red;
+  color: white;
+  font-size: 14px;
+  line-height: 14px;
+  border-radius: 10px;
+  top: -8px;
+  right: -18px;
+  border: 2px solid;
+}
+
+/*header cart*/
+.header-cart{
+  position: relative;
+}
+.cart-list{
+  position: absolute;
+  display: none;
+  width: 420px;
+  background-color: white;
+  top: calc(100% + 7px);
+  right: 0;
+  border-radius: 2px;
+  box-shadow: 0 1px 3.125rem 0 rgb(0 0 0 / 20%);
+  animation: fadeIn ease-in 0.2s;
+  cursor: default;
+  z-index: 1;
+}
+.header__cart-list-item{
+  padding: 12px 0;
+  list-style: none;
+  max-height: 50vh;
+  overflow: auto;
+  margin:10px 0;
+}
+.header__cart-item {
+  align-items: center;
+  display: flex;
+  margin: 0 10px;
+  border-bottom: 1px solid #d8d6d6;
+  padding: 20px 0;
+}
+.header__cart-item:hover {
+  background: rgb(230, 230, 230);;
+}
+.header__cart-item-qnt:hover {
+  cursor: pointer;
+  color: red;
+}
+.header__cart-img {
+  width: 70px;
+  height: 48px;
+  margin: 12px;
+  border: 1px solid #e8e8e8;
+}
+.header__cart-item-info {
+  width: 100%;
+  margin-right: 12px;
+  font-size: 14px;
+}
+.header__cart-item-head {
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px;
+}
+.header__cart-item-name{
+  font-weight: 600;
+}
+.header__cart-view-cart {
+  float: right;
+  margin: 0 12px 12px 0;
+}
+.cart-item-bottom{
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+}
+.header-cart:hover .cart-list{
+  display: block;
+}
+.cart-list::after {
+  content: "";
+  position: absolute;
+  cursor: pointer;
+  right: 4px;
+  top: -30px;
+  border-width: 20px 22px;
+  border-style: solid;
+  border-color: transparent transparent white transparent;
+}
+.cart-item-top{
+  display: flex;
+  justify-content: space-between;
+}
+.delete-item{
+  cursor: pointer;
+  font-size: 16px;
+}
+.delete-item:hover{
+  color: red;
+}
+/*show infor user*/
+.show-user-infor:hover .user-infor{
+  display: block;
+}
+
+.user-infor::after {
+  content: "";
+  position: absolute;
+  cursor: pointer;
+  right: 14px;
+  top: -32px;
+  border-width: 20px 40px;
+  border-style: solid;
+  border-color: transparent transparent white transparent;
+}
+
+/*cart page*/
+.main-title{
+  padding-bottom: 20px;
+  border-bottom: 1px solid #cacaca;
+}
+.cart-item-infor{
+  padding: 10px 20px;
+  display: flex;
+}
+
+.d-block{
+  display: block;
+}
+
+/*menu*/

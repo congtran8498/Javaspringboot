@@ -34,1436 +34,1495 @@
     <link href="/web/css/style.css" rel="stylesheet"/>
     <!-- responsive style -->
     <link href="/web/css/responsive.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+          integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 
 <body>
-
-<div class="hero_area">
-    <div class="bg-box">
-        <img src="/web/images/hero-bg.jpg" alt="">
-    </div>
-    <!-- header section strats -->
-    <header class="header_section">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg custom_nav-container ">
-                <a class="navbar-brand" href="index.html">
-            <span>
-              Feane
-            </span>
-                </a>
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class=""> </span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav  mx-auto ">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="menu.html">Menu</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="about.html">About</a>
-                        </li>
-                                      <li class="nav-item">
-                                        <a class="nav-link" href="book.html">Book Table</a>
-                                      </li>
-                    </ul>
-                    <div class="user_option">
-                        <div style="position: relative">
-                            <button id="user-infor-btn"  style="background-color: transparent;
-                                      border: none;
-                                      padding: 2px 4px;
-                                      font-size: 16px;
-                                      cursor: pointer;
-                                      opacity: 0.7; /* Độ trong suốt của button */"
-                                    class="user_link" data-toggle="modal" data-target="#modal-default">
-                                <i style="font-size: 20px" class="fa fa-user" aria-hidden="true"></i>
-                                <th:block sec:authorize="not isAuthenticated()">Thành viên</th:block>
-                                <th:block  sec:authorize="isAuthenticated()">
-                                    Hi <th:block th:text="${#authentication.principal.getFullName()}"></th:block>
-                                </th:block>
-
-                            </button>
-                            <div class="user-infor" sec:authorize="isAuthenticated()">
-                                <ul style="background-color: white;
-                                            list-style-type: none; padding: 8px 8px; border-radius: 4px">
-                                    <li class="user-infor-item"><a class="text-dark" href="#">Thông tin cá nhân</a></li>
-                                    <li class="user-infor-item"><a class="text-dark" href="/logout">Đăng xuất</a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <a class="cart_link" href="#">
-                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-                                 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                 viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;"
-                                 xml:space="preserve">
-                  <g>
-                    <g>
-                      <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
-                   c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
-                    </g>
-                  </g>
-                                <g>
-                    <g>
-                      <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
-                   C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
-                   c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
-                   C457.728,97.71,450.56,86.958,439.296,84.91z"/>
-                    </g>
-                  </g>
-                                <g>
-                    <g>
-                      <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
-                   c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
-                    </g>
-                  </g>
-                                <g>
-                  </g>
-                                <g>
-                  </g>
-                                <g>
-                  </g>
-                                <g>
-                  </g>
-                                <g>
-                  </g>
-                                <g>
-                  </g>
-                                <g>
-                  </g>
-                                <g>
-                  </g>
-                                <g>
-                  </g>
-                                <g>
-                  </g>
-                                <g>
-                  </g>
-                                <g>
-                  </g>
-                                <g>
-                  </g>
-                                <g>
-                  </g>
-                                <g>
-                  </g>
-                </svg>
+<th:block id="content">
+    <div class="hero_area">
+        <div class="bg-box">
+            <img src="/web/images/hero-bg.jpg" alt="">
+        </div>
+         header section strats
+            <header class="header_section p-0 d-flex justify-content-center"
+                    style="width: 100%;position: fixed;background-color: #626262;z-index: 5">
+                <div class="container">
+                    <nav class="navbar navbar-expand-lg custom_nav-container ">
+                        <a class="navbar-brand" href="index.html">
+                    <span>
+                      Feane
+                    </span>
                         </a>
-                                      <form class="form-inline">
-                                        <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
-                                          <i class="fa fa-search" aria-hidden="true"></i>
-                                        </button>
-                                      </form>
-                                      <a href="" class="order_online">
-                                        Order Online
-                                      </a>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
-    <!-- end header section -->
-    <!-- slider section -->
-    <section class="slider_section ">
-        <div id="customCarousel1" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="container ">
-                        <div class="row">
-                            <div class="col-md-7 col-lg-6 ">
-                                <div class="detail-box">
-                                    <h1>
-                                        Fast Food Restaurant
-                                    </h1>
-                                    <p>
-                                        Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad
-                                        mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore,
-                                        sunt repellat dolore, iste magni quos nihil ducimus libero ipsam.
-                                    </p>
-                                    <div class="btn-box">
-                                        <a href="" class="btn1">
-                                            Order Now
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item ">
-                    <div class="container ">
-                        <div class="row">
-                            <div class="col-md-7 col-lg-6 ">
-                                <div class="detail-box">
-                                    <h1>
-                                        Fast Food Restaurant
-                                    </h1>
-                                    <p>
-                                        Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad
-                                        mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore,
-                                        sunt repellat dolore, iste magni quos nihil ducimus libero ipsam.
-                                    </p>
-                                    <div class="btn-box">
-                                        <a href="" class="btn1">
-                                            Order Now
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="container ">
-                        <div class="row">
-                            <div class="col-md-7 col-lg-6 ">
-                                <div class="detail-box">
-                                    <h1>
-                                        Fast Food Restaurant
-                                    </h1>
-                                    <p>
-                                        Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad
-                                        mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore,
-                                        sunt repellat dolore, iste magni quos nihil ducimus libero ipsam.
-                                    </p>
-                                    <div class="btn-box">
-                                        <a href="" class="btn1">
-                                            Order Now
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <ol class="carousel-indicators">
-                    <li data-target="#customCarousel1" data-slide-to="0" class="active"></li>
-                    <li data-target="#customCarousel1" data-slide-to="1"></li>
-                    <li data-target="#customCarousel1" data-slide-to="2"></li>
-                </ol>
-            </div>
-        </div>
 
+                        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class=""> </span>
+                        </button>
+
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav  mx-auto ">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/menu">Menu</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="about.html">About</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a id="contact" class="nav-link" href="/contact">Contact Us</a>
+                                </li>
+                            </ul>
+                            <div class="user_option">
+                                <div style="position: relative" class="show-user-infor">
+                                    <button id="user-infor-btn" style="background-color: transparent;
+                                              border: none;
+                                              padding: 2px 4px;
+                                              font-size: 16px;
+                                              cursor: pointer;
+                                              opacity: 0.7; /* Độ trong suốt của button */"
+                                            class="user_link" data-toggle="modal" data-target="#modal-default">
+                                        <i style="font-size: 26px" class="fa fa-user" aria-hidden="true"></i>
+                                        <th:block sec:authorize="not isAuthenticated()">Thành viên</th:block>
+                                        <th:block sec:authorize="isAuthenticated()">
+                                            Hi
+                                            <th:block th:text="${#authentication.principal.getFullName()}"></th:block>
+                                        </th:block>
+
+                                    </button>
+                                    <div class="user-infor" sec:authorize="isAuthenticated()">
+                                        <ul style="background-color: white;
+                                                    list-style-type: none; padding: 8px 8px; border-radius: 4px">
+                                            <li th:attr="data-id=${#authentication.principal.getUserId()}"
+                                                class="user-infor-item"><a class="text-dark d-block" href="/myprofile">Thông tin cá nhân</a></li>
+                                            <li class="user-infor-item"><a class="text-dark d-block" href="/change-password">Đổi mật khẩu</a></li>
+                                            <li class="user-infor-item"><a class="text-dark d-block" href="/order">Đơn hàng của bạn</a></li>
+                                            <li class="user-infor-item"><a class="text-dark d-block" href="/logout">Đăng xuất</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="header-cart">
+                                    <a class="cart_link" style="position: relative; margin: 0 14px" href="#">
+                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                             x="0px" y="0px"
+                                             viewBox="0 0 456.029 456.029"
+                                             style="enable-background:new 0 0 456.029 456.029;width: 26px"
+                                             xml:space="preserve">
+                          <g>
+                            <g>
+                              <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                           c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
+                            </g>
+                          </g>
+                                            <g>
+                            <g>
+                              <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                           C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                           c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                           C457.728,97.71,450.56,86.958,439.296,84.91z"/>
+                            </g>
+                          </g>
+                                            <g>
+                            <g>
+                              <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                           c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
+                            </g>
+                          </g>
+                                            <g>
+                          </g>
+                                            <g>
+                          </g>
+                                            <g>
+                          </g>
+                                            <g>
+                          </g>
+                                            <g>
+                          </g>
+                                            <g>
+                          </g>
+                                            <g>
+                          </g>
+                                            <g>
+                          </g>
+                                            <g>
+                          </g>
+                                            <g>
+                          </g>
+                                            <g>
+                          </g>
+                                            <g>
+                          </g>
+                                            <g>
+                          </g>
+                                            <g>
+                          </g>
+                                            <g>
+                          </g>
+                        </svg>
+                                        <span class="cart-notice">0</span>
+                                    </a>
+                                    <div class="cart-list">
+                                        <ul id="header-cart" class="header__cart-list-item">
+                                            <!-- cart item  -->
+<!--                                            <li class="header__cart-item">-->
+<!--                                                <img src="http://localhost:8080/api/v1/admin/image/31" alt=""-->
+<!--                                                     class="header__cart-img">-->
+<!--                                                <div class="header__cart-item-info">-->
+<!--                                                    <div class="header__cart-item-head">-->
+<!--                                                        <div class="cart-item-top">-->
+<!--                                                            <h5 class="header__cart-item-name">Pizza Phô Mai</h5>-->
+<!--                                                            <div class="delete-item">Xóa</div>-->
+<!--                                                        </div>-->
+<!--                                                        <span class="header__cart-item-price">Kích thước - Nhỏ</span>-->
+<!--                                                        <span class="header__cart-item-mutiphy">Đế kéo tay truyền thống</span>-->
+<!--                                                        <div class="cart-item-bottom">-->
+<!--                                                            <span class="header__cart-item-qnt">Số lượng: 2</span>-->
+<!--                                                            <span class="header__cart-item-price font-weight-bolder">280.000</span>-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+
+<!--                                            </li>-->
+
+                                        </ul>
+                                        <div id="no-item" class="text-center mb-5">
+                                            <img src="https://dominos.vn/img/illustration/empty-cart.svg" style="width: 230px;height: 230px">
+                                            <p style="width: 240px;margin: auto" class="font-weight-bolder">Giỏ Hàng Chưa Có Sản Phẩm. Xin Mời Bạn Mua Hàng</p>
+                                        </div>
+
+
+
+                                        <div id="watch-cart" class="d-flex justify-content-center mx-3">
+<!--                                            <a href="/cart" style="margin-bottom: 20px; width: 100%"-->
+<!--                                                    class="btn btn-danger">-->
+<!--                                                XEM GIỎ HÀNG <span id="totalPrice-cart" style="margin-left: 20px">0</span>-->
+<!--                                            </a>-->
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <!--                        <form class="form-inline">-->
+                                <!--                            <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">-->
+                                <!--                                <i style="font-size: 24px" class="fa fa-search" aria-hidden="true"></i>-->
+                                <!--                            </button>-->
+                                <!--                        </form>-->
+                                <!--                        <a href="" class="order_online">-->
+                                <!--                            Order Online-->
+                                <!--                        </a>-->
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </header>
+        <!-- end header section -->
+        <!-- slider section -->
+        <section class="slider_section " style="padding-top: 66px">
+            <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="container ">
+                            <div class="row">
+                                <div class="col-md-7 col-lg-6 ">
+                                    <div class="detail-box">
+                                        <h1>
+                                            Fast Food Restaurant
+                                        </h1>
+                                        <p>
+                                            Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad
+                                            mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore,
+                                            sunt repellat dolore, iste magni quos nihil ducimus libero ipsam.
+                                        </p>
+                                        <div class="btn-box">
+                                            <a href="" class="btn1">
+                                                Order Now
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item ">
+                        <div class="container ">
+                            <div class="row">
+                                <div class="col-md-7 col-lg-6 ">
+                                    <div class="detail-box">
+                                        <h1>
+                                            Fast Food Restaurant
+                                        </h1>
+                                        <p>
+                                            Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad
+                                            mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore,
+                                            sunt repellat dolore, iste magni quos nihil ducimus libero ipsam.
+                                        </p>
+                                        <div class="btn-box">
+                                            <a href="" class="btn1">
+                                                Order Now
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="container ">
+                            <div class="row">
+                                <div class="col-md-7 col-lg-6 ">
+                                    <div class="detail-box">
+                                        <h1>
+                                            Fast Food Restaurant
+                                        </h1>
+                                        <p>
+                                            Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad
+                                            mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore,
+                                            sunt repellat dolore, iste magni quos nihil ducimus libero ipsam.
+                                        </p>
+                                        <div class="btn-box">
+                                            <a href="" class="btn1">
+                                                Order Now
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <ol class="carousel-indicators">
+                        <li data-target="#customCarousel1" data-slide-to="0" class="active"></li>
+                        <li data-target="#customCarousel1" data-slide-to="1"></li>
+                        <li data-target="#customCarousel1" data-slide-to="2"></li>
+                    </ol>
+                </div>
+            </div>
+
+        </section>
+        <!-- end slider section -->
+    </div>
+
+    <!-- offer section -->
+
+    <section class="offer_section layout_padding-bottom">
+        <div class="offer_container">
+            <div class="container ">
+                <div class="row">
+                    <div class="col-md-6  ">
+                        <div class="box ">
+                            <div class="img-box">
+                                <img src="/web/images/o1.jpg" alt="">
+                            </div>
+                            <div class="detail-box">
+                                <h5>
+                                    Tasty Thursdays
+                                </h5>
+                                <h6>
+                                    <span>20%</span> Off
+                                </h6>
+                                <a href="">
+                                    Order Now
+                                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                         x="0px" y="0px"
+                                         viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;"
+                                         xml:space="preserve">
+                    <g>
+                      <g>
+                        <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                     c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
+                      </g>
+                    </g>
+                                        <g>
+                      <g>
+                        <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                     C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                     c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                     C457.728,97.71,450.56,86.958,439.296,84.91z"/>
+                      </g>
+                    </g>
+                                        <g>
+                      <g>
+                        <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                     c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
+                      </g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                  </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6  ">
+                        <div class="box ">
+                            <div class="img-box">
+                                <img src="/web/images/o2.jpg" alt="">
+                            </div>
+                            <div class="detail-box">
+                                <h5>
+                                    Pizza Days
+                                </h5>
+                                <h6>
+                                    <span>15%</span> Off
+                                </h6>
+                                <a href="">
+                                    Order Now
+                                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                         x="0px" y="0px"
+                                         viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;"
+                                         xml:space="preserve">
+                    <g>
+                      <g>
+                        <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                     c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
+                      </g>
+                    </g>
+                                        <g>
+                      <g>
+                        <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                     C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                     c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                     C457.728,97.71,450.56,86.958,439.296,84.91z"/>
+                      </g>
+                    </g>
+                                        <g>
+                      <g>
+                        <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                     c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
+                      </g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                                        <g>
+                    </g>
+                  </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
-    <!-- end slider section -->
-</div>
 
-<!-- offer section -->
+    <!-- end offer section -->
 
-<section class="offer_section layout_padding-bottom">
-    <div class="offer_container">
-        <div class="container ">
+    <!-- food section -->
+
+    <section class="food_section layout_padding-bottom">
+        <div class="container">
+            <div class="heading_container heading_center">
+                <h2>
+                    Our Menu
+                </h2>
+            </div>
+
+            <ul class="filters_menu">
+                <li class="active" data-filter="*">All</li>
+                <li th:each="category : ${categoryList}" th:attr="data-filter='.'+${category.name}"  th:text="${category.name}">Burger</li>
+            </ul>
+
+            <div class="filters-content">
+                <div class="row grid">
+                    <div th:each="product : ${productList.getContent()}"
+                         th:class="'col-sm-6 col-lg-4 all pizza'+' '+ ${product.categoryList.get(0).name}">
+                        <div class="box">
+                            <div>
+                                <div class="img-box">
+                                    <img th:src="${product.image.id != null ? '/api/v1/admin/image/' + product.image.id : 'https://placehold.co/600x400'}"
+                                         alt="">
+                                </div>
+                                <div class="detail-box">
+                                    <h5 th:text="${product.name}">
+                                        Delicious Pizza
+                                    </h5>
+                                    <p class="description-long" th:text="${product.description}">
+                                        Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
+                                        voluptatem repellendus sed eaque
+                                    </p>
+                                    <div class="options">
+                                        <h6 th:text="${#numbers.formatCurrency(product.getProductSizeList().get(0).price)}">
+                                            $20
+                                        </h6>
+                                        <a th:attr="data-id=${product.id}" class="product-option" href="#"
+                                        >
+                                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                                 x="0px" y="0px"
+                                                 viewBox="0 0 456.029 456.029"
+                                                 style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                        <g>
+                          <g>
+                            <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
+                          </g>
+                        </g>
+                                                <g>
+                          <g>
+                            <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                         C457.728,97.71,450.56,86.958,439.296,84.91z"/>
+                          </g>
+                        </g>
+                                                <g>
+                          <g>
+                            <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
+                          </g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                      </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-lg-4 all burger">
+                        <div class="box">
+                            <div>
+                                <div class="img-box">
+                                    <img src="/web/images/f2.png" alt="">
+                                </div>
+                                <div class="detail-box">
+                                    <h5>
+                                        Delicious Burger
+                                    </h5>
+                                    <p>
+                                        Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
+                                        voluptatem repellendus sed eaque
+
+                                    </p>
+                                    <div class="options">
+                                        <h6>
+                                            $15
+                                        </h6>
+                                        <a href="">
+                                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                                 x="0px" y="0px"
+                                                 viewBox="0 0 456.029 456.029"
+                                                 style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                        <g>
+                          <g>
+                            <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
+                          </g>
+                        </g>
+                                                <g>
+                          <g>
+                            <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                         C457.728,97.71,450.56,86.958,439.296,84.91z"/>
+                          </g>
+                        </g>
+                                                <g>
+                          <g>
+                            <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
+                          </g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                      </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4 all pizza">
+                        <div class="box">
+                            <div>
+                                <div class="img-box">
+                                    <img src="/web/images/f3.png" alt="">
+                                </div>
+                                <div class="detail-box">
+                                    <h5>
+                                        Delicious Pizza
+                                    </h5>
+                                    <p>
+                                        Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
+                                        voluptatem repellendus sed eaque
+                                    </p>
+                                    <div class="options">
+                                        <h6>
+                                            $17
+                                        </h6>
+                                        <a href="">
+                                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                                 x="0px" y="0px"
+                                                 viewBox="0 0 456.029 456.029"
+                                                 style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                        <g>
+                          <g>
+                            <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
+                          </g>
+                        </g>
+                                                <g>
+                          <g>
+                            <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                         C457.728,97.71,450.56,86.958,439.296,84.91z"/>
+                          </g>
+                        </g>
+                                                <g>
+                          <g>
+                            <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
+                          </g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                      </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4 all pasta">
+                        <div class="box">
+                            <div>
+                                <div class="img-box">
+                                    <img src="/web/images/f4.png" alt="">
+                                </div>
+                                <div class="detail-box">
+                                    <h5>
+                                        Delicious Pasta
+                                    </h5>
+                                    <p>
+                                        Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
+                                        voluptatem repellendus sed eaque
+                                    </p>
+                                    <div class="options">
+                                        <h6>
+                                            $18
+                                        </h6>
+                                        <a href="">
+                                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                                 x="0px" y="0px"
+                                                 viewBox="0 0 456.029 456.029"
+                                                 style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                        <g>
+                          <g>
+                            <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
+                          </g>
+                        </g>
+                                                <g>
+                          <g>
+                            <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                         C457.728,97.71,450.56,86.958,439.296,84.91z"/>
+                          </g>
+                        </g>
+                                                <g>
+                          <g>
+                            <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
+                          </g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                      </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4 all fries">
+                        <div class="box">
+                            <div>
+                                <div class="img-box">
+                                    <img src="/web/images/f5.png" alt="">
+                                </div>
+                                <div class="detail-box">
+                                    <h5>
+                                        French Fries
+                                    </h5>
+                                    <p>
+                                        Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
+                                        voluptatem repellendus sed eaque
+                                    </p>
+                                    <div class="options">
+                                        <h6>
+                                            $10
+                                        </h6>
+                                        <a href="">
+                                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                                 x="0px" y="0px"
+                                                 viewBox="0 0 456.029 456.029"
+                                                 style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                        <g>
+                          <g>
+                            <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
+                          </g>
+                        </g>
+                                                <g>
+                          <g>
+                            <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                         C457.728,97.71,450.56,86.958,439.296,84.91z"/>
+                          </g>
+                        </g>
+                                                <g>
+                          <g>
+                            <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
+                          </g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                      </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4 all pizza">
+                        <div class="box">
+                            <div>
+                                <div class="img-box">
+                                    <img src="/web/images/f6.png" alt="">
+                                </div>
+                                <div class="detail-box">
+                                    <h5>
+                                        Delicious Pizza
+                                    </h5>
+                                    <p>
+                                        Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
+                                        voluptatem repellendus sed eaque
+                                    </p>
+                                    <div class="options">
+                                        <h6>
+                                            $15
+                                        </h6>
+                                        <a href="">
+                                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                                 x="0px" y="0px"
+                                                 viewBox="0 0 456.029 456.029"
+                                                 style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                        <g>
+                          <g>
+                            <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
+                          </g>
+                        </g>
+                                                <g>
+                          <g>
+                            <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                         C457.728,97.71,450.56,86.958,439.296,84.91z"/>
+                          </g>
+                        </g>
+                                                <g>
+                          <g>
+                            <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
+                          </g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                      </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4 all burger">
+                        <div class="box">
+                            <div>
+                                <div class="img-box">
+                                    <img src="/web/images/f7.png" alt="">
+                                </div>
+                                <div class="detail-box">
+                                    <h5>
+                                        Tasty Burger
+                                    </h5>
+                                    <p>
+                                        Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
+                                        voluptatem repellendus sed eaque
+                                    </p>
+                                    <div class="options">
+                                        <h6>
+                                            $12
+                                        </h6>
+                                        <a href="">
+                                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                                 x="0px" y="0px"
+                                                 viewBox="0 0 456.029 456.029"
+                                                 style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                        <g>
+                          <g>
+                            <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
+                          </g>
+                        </g>
+                                                <g>
+                          <g>
+                            <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                         C457.728,97.71,450.56,86.958,439.296,84.91z"/>
+                          </g>
+                        </g>
+                                                <g>
+                          <g>
+                            <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
+                          </g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                      </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4 all burger">
+                        <div class="box">
+                            <div>
+                                <div class="img-box">
+                                    <img src="/web/images/f8.png" alt="">
+                                </div>
+                                <div class="detail-box">
+                                    <h5>
+                                        Tasty Burger
+                                    </h5>
+                                    <p>
+                                        Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
+                                        voluptatem repellendus sed eaque
+                                    </p>
+                                    <div class="options">
+                                        <h6>
+                                            $14
+                                        </h6>
+                                        <a href="">
+                                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                                 x="0px" y="0px"
+                                                 viewBox="0 0 456.029 456.029"
+                                                 style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                        <g>
+                          <g>
+                            <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
+                          </g>
+                        </g>
+                                                <g>
+                          <g>
+                            <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                         C457.728,97.71,450.56,86.958,439.296,84.91z"/>
+                          </g>
+                        </g>
+                                                <g>
+                          <g>
+                            <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
+                          </g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                      </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4 all pasta">
+                        <div class="box">
+                            <div>
+                                <div class="img-box">
+                                    <img src="/web/images/f9.png" alt="">
+                                </div>
+                                <div class="detail-box">
+                                    <h5>
+                                        Delicious Pasta
+                                    </h5>
+                                    <p>
+                                        Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
+                                        voluptatem repellendus sed eaque
+                                    </p>
+                                    <div class="options">
+                                        <h6>
+                                            $10
+                                        </h6>
+                                        <a href="">
+                                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                                 x="0px" y="0px"
+                                                 viewBox="0 0 456.029 456.029"
+                                                 style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                        <g>
+                          <g>
+                            <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
+                          </g>
+                        </g>
+                                                <g>
+                          <g>
+                            <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                         C457.728,97.71,450.56,86.958,439.296,84.91z"/>
+                          </g>
+                        </g>
+                                                <g>
+                          <g>
+                            <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
+                          </g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                                                <g>
+                        </g>
+                      </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-box">
+                <a href="">
+                    View More
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- end food section -->
+
+    <!-- about section -->
+
+<!--    <section class="about_section layout_padding">-->
+<!--        <div class="container  ">-->
+
+<!--            <div class="row">-->
+<!--                <div class="col-md-6 ">-->
+<!--                    <div class="img-box">-->
+<!--                        <img src="/web/images/about-img.png" alt="">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-md-6">-->
+<!--                    <div class="detail-box">-->
+<!--                        <div class="heading_container">-->
+<!--                            <h2>-->
+<!--                                We Are Feane-->
+<!--                            </h2>-->
+<!--                        </div>-->
+<!--                        <p>-->
+<!--                            There are many variations of passages of Lorem Ipsum available, but the majority have suffered-->
+<!--                            alteration-->
+<!--                            in some form, by injected humour, or randomised words which don't look even slightly believable.-->
+<!--                            If you-->
+<!--                            are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing-->
+<!--                            hidden in-->
+<!--                            the middle of text. All-->
+<!--                        </p>-->
+<!--                        <a href="">-->
+<!--                            Read More-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+
+    <!-- end about section -->
+
+    <!-- book section -->
+<!--    <section class="book_section layout_padding">-->
+<!--        <div class="container">-->
+<!--            <div class="heading_container">-->
+<!--                <h2>-->
+<!--                    Book A Table-->
+<!--                </h2>-->
+<!--            </div>-->
+<!--            <div class="row">-->
+<!--                <div class="col-md-6">-->
+<!--                    <div class="form_container">-->
+<!--                        <form action="">-->
+<!--                            <div>-->
+<!--                                <input type="text" class="form-control" placeholder="Your Name"/>-->
+<!--                            </div>-->
+<!--                            <div>-->
+<!--                                <input type="text" class="form-control" placeholder="Phone Number"/>-->
+<!--                            </div>-->
+<!--                            <div>-->
+<!--                                <input type="email" class="form-control" placeholder="Your Email"/>-->
+<!--                            </div>-->
+<!--                            <div>-->
+<!--                                <select class="form-control nice-select wide">-->
+<!--                                    <option value="" disabled selected>-->
+<!--                                        How many persons?-->
+<!--                                    </option>-->
+<!--                                    <option value="">-->
+<!--                                        2-->
+<!--                                    </option>-->
+<!--                                    <option value="">-->
+<!--                                        3-->
+<!--                                    </option>-->
+<!--                                    <option value="">-->
+<!--                                        4-->
+<!--                                    </option>-->
+<!--                                    <option value="">-->
+<!--                                        5-->
+<!--                                    </option>-->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                            <div>-->
+<!--                                <input type="date" class="form-control">-->
+<!--                            </div>-->
+<!--                            <div class="btn_box">-->
+<!--                                <button>-->
+<!--                                    Book Now-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-md-6">-->
+<!--                    <div class="map_container ">-->
+<!--                        <div id="googleMap"></div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+    <!-- end book section -->
+
+    <!-- client section -->
+
+    <section class="client_section layout_padding-bottom">
+        <div class="container">
+            <div class="heading_container heading_center psudo_white_primary mb_45">
+                <h2>
+                    What Says Our Customers
+                </h2>
+            </div>
+            <div class="carousel-wrap row ">
+                <div class="owl-carousel client_owl-carousel">
+                    <div th:each="mess : ${contactList}" class="item">
+                        <div class="box">
+                            <div class="detail-box">
+                                <p th:text="${mess.message}">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+                                </p>
+                                <h6 th:text="${mess.user.name}">
+                                    Moana Michell
+                                </h6>
+                            </div>
+                            <div class="img-box">
+                                <img th:src="${mess.user.avatarUrl != null ? mess.user.avatarUrl : 'https://placehold.co/600x400'}" alt="" class="box-img">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="box">
+                            <div class="detail-box">
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+                                </p>
+                                <h6>
+                                    Mike Hamell
+                                </h6>
+                            </div>
+                            <div class="img-box">
+                                <img src="/web/images/client2.jpg" alt="" class="box-img">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- end client section -->
+
+    <!-- footer section -->
+    <footer class="footer_section">
+        <div class="container">
             <div class="row">
-                <div class="col-md-6  ">
-                    <div class="box ">
-                        <div class="img-box">
-                            <img src="/web/images/o1.jpg" alt="">
-                        </div>
-                        <div class="detail-box">
-                            <h5>
-                                Tasty Thursdays
-                            </h5>
-                            <h6>
-                                <span>20%</span> Off
-                            </h6>
+                <div class="col-md-4 footer-col">
+                    <div class="footer_contact">
+                        <h4>
+                            Contact Us
+                        </h4>
+                        <div class="contact_link_box">
                             <a href="">
-                                Order Now
-                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-                                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                     viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;"
-                                     xml:space="preserve">
-                    <g>
-                      <g>
-                        <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
-                     c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
-                      </g>
-                    </g>
-                                    <g>
-                      <g>
-                        <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
-                     C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
-                     c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
-                     C457.728,97.71,450.56,86.958,439.296,84.91z"/>
-                      </g>
-                    </g>
-                                    <g>
-                      <g>
-                        <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
-                     c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
-                      </g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                  </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6  ">
-                    <div class="box ">
-                        <div class="img-box">
-                            <img src="/web/images/o2.jpg" alt="">
-                        </div>
-                        <div class="detail-box">
-                            <h5>
-                                Pizza Days
-                            </h5>
-                            <h6>
-                                <span>15%</span> Off
-                            </h6>
-                            <a href="">
-                                Order Now
-                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-                                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                     viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;"
-                                     xml:space="preserve">
-                    <g>
-                      <g>
-                        <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
-                     c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
-                      </g>
-                    </g>
-                                    <g>
-                      <g>
-                        <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
-                     C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
-                     c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
-                     C457.728,97.71,450.56,86.958,439.296,84.91z"/>
-                      </g>
-                    </g>
-                                    <g>
-                      <g>
-                        <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
-                     c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
-                      </g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                                    <g>
-                    </g>
-                  </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- end offer section -->
-
-<!-- food section -->
-
-<section class="food_section layout_padding-bottom">
-    <div class="container">
-        <div class="heading_container heading_center">
-            <h2>
-                Our Menu
-            </h2>
-        </div>
-
-        <ul class="filters_menu">
-            <li class="active" data-filter="*">All</li>
-            <li data-filter=".burger">Burger</li>
-            <li data-filter=".Pizza">Pizza</li>
-            <li data-filter=".pasta">Pasta</li>
-            <li data-filter=".Drink">Drink</li>
-        </ul>
-
-        <div class="filters-content">
-            <div class="row grid">
-                <div th:each="product : ${productList}" th:class="'col-sm-6 col-lg-4 all pizza'+' '+ ${product.categoryList.get(0).name}">
-                    <div class="box">
-                        <div>
-                            <div class="img-box">
-                                <img th:src="${product.image.id != null ? '/api/v1/admin/image/' + product.image.id : 'https://placehold.co/600x400'}" alt="">
-                            </div>
-                            <div class="detail-box">
-                                <h5 th:text="${product.name}">
-                                    Delicious Pizza
-                                </h5>
-                                <p th:text="${product.description}">
-                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
-                                    voluptatem repellendus sed eaque
-                                </p>
-                                <div class="options">
-                                    <h6 th:text="${#numbers.formatCurrency(product.getProductSizeList().get(0).price)}">
-                                        $20
-                                    </h6>
-                                    <a href="">
-                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-                                             xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                             viewBox="0 0 456.029 456.029"
-                                             style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
-                        <g>
-                          <g>
-                            <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
-                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
-                          </g>
-                        </g>
-                                            <g>
-                          <g>
-                            <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
-                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
-                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
-                         C457.728,97.71,450.56,86.958,439.296,84.91z"/>
-                          </g>
-                        </g>
-                                            <g>
-                          <g>
-                            <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
-                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
-                          </g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                      </svg>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 all burger">
-                    <div class="box">
-                        <div>
-                            <div class="img-box">
-                                <img src="/web/images/f2.png" alt="">
-                            </div>
-                            <div class="detail-box">
-                                <h5>
-                                    Delicious Burger
-                                </h5>
-                                <p>
-                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
-                                    voluptatem repellendus sed eaque
-                                </p>
-                                <div class="options">
-                                    <h6>
-                                        $15
-                                    </h6>
-                                    <a href="">
-                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-                                             xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                             viewBox="0 0 456.029 456.029"
-                                             style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
-                        <g>
-                          <g>
-                            <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
-                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
-                          </g>
-                        </g>
-                                            <g>
-                          <g>
-                            <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
-                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
-                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
-                         C457.728,97.71,450.56,86.958,439.296,84.91z"/>
-                          </g>
-                        </g>
-                                            <g>
-                          <g>
-                            <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
-                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
-                          </g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                      </svg>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 all pizza">
-                    <div class="box">
-                        <div>
-                            <div class="img-box">
-                                <img src="/web/images/f3.png" alt="">
-                            </div>
-                            <div class="detail-box">
-                                <h5>
-                                    Delicious Pizza
-                                </h5>
-                                <p>
-                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
-                                    voluptatem repellendus sed eaque
-                                </p>
-                                <div class="options">
-                                    <h6>
-                                        $17
-                                    </h6>
-                                    <a href="">
-                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-                                             xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                             viewBox="0 0 456.029 456.029"
-                                             style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
-                        <g>
-                          <g>
-                            <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
-                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
-                          </g>
-                        </g>
-                                            <g>
-                          <g>
-                            <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
-                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
-                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
-                         C457.728,97.71,450.56,86.958,439.296,84.91z"/>
-                          </g>
-                        </g>
-                                            <g>
-                          <g>
-                            <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
-                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
-                          </g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                      </svg>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 all pasta">
-                    <div class="box">
-                        <div>
-                            <div class="img-box">
-                                <img src="/web/images/f4.png" alt="">
-                            </div>
-                            <div class="detail-box">
-                                <h5>
-                                    Delicious Pasta
-                                </h5>
-                                <p>
-                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
-                                    voluptatem repellendus sed eaque
-                                </p>
-                                <div class="options">
-                                    <h6>
-                                        $18
-                                    </h6>
-                                    <a href="">
-                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-                                             xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                             viewBox="0 0 456.029 456.029"
-                                             style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
-                        <g>
-                          <g>
-                            <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
-                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
-                          </g>
-                        </g>
-                                            <g>
-                          <g>
-                            <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
-                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
-                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
-                         C457.728,97.71,450.56,86.958,439.296,84.91z"/>
-                          </g>
-                        </g>
-                                            <g>
-                          <g>
-                            <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
-                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
-                          </g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                      </svg>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 all fries">
-                    <div class="box">
-                        <div>
-                            <div class="img-box">
-                                <img src="/web/images/f5.png" alt="">
-                            </div>
-                            <div class="detail-box">
-                                <h5>
-                                    French Fries
-                                </h5>
-                                <p>
-                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
-                                    voluptatem repellendus sed eaque
-                                </p>
-                                <div class="options">
-                                    <h6>
-                                        $10
-                                    </h6>
-                                    <a href="">
-                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-                                             xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                             viewBox="0 0 456.029 456.029"
-                                             style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
-                        <g>
-                          <g>
-                            <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
-                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
-                          </g>
-                        </g>
-                                            <g>
-                          <g>
-                            <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
-                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
-                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
-                         C457.728,97.71,450.56,86.958,439.296,84.91z"/>
-                          </g>
-                        </g>
-                                            <g>
-                          <g>
-                            <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
-                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
-                          </g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                      </svg>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 all pizza">
-                    <div class="box">
-                        <div>
-                            <div class="img-box">
-                                <img src="/web/images/f6.png" alt="">
-                            </div>
-                            <div class="detail-box">
-                                <h5>
-                                    Delicious Pizza
-                                </h5>
-                                <p>
-                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
-                                    voluptatem repellendus sed eaque
-                                </p>
-                                <div class="options">
-                                    <h6>
-                                        $15
-                                    </h6>
-                                    <a href="">
-                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-                                             xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                             viewBox="0 0 456.029 456.029"
-                                             style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
-                        <g>
-                          <g>
-                            <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
-                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
-                          </g>
-                        </g>
-                                            <g>
-                          <g>
-                            <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
-                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
-                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
-                         C457.728,97.71,450.56,86.958,439.296,84.91z"/>
-                          </g>
-                        </g>
-                                            <g>
-                          <g>
-                            <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
-                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
-                          </g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                      </svg>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 all burger">
-                    <div class="box">
-                        <div>
-                            <div class="img-box">
-                                <img src="/web/images/f7.png" alt="">
-                            </div>
-                            <div class="detail-box">
-                                <h5>
-                                    Tasty Burger
-                                </h5>
-                                <p>
-                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
-                                    voluptatem repellendus sed eaque
-                                </p>
-                                <div class="options">
-                                    <h6>
-                                        $12
-                                    </h6>
-                                    <a href="">
-                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-                                             xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                             viewBox="0 0 456.029 456.029"
-                                             style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
-                        <g>
-                          <g>
-                            <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
-                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
-                          </g>
-                        </g>
-                                            <g>
-                          <g>
-                            <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
-                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
-                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
-                         C457.728,97.71,450.56,86.958,439.296,84.91z"/>
-                          </g>
-                        </g>
-                                            <g>
-                          <g>
-                            <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
-                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
-                          </g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                      </svg>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 all burger">
-                    <div class="box">
-                        <div>
-                            <div class="img-box">
-                                <img src="/web/images/f8.png" alt="">
-                            </div>
-                            <div class="detail-box">
-                                <h5>
-                                    Tasty Burger
-                                </h5>
-                                <p>
-                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
-                                    voluptatem repellendus sed eaque
-                                </p>
-                                <div class="options">
-                                    <h6>
-                                        $14
-                                    </h6>
-                                    <a href="">
-                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-                                             xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                             viewBox="0 0 456.029 456.029"
-                                             style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
-                        <g>
-                          <g>
-                            <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
-                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
-                          </g>
-                        </g>
-                                            <g>
-                          <g>
-                            <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
-                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
-                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
-                         C457.728,97.71,450.56,86.958,439.296,84.91z"/>
-                          </g>
-                        </g>
-                                            <g>
-                          <g>
-                            <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
-                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
-                          </g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                      </svg>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-4 all pasta">
-                    <div class="box">
-                        <div>
-                            <div class="img-box">
-                                <img src="/web/images/f9.png" alt="">
-                            </div>
-                            <div class="detail-box">
-                                <h5>
-                                    Delicious Pasta
-                                </h5>
-                                <p>
-                                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
-                                    voluptatem repellendus sed eaque
-                                </p>
-                                <div class="options">
-                                    <h6>
-                                        $10
-                                    </h6>
-                                    <a href="">
-                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-                                             xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                             viewBox="0 0 456.029 456.029"
-                                             style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
-                        <g>
-                          <g>
-                            <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
-                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
-                          </g>
-                        </g>
-                                            <g>
-                          <g>
-                            <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
-                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
-                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
-                         C457.728,97.71,450.56,86.958,439.296,84.91z"/>
-                          </g>
-                        </g>
-                                            <g>
-                          <g>
-                            <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
-                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
-                          </g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                                            <g>
-                        </g>
-                      </svg>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="btn-box">
-            <a href="">
-                View More
-            </a>
-        </div>
-    </div>
-</section>
-
-<!-- end food section -->
-
-<!-- about section -->
-
-<section class="about_section layout_padding">
-    <div class="container  ">
-
-        <div class="row">
-            <div class="col-md-6 ">
-                <div class="img-box">
-                    <img src="/web/images/about-img.png" alt="">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="detail-box">
-                    <div class="heading_container">
-                        <h2>
-                            We Are Feane
-                        </h2>
-                    </div>
-                    <p>
-                        There are many variations of passages of Lorem Ipsum available, but the majority have suffered
-                        alteration
-                        in some form, by injected humour, or randomised words which don't look even slightly believable.
-                        If you
-                        are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing
-                        hidden in
-                        the middle of text. All
-                    </p>
-                    <a href="">
-                        Read More
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- end about section -->
-
-<!-- book section -->
-  <section class="book_section layout_padding">
-    <div class="container">
-      <div class="heading_container">
-        <h2>
-          Book A Table
-        </h2>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form_container">
-            <form action="">
-              <div>
-                <input type="text" class="form-control" placeholder="Your Name" />
-              </div>
-              <div>
-                <input type="text" class="form-control" placeholder="Phone Number" />
-              </div>
-              <div>
-                <input type="email" class="form-control" placeholder="Your Email" />
-              </div>
-              <div>
-                <select class="form-control nice-select wide">
-                  <option value="" disabled selected>
-                    How many persons?
-                  </option>
-                  <option value="">
-                    2
-                  </option>
-                  <option value="">
-                    3
-                  </option>
-                  <option value="">
-                    4
-                  </option>
-                  <option value="">
-                    5
-                  </option>
-                </select>
-              </div>
-              <div>
-                <input type="date" class="form-control">
-              </div>
-              <div class="btn_box">
-                <button>
-                  Book Now
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="map_container ">
-            <div id="googleMap"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-<!-- end book section -->
-
-<!-- client section -->
-
-<section class="client_section layout_padding-bottom">
-    <div class="container">
-        <div class="heading_container heading_center psudo_white_primary mb_45">
-            <h2>
-                What Says Our Customers
-            </h2>
-        </div>
-        <div class="carousel-wrap row ">
-            <div class="owl-carousel client_owl-carousel">
-                <div class="item">
-                    <div class="box">
-                        <div class="detail-box">
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
-                            </p>
-                            <h6>
-                                Moana Michell
-                            </h6>
-                            <p>
-                                magna aliqua
-                            </p>
-                        </div>
-                        <div class="img-box">
-                            <img src="/web/images/client1.jpg" alt="" class="box-img">
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="box">
-                        <div class="detail-box">
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
-                            </p>
-                            <h6>
-                                Mike Hamell
-                            </h6>
-                            <p>
-                                magna aliqua
-                            </p>
-                        </div>
-                        <div class="img-box">
-                            <img src="/web/images/client2.jpg" alt="" class="box-img">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- end client section -->
-
-<!-- footer section -->
-<footer class="footer_section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 footer-col">
-                <div class="footer_contact">
-                    <h4>
-                        Contact Us
-                    </h4>
-                    <div class="contact_link_box">
-                        <a href="">
-                            <i class="fa fa-map-marker" aria-hidden="true"></i>
-                            <span>
+                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                <span>
                   Location
                 </span>
-                        </a>
-                        <a href="">
-                            <i class="fa fa-phone" aria-hidden="true"></i>
-                            <span>
+                            </a>
+                            <a href="">
+                                <i class="fa fa-phone" aria-hidden="true"></i>
+                                <span>
                   Call +01 1234567890
                 </span>
-                        </a>
-                        <a href="">
-                            <i class="fa fa-envelope" aria-hidden="true"></i>
-                            <span>
+                            </a>
+                            <a href="">
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                                <span>
                   demo@gmail.com
                 </span>
-                        </a>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 footer-col">
-                <div class="footer_detail">
-                    <a href="" class="footer-logo">
-                        Feane
-                    </a>
+                <div class="col-md-4 footer-col">
+                    <div class="footer_detail">
+                        <a href="" class="footer-logo">
+                            Feane
+                        </a>
+                        <p>
+                            Necessary, making this the first true generator on the Internet. It uses a dictionary of over
+                            200 Latin words, combined with
+                        </p>
+                        <div class="footer_social">
+                            <a href="">
+                                <i class="fa fa-facebook" aria-hidden="true"></i>
+                            </a>
+                            <a href="">
+                                <i class="fa fa-twitter" aria-hidden="true"></i>
+                            </a>
+                            <a href="">
+                                <i class="fa fa-linkedin" aria-hidden="true"></i>
+                            </a>
+                            <a href="">
+                                <i class="fa fa-instagram" aria-hidden="true"></i>
+                            </a>
+                            <a href="">
+                                <i class="fa fa-pinterest" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 footer-col">
+                    <h4>
+                        Opening Hours
+                    </h4>
                     <p>
-                        Necessary, making this the first true generator on the Internet. It uses a dictionary of over
-                        200 Latin words, combined with
+                        Everyday
                     </p>
-                    <div class="footer_social">
-                        <a href="">
-                            <i class="fa fa-facebook" aria-hidden="true"></i>
-                        </a>
-                        <a href="">
-                            <i class="fa fa-twitter" aria-hidden="true"></i>
-                        </a>
-                        <a href="">
-                            <i class="fa fa-linkedin" aria-hidden="true"></i>
-                        </a>
-                        <a href="">
-                            <i class="fa fa-instagram" aria-hidden="true"></i>
-                        </a>
-                        <a href="">
-                            <i class="fa fa-pinterest" aria-hidden="true"></i>
-                        </a>
-                    </div>
+                    <p>
+                        10.00 Am -10.00 Pm
+                    </p>
                 </div>
             </div>
-            <div class="col-md-4 footer-col">
-                <h4>
-                    Opening Hours
-                </h4>
+            <div class="footer-info">
                 <p>
-                    Everyday
-                </p>
-                <p>
-                    10.00 Am -10.00 Pm
+                    &copy; <span id="displayYear"></span> All Rights Reserved By
+                    <a href="https://html.design/">Free Html Templates</a><br><br>
+                    &copy; <span id="displayYear"></span> Distributed By
+                    <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
                 </p>
             </div>
         </div>
-        <div class="footer-info">
-            <p>
-                &copy; <span id="displayYear"></span> All Rights Reserved By
-                <a href="https://html.design/">Free Html Templates</a><br><br>
-                &copy; <span id="displayYear"></span> Distributed By
-                <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
-            </p>
-        </div>
-    </div>
-</footer>
+    </footer>
 
-<!-- Modal Login -->
-<div sec:authorize="not isAuthenticated()" class="modal fade" id="modal-default" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="max-width: 700px">
-        <div class="modal-content">
-            <button class="p-0" type="button" data-dismiss="modal" style="border: none">
-                <img src="https://cdn.pizzahut.vn/images/Web_V3/Member/close.png"
-                     style="width: 30px;
+    <!-- Modal Login -->
+    <div sec:authorize="not isAuthenticated()" class="modal fade" id="modal-default" tabindex="-1"
+         aria-labelledby="loginModalLabel" aria-hidden="true">
+
+        <div class="modal-dialog" style="max-width: 700px">
+            <div class="modal-content">
+                <button class="p-0" type="button" data-dismiss="modal" style="border: none">
+                    <img src="https://cdn.pizzahut.vn/images/Web_V3/Member/close.png"
+                         style="width: 30px;
                         top: -10px;
                         position: absolute;
                         right: -15px;
                         cursor: pointer;">
-            </button>
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-5">
-                            <div class="h-100 login-background"></div>
-                        </div>
-                        <div class="col-lg-7">
-                            <div class="mt-3">
-                                <div class="mb-4" style="text-align: center; font-weight: bold; color: #A80000; font-size: 25px">
-                                    🍕🍕 WELCOME BACK!
+                </button>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div class="h-100 login-background"></div>
+                            </div>
+                            <div class="col-lg-7">
+                                <div class="mt-3">
+                                    <div class="mb-4"
+                                         style="text-align: center; font-weight: bold; color: #A80000; font-size: 25px">
+                                        🍕🍕 WELCOME BACK!
+                                    </div>
+                                    <form id="form-login">
+                                        <div class="form-group mb-3">
+                                            <label class="fs-4" for="email">Email <span class="text-danger">*</span></label>
+                                            <input
+                                                    name="email" id="email" type="email"
+                                                    class="form-control placeholder-text-grey-light placeholder-nomal login-form form-control"
+                                                    value="">
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label class="fs-4" for="password">Password <span
+                                                    class="text-danger">*</span></label>
+                                            <input
+                                                    name="password" id="password" type="password"
+                                                    class="form-control placeholder-text-grey-light placeholder-nomal login-form form-control"
+                                                    value="">
+                                            <i class="fas fa-eye" id="togglePassword" style="right: 50px;top: 208px;position: absolute;font-size: 16px;"></i>
+
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-3 mb-3">
+                                            <div class="icheck-primary">
+                                                <input type="checkbox" id="remember">
+                                                <label for="remember">
+                                                    Lưu mật khẩu
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <a href="/forgot-password">Quên mật khẩu?</a>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center mb-4">
+                                            <div id="login-btn" class="col-8">
+                                                <button type="submit" class="btn btn-primary btn-block mb-3">Đăng nhập
+                                                </button>
+                                            </div>
+                                            <div id="error-message" style="display: none; color: red;">Email hoặc mật khẩu
+                                                không hợp lệ, vui lòng thử lại!
+                                            </div>
+                                            <div>
+                                                Bạn chưa có tài khoản? <a href="/register">Đăng kí ngay</a>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
-                                <form id="form-login">
-                                    <div class="form-group mb-3">
-                                        <label class="fs-4" for="email">Email <span class="text-danger">*</span></label>
-                                        <input
-                                            name="email" id="email" type="email"
-                                            class="form-control placeholder-text-grey-light placeholder-nomal login-form form-control"
-                                            value="">
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label class="fs-4" for="password">Password <span class="text-danger">*</span></label>
-                                        <input
-                                            name="password" id="password" type="password"
-                                            class="form-control placeholder-text-grey-light placeholder-nomal login-form form-control"
-                                            value="">
-                                    </div>
-                                    <div class="d-flex justify-content-between mt-3 mb-3">
-                                        <div class="icheck-primary">
-                                            <input type="checkbox" id="remember">
-                                            <label for="remember">
-                                                Lưu mật khẩu
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <a href="/forgot-password">Quên mật khẩu?</a>
-                                        </div>
-                                    </div>
-                                    <div class="row justify-content-center mb-4">
-                                        <div id="login-btn" class="col-8">
-                                            <button type="submit" class="btn btn-primary btn-block mb-3">Đăng nhập</button>
-                                        </div>
-                                        <div id="error-message" style="display: none; color: red;">Email hoặc mật khẩu không hợp lệ, vui lòng thử lại!</div>
-                                        <div>
-                                            Bạn chưa có tài khoản? <a href="/register">Đăng kí ngay</a>
-                                        </div>
-                                    </div>
-                                </form>
                             </div>
                         </div>
                     </div>
@@ -1471,8 +1530,90 @@
             </div>
         </div>
     </div>
-</div>
-<div></div>
+
+    <div class="modal fade" id="modal-cart" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="max-width: 800px">
+            <div class="modal-content">
+                <button class="p-0 cart-close" type="button" data-dismiss="modal" style="border: none">
+                    <img src="https://cdn.pizzahut.vn/images/Web_V3/Member/close.png"
+                         style="width: 30px;
+                        top: -10px;
+                        position: absolute;
+                        right: -15px;
+                        cursor: pointer;">
+                </button>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div class="h-100 login-background"></div>
+                            </div>
+                            <div class="col-lg-7 product-info">
+                                <h3 id="product-name" class="font-weight-bolder">Pizza Seoul Bò Xào Bulgogi Viền Khoai Lang
+                                    Phô Mai - Seoul Beef Bulgogi Cheesy Sweet Potato Crust</h3>
+                                <p id="product-description">Phô Mai Mozzarella, Xốt Bulgogi, Bò Bulgogi, Miến Hàn Quốc, Cà
+                                    Rốt, Nấm, Ớt Chuông Xanh, Mè Trắng, Viền Phô Mai Khoai Lang</p>
+                                <div class="mb-4" id="option-product">
+                                    <p class="font-weight-bolder">Chọn kích cỡ</p>
+                                    <div class="mb-4" id="size-option">
+                                    </div>
+                                    <div class="topping-wraper">
+
+                                    </div>
+                                    <!--                                <p class="font-weight-bolder">Tùy chọn thêm</p>-->
+                                    <!--                                <div id="topping-option">-->
+                                    <!--                                </div>-->
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <div class="quantity-field">
+                                        <div class="value-button" id="decrease" onclick="decreaseQuantity()">-</div>
+                                        <input type="text" class="number" value="1" disabled/>
+                                        <div class="value-button" id="increase" onclick="increaseQuantity()">+</div>
+                                    </div>
+                                    <button id="addCart" class="btn btn-danger">Thêm vào giỏ hàng</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--modal quantity-->
+
+    <div class="modal fade" id="modal-update" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="max-width: 600px">
+            <div class="modal-content">
+                <button id="update-close" class="p-0" type="button" data-dismiss="modal" style="border: none">
+                    <img src="https://cdn.pizzahut.vn/images/Web_V3/Member/close.png"
+                         style="width: 30px;
+                        top: -10px;
+                        position: absolute;
+                        right: -15px;
+                        cursor: pointer;">
+                </button>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="d-flex justify-content-center flex-column">
+                            <h3 style="text-align: center" id="productName" class="font-weight-bolder"></h3>
+                            <div style="margin: 20px auto" class="quantity-field">
+                                <div class="value-button disabledbutton" id="decrease1" onclick="decreaseQuantity1()">-</div>
+                                <input type="text" id="quantity-item" class="number" value="1" disabled="">
+                                <div class="value-button" id="increase1" onclick="increaseQuantity1()">+</div>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <button data-dismiss="modal" style="width: 48%" id="cancel" class="btn btn-secondary">Hủy</button>
+                                <button style="width: 48%" id="save" class="btn btn-success">Lưu</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
 
 
 <!-- jQery -->
@@ -1511,11 +1652,35 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"
         integrity="sha512-TiQST7x/0aMjgVTcep29gi+q5Lk5gVTUPE9XgN0g96rwtjEjLpod4mlBRKWHeBcvGBAEvJBmfDqh2hfMMmg+5A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script th:inline="javascript">
+
 
     const formLogin = document.querySelector("#form-login")
     const emailEl = document.querySelector("#email")
     const passwordEl = document.querySelector("#password")
+    const authentic = [[${#authentication.principal}]]
+
+
+    const togglePassword = document.getElementById('togglePassword');
+
+    if(togglePassword != null){
+        togglePassword.addEventListener('click', function() {
+            if (passwordEl.type === 'password') {
+                passwordEl.type = 'text';
+                togglePassword.classList.remove('fa-eye');
+                togglePassword.classList.add('fa-eye-slash');
+            } else {
+                passwordEl.type = 'password';
+                togglePassword.classList.remove('fa-eye-slash');
+                togglePassword.classList.add('fa-eye');
+            }
+        });
+    }
+
+
     //validate
     $('#form-login').validate({
         rules: {
@@ -1524,7 +1689,8 @@
                 email: true
             },
             password: {
-                required: true
+                required: true,
+                minlength: 5
             },
         },
         messages: {
@@ -1533,7 +1699,8 @@
                 email: "email không hợp lệ"
             },
             password: {
-                required: "password không được để trống"
+                required: "password không được để trống",
+                minlength:"Mật khẩu tối thiểu 5 kí tự"
             },
         },
         errorElement: 'span',
@@ -1550,50 +1717,499 @@
     });
 
     // login
-   if(formLogin !== null){
-       formLogin.addEventListener("submit", async (e) =>{
-           e.preventDefault()
+    if (formLogin !== null) {
+        formLogin.addEventListener("submit", async (e) => {
+            e.preventDefault()
 
-           const data = {
-               email: emailEl.value,
-               password: passwordEl.value
-           }
-           console.log(data)
-           try{
-               const res = await axios.post("/api/v1/auth/login", data)
-               console.log(res)
-               if(res.status === 200){
-                   alert(res.data)
-                   setTimeout(()=>{
-                       window.location.href = "/"
-                   },1000)
-               }else {
-                   showErrorMessage()
-               }
-           }catch (e) {
-               showErrorMessage()
-           }
-       })
-   }
-    function showErrorMessage() {
+            const data = {
+                email: emailEl.value,
+                password: passwordEl.value
+            }
+            try {
+                const res = await axios.post("/api/v1/auth/login", data)
+                console.log(res)
+                if (res.status === 200) {
+                    try {
+                        const resCart = await axios.get("/api/v1/cart")
+                        console.log(resCart)
+                        if (resCart.data !== '') {
+                            localStorage.setItem('apiData', JSON.stringify(resCart.data));
+                        }
+                    } catch (e) {
+                        showErrorMessage()
+                    }
+                    setTimeout(() => {
+                        window.location.href = "/"
+                    }, 1000)
+                } else {
+                    console.log("abc")
+                }
+            } catch (e) {
+                console.log(e)
+                showErrorMessage("Sai email hoặc mật khẩu")
+            }
+        })
+    }
+
+    window.addEventListener('load', () => {
+        let params = new URLSearchParams(document.location.search);
+        let openLogin = params.get("openLogin");
+        if(openLogin === 'true'){
+            $('#modal-default').modal('show');
+        }
+        const apiData = JSON.parse(localStorage.getItem('apiData'));
+        if (authentic === "anonymousUser") {
+            localStorage.removeItem('apiData')
+            localStorage.removeItem('voucher')
+            cartNotice.innerHTML = '0'
+            headerCart.innerHTML = ''
+        }
+        if (apiData !== null) {
+            cartNotice.innerHTML = apiData.totalItem;
+            renderCartItem(apiData)
+        }
+        if(localStorage.length === 0){
+            cartNotice.innerHTML = '0'
+            headerCart.innerHTML = ''
+        }
+
+        console.log(localStorage)
+    });
+
+    function showErrorMessage(message) {
         let errorMessage = document.getElementById("error-message");
+        console.log(message)
         errorMessage.style.display = "block";
+        errorMessage.textContent = message
     }
 
     //show infor
     const userInforBtn = document.querySelector("#user-infor-btn")
     const userInfor = document.querySelector(".user-infor")
-    console.log(userInfor)
-    console.log(userInforBtn)
 
-    userInforBtn.addEventListener("click",(e)=>{
-        console.log("1")
-        if (userInfor.style.display === 'none') {
-            userInfor.style.display = 'block';
+    // buy product
+    const cardEl = document.querySelectorAll(".product-option")
+    let productName = document.querySelector("#product-name")
+    let productDes = document.querySelector("#product-description")
+    const sizeOption = document.querySelector("#size-option")
+
+
+    // tăng giảm số lượng
+    const quantityInput = document.querySelector('.number');
+    let quantity
+    const decreaseButton = document.querySelector("#decrease")
+    const increaseButton = document.querySelector("#increase")
+    const addBtn = document.querySelector("#addCart")
+
+    cardEl.forEach((card) => {
+        card.addEventListener("click", async () => {
+            if (authentic === "anonymousUser") {
+                $('#modal-default').modal('show');
+            } else {
+                card.setAttribute("data-toggle", "modal")
+                card.setAttribute("data-target", "#modal-cart")
+                quantityInput.value = 1
+                let productId = card.getAttribute("data-id")
+                quantity = parseInt(quantityInput.value);
+
+                try {
+                    const res = await axios.get(`/api/v1/admin/product/${productId}`)
+                    productName.textContent = res.data.name
+                    productName.setAttribute("data-id", res.data.id)
+                    productDes.textContent = res.data.description
+                    let html = ""
+                    for (let i = 0; i < res.data.productSizeList.length; i++) {
+                        let size = res.data.productSizeList[i].size
+                        let price = res.data.productSizeList[i].price
+                        let sizeId = size.id
+                        let checked = i === 0 ? 'checked' : '';
+                        const formatPrice = formatCurrency(price)
+                        html +=
+                            `<div class="form-check">
+                                        <input data-id="${res.data.id}" class="form-check-input" type="radio" name="sizeRadios" id="sizeRadio${sizeId}" value="${sizeId}" ${checked}>
+                                        <label class="form-check-label" for="sizeRadio${sizeId}">
+                                            ${size.name} - ${formatPrice}
+                                        </label>
+                                    </div>`
+
+                    }
+                    sizeOption.innerHTML = html
+                } catch (e) {
+                    console.log(e)
+                }
+                //topping option
+                const sizeRadios = document.getElementsByName('sizeRadios');
+
+                const firstSizeId = sizeRadios[0].value
+                await renderTopping(firstSizeId)
+                for (let i = 0; i < sizeRadios.length; i++) {
+                    sizeRadios[i].addEventListener("change", async () => {
+                        if (sizeRadios[i].checked) {
+                            const sizeId = sizeRadios[i].value
+                            await renderTopping(sizeId)
+                        }
+                    })
+                }
+            }
+        })
+    })
+    const optionEl = document.querySelector(".topping-wraper")
+
+    async function renderTopping(sizeId) {
+        try {
+            const res = await axios.get(`/api/v1/admin/size/${sizeId}`)
+            optionEl.innerHTML = ''
+            if (res.data.sizeToppingList.length > 0) {
+
+                const pEl = document.createElement('p')
+                pEl.classList.add("font-weight-bolder")
+                pEl.textContent = "Tùy chọn thêm"
+                const divEl = document.createElement('div')
+                divEl.id = "topping-option"
+
+                optionEl.appendChild(pEl)
+                optionEl.appendChild(divEl)
+                const toppingOption = document.querySelector("#topping-option")
+                let html = ""
+                toppingOption.innerHTML = ""
+                for (let i = 0; i < res.data.sizeToppingList.length; i++) {
+                    let topping = res.data.sizeToppingList[i].topping
+                    let price = res.data.sizeToppingList[i].price
+                    let toppingId = topping.id
+                    let checked = i === 0 ? 'checked' : '';
+                    const formatPrice = formatCurrency(price)
+                    html +=
+                        `<div class="form-check">
+                          <input data-name="${topping.name}" data-price="${price}" class="form-check-input" type="radio" name="toppingRadios" id="toppingRadio${toppingId}" value="${toppingId}" ${checked}>
+                          <label class="form-check-label" for="toppingRadio${toppingId}">
+                                 ${topping.name} - ${formatPrice}
+                          </label>
+                    </div>`
+                }
+                toppingOption.innerHTML = html
+            } else {
+                optionEl.innerHTML = ''
+            }
+
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    // add to cart
+    const addCartBtn = document.querySelector("#addCart")
+    const cartNotice = document.querySelector(".cart-notice")
+    const headerCart = document.querySelector("#header-cart")
+
+    const cartItems = document.getElementsByClassName('header__cart-item');
+    const cartClose = document.querySelector(".cart-close")
+    const firstTotalPrice = document.querySelector("#first-totalPrice")
+    const salePrice = document.querySelector("#sale-Price")
+
+    addCartBtn.addEventListener('click', async () => {
+        const selectedRadioSize = document.querySelector('input[name="sizeRadios"]:checked');
+        const selectedRadioTopping = document.querySelector('input[name="toppingRadios"]:checked');
+        cartClose.click()
+        let productId
+        let sizeId;
+        let toppingId;
+        let quantityEl = document.querySelector(".number").value
+        // salePrice.innerText = formatCurrency(0)
+
+        productId = selectedRadioSize.getAttribute("data-id")
+        sizeId = selectedRadioSize.value
+        if (selectedRadioTopping) {
+            toppingId = Number(selectedRadioTopping.value)
         } else {
-            userInfor.style.display = 'none';
+            toppingId = null
+        }
+        const data = {
+            productId: Number(productId),
+            sizeId: Number(sizeId),
+            toppingId: toppingId,
+            quantity: Number(quantityEl)
+        }
+        console.log(data)
+        try {
+            const res = await axios.post("/api/v1/cart/addToCart", data)
+            console.log(res)
+            toastr.success("Thêm vào giỏ hàng thành công")
+            cartNotice.innerHTML = res.data.totalItem
+
+            localStorage.setItem('apiData', JSON.stringify(res.data));
+            const apiData = JSON.parse(localStorage.getItem('apiData'));
+            renderCartItem(apiData)
+        } catch (e) {
+            console.log(e)
         }
     })
+
+
+    const cartList = document.querySelector(".cart-list")
+    const noItem = document.querySelector("#no-item")
+    const watchCart = document.querySelector("#watch-cart")
+    function renderCartItem(data) {
+        console.log(data)
+        if(data.totalItem === 0){
+
+            watchCart.innerHTML = ''
+
+            headerCart.innerHTML = ''
+            noItem.innerHTML = `<img src="https://dominos.vn/img/illustration/empty-cart.svg" style="width: 230px;height: 230px">
+                                <p style="width: 240px;margin: auto" class="font-weight-bolder">Giỏ Hàng Chưa Có Sản Phẩm. Xin Mời Bạn Mua Hàng</p>`
+            return
+        }
+            noItem.innerHTML = ''
+            let html = ''
+            const itemList = data.shoppingCartDetailList
+            itemList.forEach((item) => {
+                let formatPrice = formatCurrency(item.unitPrice)
+                let toppingName = ''
+                const sizeToppingList = item.size.sizeToppingList
+                if (item.toppingId != null) {
+                    for (let i = 0; i < sizeToppingList.length; i++) {
+                        if (item.toppingId === sizeToppingList[i].topping.id) {
+                            toppingName = sizeToppingList[i].topping.name
+                        }
+                    }
+                }
+                html += `<li class="header__cart-item">
+                      <img src="http://localhost:8080/api/v1/admin/image/${item.product.image.id}" alt=""
+                      class="header__cart-img">
+                   <div class="header__cart-item-info">
+                       <div class="header__cart-item-head">
+                           <div class="cart-item-top">
+                               <h5 data-id="${item.product.id}" class="header__cart-item-name">${item.product.name}</h5>
+<!--                               <div class="delete-item">Xóa</div>-->
+                           </div>
+                           <span data-id="${item.size.id}" class="header__cart-item-size">Kích thước : ${item.size.name}</span>
+                           <span data-id="${item.toppingId}" class="header__cart-item-topping">${toppingName}</span>
+                           <div class="cart-item-bottom">
+                               <span data-id="${item.quantity}" class="header__cart-item-qnt">Số lượng: <span class="item-quantity">${item.quantity}</span> </span>
+                               <span class="header__cart-item-price font-weight-bolder">${formatPrice}</span>
+
+                           </div>
+                       </div>
+                   </div>
+
+                  </li>`
+            })
+
+            headerCart.innerHTML = html
+
+
+            let html1 = ''
+            html1 = `<a href="/cart" style="margin-bottom: 20px; width: 100%" class="btn btn-danger">
+                        XEM GIỎ HÀNG <span id="totalPrice-cart" style="margin-left: 20px">0</span>
+                     </a`
+            watchCart.innerHTML = html1
+            const totalPrice = document.querySelector("#totalPrice-cart")
+            totalPrice.innerHTML = formatCurrency(data.totalPrice)
+
+
+
+        updateItem()
+        deleteItem()
+    }
+
+    const quantityItem = document.querySelector("#quantity-item")
+    const updateCloseBtn = document.querySelector("#update-close")
+
+
+
+
+
+    let quantityValue
+    function updateItem() {
+        const quantityValueBtn = document.querySelectorAll(".header__cart-item-qnt")
+        let productId;
+        let sizeId;
+        let toppingId;
+        let quantity;
+        for (let i = 0; i < quantityValueBtn.length; i++) {
+            quantityValueBtn[i].addEventListener('click', function () {
+
+                quantityValueBtn[i].setAttribute("data-toggle", "modal")
+                quantityValueBtn[i].setAttribute("data-target", "#modal-update")
+
+                let productName = this.parentNode.parentNode.querySelector('.header__cart-item-name');
+                let productQuantity = this.parentNode.parentNode.querySelector('.item-quantity');
+                let productSize = this.parentNode.parentNode.querySelector('.header__cart-item-size')
+                let productTopping = this.parentNode.parentNode.querySelector('.header__cart-item-topping')
+
+                productId = productName.getAttribute("data-id")
+                sizeId = productSize.getAttribute("data-id")
+                toppingId = productTopping.getAttribute("data-id")
+
+
+                // Cập nhật thông tin sản phẩm trong modal
+                document.getElementById('productName').innerText = productName.innerText;
+                document.querySelector('#quantity-item').value = productQuantity.innerText;
+
+
+                quantityValue = parseInt(productQuantity.innerText);
+                updateButtonStatus1(quantityValue)
+            });
+        }
+        const saveBtn = document.querySelector("#save")
+        saveBtn.addEventListener("click",async ()=>{
+            updateCloseBtn.click()
+            if(toppingId === 'null'){
+                toppingId = null
+            }else{
+                toppingId = Number(toppingId)
+            }
+            const data = {
+                productId: Number(productId),
+                sizeId: Number(sizeId),
+                toppingId: toppingId,
+                quantity: Number(quantityItem.value)
+            }
+            console.log(data)
+            try{
+                const res = await axios.post("/api/v1/cart/updateCart",data)
+                console.log(res.data)
+                toastr.success("sửa thành công")
+                cartNotice.innerHTML = res.data.totalItem
+
+                localStorage.setItem('apiData', JSON.stringify(res.data));
+                const apiData = JSON.parse(localStorage.getItem('apiData'));
+                renderCartItem(apiData)
+                console.log(localStorage)
+            }catch (e){
+                console.log(e)
+            }
+        })
+    }
+    function deleteItem(){
+        const deleteItemBtn = document.querySelectorAll(".delete-item")
+        let productId;
+        let sizeId;
+        let toppingId;
+        let quantity;
+
+        deleteItemBtn.forEach((deleteItem)=>{
+            deleteItem.addEventListener("click",async ()=>{
+
+                let productName = deleteItem.parentNode.parentNode.querySelector('.header__cart-item-name');
+                let productQuantity = deleteItem.parentNode.parentNode.querySelector('.item-quantity');
+                let productSize = deleteItem.parentNode.parentNode.querySelector('.header__cart-item-size')
+                let productTopping = deleteItem.parentNode.parentNode.querySelector('.header__cart-item-topping')
+
+                productId = productName.getAttribute("data-id")
+                sizeId = productSize.getAttribute("data-id")
+                toppingId = productTopping.getAttribute("data-id")
+                quantity = productQuantity.innerText
+
+                if(toppingId === 'null'){
+                    toppingId = null
+                }else{
+                    toppingId = Number(toppingId)
+                }
+
+                const data = {
+                    productId: Number(productId),
+                    sizeId: Number(sizeId),
+                    toppingId: toppingId,
+                    quantity: Number(quantity)
+                }
+                console.log(data)
+                try{
+                    const res = await axios.post("/api/v1/cart/deleteItem",data)
+                    console.log(res.data)
+                    cartNotice.innerHTML = res.data.totalItem
+                    toastr.success("xóa thành công")
+                    localStorage.setItem('apiData', JSON.stringify(res.data));
+                    const apiData = JSON.parse(localStorage.getItem('apiData'));
+                    renderCartItem(apiData)
+                    console.log(localStorage)
+                }catch (e){
+                    console.log(e)
+                }
+            })
+        })
+    }
+
+
+    let decrease = document.querySelector("#decrease1")
+
+    function updateButtonStatus1(quantity){
+        if(quantity > 1){
+            decrease.classList.remove("disabledbutton")
+        }else{
+            decrease.classList.add("disabledbutton")
+        }
+    }
+
+    function decreaseQuantity1() {
+        if (quantityValue > 1) {
+            quantityValue--;
+            quantityItem.value = quantityValue;
+            updateButtonStatus1(quantityValue);
+        }
+    }
+    function increaseQuantity1() {
+        quantityValue++;
+        quantityItem.value = quantityValue;
+        updateButtonStatus1(quantityValue);
+    }
+
+    function formatCurrency(price) {
+        // Kiểm tra nếu price không phải là một số
+        if (typeof price !== 'number') {
+            return price; // Trả về giá trị ban đầu
+        }
+
+        // Định dạng tiền tệ
+        return price.toLocaleString('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+        });
+    }
+
+    function updateButtonStatus() {
+        if (quantity <= 1) {
+            decreaseButton.classList.add("disabledbutton")
+        } else {
+            decreaseButton.classList.remove("disabledbutton")
+        }
+    }
+
+    function updateTotalPrice(sizeRadios, toppingRadios, quantity) {
+        const totalPrice = (getPrice(sizeRadios) + getPrice(toppingRadios)) * quantity
+        let formatPrice = formatCurrency(totalPrice)
+        addBtn.textContent = `Thêm vào giỏ hàng ${formatPrice}`;
+    }
+
+
+    function getPrice(radios) {
+        let price = 0;
+        for (let i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                price = parseInt(radios[i].getAttribute("data-price"));
+                break;
+            }
+        }
+        return price;
+    }
+
+    function decreaseQuantity() {
+        if (quantity > 1) {
+            quantity--;
+            quantityInput.value = quantity;
+            updateButtonStatus();
+        }
+    }
+
+    function increaseQuantity() {
+        quantity++;
+        quantityInput.value = quantity;
+        updateButtonStatus();
+    }
+
+    updateButtonStatus();
+
+
 </script>
 </body>
 

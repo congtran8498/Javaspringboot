@@ -24,6 +24,7 @@ public class Topping {
     private String name;
 
     @OneToMany(mappedBy = "topping",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<SizeTopping> sizeToppingList = new ArrayList<>();
 
     @Column(name = "created_at")

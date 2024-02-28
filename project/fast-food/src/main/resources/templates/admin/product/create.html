@@ -444,90 +444,90 @@
         })
 
 
-        const renderImage = (images) => {
-
-            let html = "";
-            images.forEach(image => {
-                html += `
-                    <div class="image-item" onclick="choseImage(this)" data-id="${image.id}">
-                        <img src="/api/v1/admin/image/${image.id}" alt="">
-                    </div>
-                `
-            })
-            imageContainer.innerHTML = html;
-        }
-
-
-        const renderPagination = (imageList) => {
-            $('.pagination-container').pagination({
-                dataSource: imageList,
-                pageSize: 8,
-                callback: function (data, pagination) {
-                    renderImage(data);
-                }
-            })
-        }
-
-
-        // upload file
-        const upLoadBtn = document.querySelector("#avatar");
-        upLoadBtn.addEventListener("change", async (e) => {
-            const file = e.target.files[0];
-
-            const formData = new FormData();
-            formData.append("file", file)
-            try {
-                const res = await axios.post(`/api/v1/user/${idUser}/images`, formData)
-                imageList.unshift(res.data)
-                renderPagination(imageList)
-                console.log(res.data)
-            } catch (e) {
-                console.log(e)
-            }
-        })
-        // Xu li anh
-        const choseImage = el => {
-            const selectedEl = document.querySelector('.image-item.selected');
-            if (selectedEl) {
-                selectedEl.classList.remove('selected');
-            }
-            el.classList.add('selected');
-
-            choseImageBtn.disabled = false;
-            deleteImageBtn.disabled = false;
-        }
-        // Xóa ảnh
-        deleteImageBtn.addEventListener('click', async () => {
-            const selectedEl = document.querySelector('.image-item.selected');
-            const imageId = selectedEl.dataset.id;
-            console.log(typeof imageId)
-
-            try {
-                const res = await axios.delete(`/api/v1/admin/image/${imageId}`)
-                console.log("Before", imageList)
-                imageList = imageList.filter(image => image.id !== Number(imageId));
-                console.log("After", imageList)
-                renderPagination(imageList);
-
-                choseImageBtn.disabled = true;
-                deleteImageBtn.disabled = true;
-            } catch (error) {
-                console.log(error)
-            }
-        })
-
-
-        // Chon anh
-        const modalEl = document.querySelector("#modal-xl")
-        const closeBtn = document.querySelector(".close")
-
-        choseImageBtn.addEventListener("click", () => {
-            const selectedEl = document.querySelector('.image-item.selected');
-            const imageId = selectedEl.dataset.id;
-            thumbnailEl.src = `/api/v1/admin/image/${imageId}`
-            thumbnailEl.setAttribute("data-id", imageId)
-            closeBtn.click()
-        })
+        // const renderImage = (images) => {
+        //
+        //     let html = "";
+        //     images.forEach(image => {
+        //         html += `
+        //             <div class="image-item" onclick="choseImage(this)" data-id="${image.id}">
+        //                 <img src="/api/v1/admin/image/${image.id}" alt="">
+        //             </div>
+        //         `
+        //     })
+        //     imageContainer.innerHTML = html;
+        // }
+        //
+        //
+        // const renderPagination = (imageList) => {
+        //     $('.pagination-container').pagination({
+        //         dataSource: imageList,
+        //         pageSize: 8,
+        //         callback: function (data, pagination) {
+        //             renderImage(data);
+        //         }
+        //     })
+        // }
+        //
+        //
+        // // upload file
+        // const upLoadBtn = document.querySelector("#avatar");
+        // upLoadBtn.addEventListener("change", async (e) => {
+        //     const file = e.target.files[0];
+        //
+        //     const formData = new FormData();
+        //     formData.append("file", file)
+        //     try {
+        //         const res = await axios.post(`/api/v1/user/${idUser}/images`, formData)
+        //         imageList.unshift(res.data)
+        //         renderPagination(imageList)
+        //         console.log(res.data)
+        //     } catch (e) {
+        //         console.log(e)
+        //     }
+        // })
+        // // Xu li anh
+        // const choseImage = el => {
+        //     const selectedEl = document.querySelector('.image-item.selected');
+        //     if (selectedEl) {
+        //         selectedEl.classList.remove('selected');
+        //     }
+        //     el.classList.add('selected');
+        //
+        //     choseImageBtn.disabled = false;
+        //     deleteImageBtn.disabled = false;
+        // }
+        // // Xóa ảnh
+        // deleteImageBtn.addEventListener('click', async () => {
+        //     const selectedEl = document.querySelector('.image-item.selected');
+        //     const imageId = selectedEl.dataset.id;
+        //     console.log(typeof imageId)
+        //
+        //     try {
+        //         const res = await axios.delete(`/api/v1/admin/image/${imageId}`)
+        //         console.log("Before", imageList)
+        //         imageList = imageList.filter(image => image.id !== Number(imageId));
+        //         console.log("After", imageList)
+        //         renderPagination(imageList);
+        //
+        //         choseImageBtn.disabled = true;
+        //         deleteImageBtn.disabled = true;
+        //     } catch (error) {
+        //         console.log(error)
+        //     }
+        // })
+        //
+        //
+        // // Chon anh
+        // const modalEl = document.querySelector("#modal-xl")
+        // const closeBtn = document.querySelector(".close")
+        //
+        // choseImageBtn.addEventListener("click", () => {
+        //     const selectedEl = document.querySelector('.image-item.selected');
+        //     const imageId = selectedEl.dataset.id;
+        //     thumbnailEl.src = `/api/v1/admin/image/${imageId}`
+        //     thumbnailEl.setAttribute("data-id", imageId)
+        //     closeBtn.click()
+        // })
 
 
     </script>

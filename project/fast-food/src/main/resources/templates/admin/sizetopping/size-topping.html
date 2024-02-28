@@ -3,7 +3,7 @@
       th:replace="~{/admin/layout/admin-layout :: admin-layout(~{:: title}, ~{}, ~{:: #content}, ~{:: #js})}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Size-Topping</title>
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -18,7 +18,7 @@
                                 <a href="#">Dashboard</a>
                             </li>
                             <li class="breadcrumb-item active">
-                                Danh sách size
+                                Danh sách size-topping
                             </li>
                         </ol>
                     </div>
@@ -230,7 +230,7 @@
                 const res = await axios.put(`/api/v1/admin/size-topping/${idSize}`, request)
                 console.log(res)
                 if (res.status === 200) {
-                    toastr.success("Thay doi thanh cong")
+                    toastr.success("Thay đổi thành công")
                     setTimeout(() => {
                         window.location.href = "/admin-page/size-topping"
                     }, 1500)
@@ -274,7 +274,7 @@
                 const res = await axios.post(`/api/v1/admin/size-topping`, request)
                 console.log(res)
                 if (res.status === 201) {
-                    toastr.success("Thay doi thanh cong")
+                    toastr.success("Tạo thành công")
                     setTimeout(() => {
                         window.location.href = "/admin-page/size-topping"
                     }, 1500)

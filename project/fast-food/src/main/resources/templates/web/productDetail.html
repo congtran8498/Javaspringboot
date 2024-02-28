@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chi tiết sản phẩm</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+
+    <link rel="stylesheet" href="/admin/plugins/fontawesome-free/css/all.min.css">
+
+    <link rel="stylesheet" href="/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+
+    <link rel="stylesheet" href="/admin/dist/css/adminlte.min.css?v=3.2.0">
+<body class="hold-transition login-page">
+<div style="width: 600px;margin-top: 40px">
+
+    <div class="card">
+        <div class="card-body container-fluid">
+            <h4 class="text-center font-weight-bolder">Sản phẩm</h4>
+            <div th:each="item : ${order.getOrderDetailList()}" class="cart-item-wraper row" style="border-bottom: 1px solid #cacaca;margin: 0">
+                <div class="col-8 cart-item-infor d-flex align-items-center">
+                    <img style="width: 120px;
+                                    height: auto;
+                                    margin: 12px;
+                                    border: 1px solid #e8e8e8;" th:src="${item.product.image.id != null ? '/api/v1/admin/image/' + item.product.image.id : 'https://placehold.co/600x400'}">
+                    <div class="header__cart-item-info">
+                        <div class="header__cart-item-head" style="padding-left: 20px">
+                            <h5 class="header__cart-item-name" th:text="${item.product.name}">pizza rau củ sốt bơ tỏi</h5>
+                            <span>Kích thước: <span th:text="${item.size.name}"></span></span>
+                            <br>
+                            <span th:if="${item.toppingName != null}" th:text="${item.toppingName}">Viền phô mai</span>
+                            <br th:if="${item.toppingName != null}">
+                            <span>Số lượng: <span th:text="${item.quantity}"></span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 d-flex align-items-center justify-content-between">
+
+                    <div id="itemPrice_37" class="d-flex align-items-center" style="margin: 0 50px; font-weight: 600" >
+
+                    </div>
+
+                </div>
+            </div>
+            <div style="background-color: #e5e5e5" class="mx-3 my-4 p-2">
+                <div class="d-flex justify-content-between mx-3">
+                    <p class="mb-0">Tổng tiền:</p>
+                    <p id="first-totalPrice" class="mb-0" th:text="${#numbers.formatCurrency(order.totalPrice)}"></p>
+                </div>
+                <div class="d-flex justify-content-between mx-3">
+                    <p class="mb-0">Giảm khuyến mãi:</p>
+                    <p id="sale-Price" class="mb-0" th:text="${#numbers.formatCurrency(order.discountValue)}">0đ</p>
+                </div>
+                <div class="d-flex justify-content-between mx-3">
+                    <p class="mb-0">Thanh toán:</p>
+                    <p id="total-Price" class="mb-0" th:text="${#numbers.formatCurrency(order.totalPrice - order.discountValue)}">0đ</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script src="/admin/plugins/jquery/jquery.min.js"></script>
+
+<script src="/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script src="/admin/dist/js/adminlte.min.js?v=3.2.0"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
+        integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"
+        integrity="sha512-TiQST7x/0aMjgVTcep29gi+q5Lk5gVTUPE9XgN0g96rwtjEjLpod4mlBRKWHeBcvGBAEvJBmfDqh2hfMMmg+5A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script th:inline="javascript">
+    const order = [[${order}]]
+    console.log(order)
+</script>
+</body>
+</html>

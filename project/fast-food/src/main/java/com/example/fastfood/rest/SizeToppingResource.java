@@ -29,4 +29,10 @@ public class SizeToppingResource {
         sizeToppingService.deleteSizeTopping(id);
         return ResponseEntity.noContent().build();
     }
+
+    //
+    @GetMapping("{id}")
+    public ResponseEntity<?> getSizeBySizeId(@PathVariable Long id){
+        return ResponseEntity.ok(sizeToppingService.findBySizeId(id));
+    }
 }

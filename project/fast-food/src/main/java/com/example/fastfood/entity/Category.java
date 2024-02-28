@@ -30,9 +30,15 @@ public class Category {
 
     @Enumerated(EnumType.STRING)
     private Status status;
-    private enum Status {
-        ACTIVE,
-        BLOCK
+    @Getter
+    public enum Status {
+        ACTIVE("Đang sử dụng"),
+        BLOCK("Ngừng sử dụng");
+        private final String value;
+
+        Status(String value) {
+            this.value = value;
+        }
     }
 
     @ManyToMany(mappedBy = "categoryList")

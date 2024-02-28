@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{/admin/layout/admin-layout :: admin-layout(~{:: title}, ~{}, ~{:: #content}, ~{})}">
+      th:replace="~{/admin/layout/admin-layout :: admin-layout(~{:: title}, ~{}, ~{:: #content}, ~{:: #js})}">
 
 <head>
     <meta charset="utf-8" />
@@ -57,6 +57,7 @@
                                         <th>Danh mục</th>
                                         <th>Giá</th>
                                         <th>Hình ảnh</th>
+                                        <th>Trạng thái</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -68,8 +69,8 @@
                                             <a th:href="@{|/admin-page/product/${product.id}|}" th:text="${product.name}">John Doe</a>
                                         </td>
                                         <td  th:text="${product.description}">Công khai</td>
-                                        <td th:each="category : ${product.categoryList}" >
-                                            <span class="badge bg-secondary me-2" th:text="${category.name}"></span>
+                                        <td>
+                                            <span th:each="category : ${product.categoryList}" class="badge bg-secondary me-2" th:text="${category.name}"></span>
                                         </td>
                                         <td>
                                             <ul>
@@ -79,6 +80,14 @@
                                             </ul>
                                         </td>
                                         <td ><img th:src="@{/api/v1/admin/image/{id}(id=${product.image.id})}" style="width: 150px; height: 100px;"></td>
+                                        <td>
+                                            <span th:switch="${product.status.value}">
+                                                    <span th:case="'Đang sử dụng'" class="badge badge-success" th:text="${product.status.value}"></span>
+                                                    <span th:case="'Hết hàng'" class="badge badge-danger" th:text="${product.status.value}"></span>
+                                                    <span th:case="*" class="badge" th:text="${product.status.value}"></span>
+                                            </span>
+
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -114,8 +123,14 @@
         </section>
     </div>
 </th:block>
+<th:block id="js">
+    <script th:inline="javascript">
+        const res = [[${pageData.getContent()}]]
+        console.log(res)
 
 
+    </script>
+</th:block>
 
 </body>
 

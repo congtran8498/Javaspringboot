@@ -28,4 +28,14 @@ public class ProductResource {
     public ResponseEntity<?> updateBlog(@PathVariable Long id, @RequestBody CreatePizzaRequestDto request){
         return ResponseEntity.ok(productService.updateProduct(id,request));
     }
+
+    @GetMapping("{id}")
+    public ResponseEntity<?> getProductById(@PathVariable Long id){
+        return ResponseEntity.ok(productService.findById(id));
+    }
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteBlog(@PathVariable Long id){
+        productService.deleteProduct(id);
+        return ResponseEntity.noContent().build();
+    }
 }

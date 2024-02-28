@@ -31,15 +31,33 @@ public class Product {
     @JoinColumn(name = "image_id")
     private Image image;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "product_category",
             joinColumns =@JoinColumn( name = "product_id"),
             inverseJoinColumns =@JoinColumn(name = "category_id"))
 
     private List<Category> categoryList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<ProductSize> productSizeList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product",cascade=CascadeType.ALL)
+    @JsonIgnore
+    private List<OrderDetail> orderDetailList = new ArrayList<>();
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    @Getter
+    public enum Status {
+        ACTIVE("Đang sử dụng"),
+        BLOCK("Hết hàng");
+        private final String value;
+
+        Status(String value) {
+            this.value = value;
+        }
+    }
 
 
     @Column(name = "created_at")

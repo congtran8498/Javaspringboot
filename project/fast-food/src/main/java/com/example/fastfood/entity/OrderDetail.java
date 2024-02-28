@@ -1,5 +1,6 @@
 package com.example.fastfood.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,13 +19,24 @@ public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String crustOption;
-    private Integer quantity;
-    private Float price;
-
 
     @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "size_id")
+    private Size size;
+
+    private Long toppingId;
+    private String toppingName;
+    private Integer quantity;
+    private double price;
+
+
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "order_id")
+    @JsonIgnore
     private Order order;
 
     private Status status;

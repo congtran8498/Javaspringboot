@@ -2,6 +2,7 @@ package com.example.fastfood.security;
 
 import com.example.fastfood.entity.User;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,7 +12,7 @@ import java.util.Collection;
 
 @AllArgsConstructor
 @NoArgsConstructor
-
+@Getter
 public class CustomUserDetails implements UserDetails {
 
     private User user;
@@ -22,6 +23,9 @@ public class CustomUserDetails implements UserDetails {
 
     public Long getUserId(){
         return user.getId();
+    }
+    public String getAvatar(){
+        return user.getAvatarUrl();
     }
 
     @Override

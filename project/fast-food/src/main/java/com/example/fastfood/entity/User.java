@@ -1,5 +1,6 @@
 package com.example.fastfood.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -25,7 +26,7 @@ public class User {
     private Long id;
 
     @Column(length = 50)
-    @Size(min = 5, max = 50,message = "tên tối thiểu 5 kí tự và tối đa 50 kí tự")
+//    @Size(min = 5, max = 50,message = "tên tối thiểu 5 kí tự và tối đa 50 kí tự")
     @NotEmpty(message = "thiếu tên")
     private String name;
 
@@ -57,10 +58,21 @@ public class User {
     private Status status;
     private Boolean isEnabled;
 
+    private String avatarUrl;
+
+    @Getter
     public enum Status {
-        ACTIVE,
-        BLOCK
+        ACTIVE("Đang hoạt động"),
+        BLOCK("Ngừng hoạt động");
+        private final String value;
+
+        Status(String value) {
+            this.value = value;
+        }
     }
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private ShoppingCart shoppingCart;
 
     @ManyToMany(fetch = FetchType.EAGER) // load all role when load user
     @JoinTable(
@@ -69,6 +81,12 @@ public class User {
             inverseJoinColumns =@JoinColumn(name = "role_id")
     )
     private List<Role> roleList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<Order> orders = new ArrayList<>();
+
+
 
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)

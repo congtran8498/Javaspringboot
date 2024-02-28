@@ -1,5 +1,6 @@
 package com.example.fastfood.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,12 +19,23 @@ public class ShoppingCartDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer quantity;
-    private String crustOption;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
+    @ManyToOne
+    @JoinColumn(name = "size_id")
+    private Size size;
+
+    private Long toppingId;
+    private String toppingName;
+
+    private Integer quantity;
+    private double unitPrice;
 
     @ManyToOne
     @JoinColumn(name = "shopping_cart_id")
+    @JsonIgnore
     private ShoppingCart shoppingCart;
 
     @Column(name = "created_at")

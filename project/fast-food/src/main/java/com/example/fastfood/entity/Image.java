@@ -1,5 +1,6 @@
 package com.example.fastfood.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,10 +25,13 @@ public class Image {
     @Column(columnDefinition = "LONGBLOB")
     private byte[] data;
     private String type;
+    private String imageFor;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="user_id")
     private User user;
+
 
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)

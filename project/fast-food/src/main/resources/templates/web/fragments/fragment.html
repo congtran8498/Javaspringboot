@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div th:fragment="navbar">
+        <header class="header_section p-0 d-flex justify-content-center"
+                style="width: 100%;position: fixed;background-color: #626262;z-index: 5">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg custom_nav-container ">
+                    <a class="navbar-brand" href="/">
+            <span>
+              Feane
+            </span>
+                    </a>
+
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class=""> </span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav  mx-auto ">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/menu">Menu</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/contact">Contact Us</a>
+                            </li>
+                        </ul>
+                        <div class="user_option">
+                            <div style="position: relative" class="show-user-infor">
+                                <button id="user-infor-btn" style="background-color: transparent;
+                                      border: none;
+                                      padding: 2px 4px;
+                                      font-size: 16px;
+                                      cursor: pointer;
+                                      opacity: 0.7; /* Độ trong suốt của button */"
+                                        class="user_link" data-toggle="modal" data-target="#modal-default">
+                                    <i style="font-size: 26px" class="fa fa-user" aria-hidden="true"></i>
+                                    <th:block sec:authorize="not isAuthenticated()">Thành viên</th:block>
+                                    <th:block sec:authorize="isAuthenticated()">
+                                        Hi
+                                        <th:block th:text="${#authentication.principal.getFullName()}"></th:block>
+                                    </th:block>
+
+                                </button>
+                                <div class="user-infor" sec:authorize="isAuthenticated()">
+                                    <ul style="background-color: white;
+                                            list-style-type: none; padding: 8px 8px; border-radius: 4px">
+                                        <li th:attr="data-id=${#authentication.principal.getUserId()}"
+                                            class="user-infor-item"><a class="text-dark d-block" href="/myprofile">Thông tin cá nhân</a></li>
+                                        <li class="user-infor-item"><a class="text-dark d-block" href="/change-password">Đổi mật khẩu</a></li>
+                                        <li class="user-infor-item"><a class="text-dark d-block" href="/order">Đơn hàng của bạn</a></li>
+                                        <li class="user-infor-item"><a class="text-dark d-block" href="/logout">Đăng xuất</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+<!--                            <div class="header-cart">-->
+<!--                                <a class="cart_link" style="position: relative; margin: 0 14px" href="#">-->
+<!--                                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"-->
+<!--                                         x="0px" y="0px"-->
+<!--                                         viewBox="0 0 456.029 456.029"-->
+<!--                                         style="enable-background:new 0 0 456.029 456.029;width: 26px"-->
+<!--                                         xml:space="preserve">-->
+<!--                  <g>-->
+<!--                    <g>-->
+<!--                      <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248-->
+<!--                   c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>-->
+<!--                    </g>-->
+<!--                  </g>-->
+<!--                                        <g>-->
+<!--                    <g>-->
+<!--                      <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48-->
+<!--                   C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064-->
+<!--                   c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4-->
+<!--                   C457.728,97.71,450.56,86.958,439.296,84.91z"/>-->
+<!--                    </g>-->
+<!--                  </g>-->
+<!--                                        <g>-->
+<!--                    <g>-->
+<!--                      <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296-->
+<!--                   c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>-->
+<!--                    </g>-->
+<!--                  </g>-->
+<!--                                        <g>-->
+<!--                  </g>-->
+<!--                                        <g>-->
+<!--                  </g>-->
+<!--                                        <g>-->
+<!--                  </g>-->
+<!--                                        <g>-->
+<!--                  </g>-->
+<!--                                        <g>-->
+<!--                  </g>-->
+<!--                                        <g>-->
+<!--                  </g>-->
+<!--                                        <g>-->
+<!--                  </g>-->
+<!--                                        <g>-->
+<!--                  </g>-->
+<!--                                        <g>-->
+<!--                  </g>-->
+<!--                                        <g>-->
+<!--                  </g>-->
+<!--                                        <g>-->
+<!--                  </g>-->
+<!--                                        <g>-->
+<!--                  </g>-->
+<!--                                        <g>-->
+<!--                  </g>-->
+<!--                                        <g>-->
+<!--                  </g>-->
+<!--                                        <g>-->
+<!--                  </g>-->
+<!--                </svg>-->
+<!--                                    <span class="cart-notice">0</span>-->
+<!--                                </a>-->
+<!--                                <div class="cart-list">-->
+<!--                                    <ul id="header-cart" class="header__cart-list-item">-->
+<!--                                        &lt;!&ndash; cart item  &ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                    <li class="header__cart-item">&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                        <img src="http://localhost:8080/api/v1/admin/image/31" alt=""&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                             class="header__cart-img">&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                        <div class="header__cart-item-info">&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                            <div class="header__cart-item-head">&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                                <div class="cart-item-top">&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                                    <h5 class="header__cart-item-name">Pizza Phô Mai</h5>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                                    <div class="delete-item">Xóa</div>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                                </div>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                                <span class="header__cart-item-price">Kích thước - Nhỏ</span>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                                <span class="header__cart-item-mutiphy">Đế kéo tay truyền thống</span>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                                <div class="cart-item-bottom">&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                                    <span class="header__cart-item-qnt">Số lượng: 2</span>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                                    <span class="header__cart-item-price font-weight-bolder">280.000</span>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                                </div>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                            </div>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                        </div>&ndash;&gt;-->
+
+<!--                                        &lt;!&ndash;                                    </li>&ndash;&gt;-->
+
+<!--                                    </ul>-->
+<!--                                    <div class="d-flex justify-content-center mb-4">-->
+<!--                                        <div class="form-floating ">-->
+<!--                                            <input style="width: 300px" type="text" class="form-control" id="floatingInput"-->
+<!--                                                   placeholder="Nhập mã voucher">-->
+<!--                                        </div>-->
+<!--                                        <button id="voucher-btn" class="btn btn-info">Áp dụng</button>-->
+<!--                                    </div>-->
+<!--                                    <div style="background-color: #e5e5e5" class="mx-3 mb-4 p-2">-->
+<!--                                        <div class="d-flex justify-content-between mx-3">-->
+<!--                                            <p class="mb-0">Tổng tiền:</p>-->
+<!--                                            <p id="first-totalPrice" class="mb-0">0đ</p>-->
+<!--                                        </div>-->
+<!--                                        <div class="d-flex justify-content-between mx-3">-->
+<!--                                            <p class="mb-0">Giảm khuyến mãi:</p>-->
+<!--                                            <p id="sale-Price" class="mb-0">0đ</p>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="d-flex justify-content-center mx-3">-->
+<!--                                        <a href="/cart" style="margin-bottom: 20px; width: 100%"-->
+<!--                                           class="btn btn-danger">-->
+<!--                                            XEM GIỎ HÀNG <span id="totalPrice-cart" style="margin-left: 20px">0</span>-->
+<!--                                        </a>-->
+<!--                                    </div>-->
+
+
+<!--                                </div>-->
+<!--                            </div>-->
+
+                            <!--                        <form class="form-inline">-->
+                            <!--                            <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">-->
+                            <!--                                <i style="font-size: 24px" class="fa fa-search" aria-hidden="true"></i>-->
+                            <!--                            </button>-->
+                            <!--                        </form>-->
+                            <!--                        <a href="" class="order_online">-->
+                            <!--                            Order Online-->
+                            <!--                        </a>-->
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+    </div>
+</body>
+</html>

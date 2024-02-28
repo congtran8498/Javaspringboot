@@ -1,6 +1,7 @@
 package com.example.fastfood.rest;
 
 import com.example.fastfood.request.UpsertVoucherRequest;
+import com.example.fastfood.request.VoucherRequest;
 import com.example.fastfood.service.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,10 @@ public class VoucherResource {
     @PostMapping
     public ResponseEntity<?> createVoucher(@RequestBody UpsertVoucherRequest request){
         return new ResponseEntity<>(voucherService.createVoucher(request), HttpStatus.CREATED);
+    }
+    @PostMapping("/find")
+    public ResponseEntity<?> findVoucher(@RequestBody VoucherRequest request){
+        return ResponseEntity.ok(voucherService.findVoucherByCode(request));
     }
 
     //Cap nhat

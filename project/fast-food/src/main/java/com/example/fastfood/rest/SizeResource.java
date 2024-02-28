@@ -30,4 +30,10 @@ public class SizeResource {
         sizeService.deleteSize(id);
         return ResponseEntity.noContent().build();
     }
+
+    //size
+    @GetMapping("{id}")
+    public ResponseEntity<?> getSizeById(@PathVariable Long id){
+        return ResponseEntity.ok(sizeService.getSizeById(id));
+    }
 }

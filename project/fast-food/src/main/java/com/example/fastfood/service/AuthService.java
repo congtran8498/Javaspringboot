@@ -52,10 +52,12 @@ public class AuthService {
         User user = new User();
         user.setName(request.getName());
         user.setEmail(request.getEmail());
+        user.setPhone(request.getPhone());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setAddress(request.getAddress());
         user.setIsEnabled(false);
         user.setRoleList(List.of(roleUser));
+        user.setStatus(User.Status.ACTIVE);
         userRepository.save(user);
 
         Token tokenConfirm = new Token();

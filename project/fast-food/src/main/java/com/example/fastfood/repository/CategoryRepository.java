@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface CategoryRepository extends JpaRepository<Category,Long> {
     List<Category> findByIdIn(List<Long> ids);
+    List<Category> findByStatus(Category.Status status);
 }

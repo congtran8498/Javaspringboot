@@ -1,9 +1,6 @@
 package com.example.fastfood.service;
 
-import com.example.fastfood.entity.Product;
-import com.example.fastfood.entity.ProductSize;
-import com.example.fastfood.entity.Size;
-import com.example.fastfood.entity.SizeTopping;
+import com.example.fastfood.entity.*;
 import com.example.fastfood.exception.BadRequestException;
 import com.example.fastfood.exception.NotFoundException;
 import com.example.fastfood.repository.*;
@@ -36,13 +33,15 @@ public class ProductService {
     @Autowired
     private ImageRepository imageRepository;
 
-    public List<Product> getAllProduct(){
-        return productRepository.findAll();
+    public Page<Product> getAllProduct(Integer page, Integer limit){
+        Pageable pageable = PageRequest.of(page-1,limit);
+        return productRepository.findAll(pageable);
     }
 
     public Page<Product> findAll(Integer page, Integer limit){
         Pageable pageable = PageRequest.of(page-1,limit);
-        return productRepository.findAll(pageable);
+        Product.Status status = Product.Status.ACTIVE;
+        return productRepository.findByStatus(status,pageable);
     }
 
     public Product createProduct(CreatePizzaRequestDto request){
@@ -51,6 +50,7 @@ public class ProductService {
         product.setDescription(request.getDescription());
         product.setCategoryList(categoryRepository.findByIdIn(request.getCategoryIds()));
         product.setImage(imageRepository.findById(request.getImageId()).orElseThrow(()-> new BadRequestException("Không thấy ảnh")));
+        product.setStatus(Product.Status.ACTIVE);
         productRepository.save(product);
 
         List<ProductSize> productSizeList = new ArrayList<>();
@@ -80,24 +80,36 @@ public class ProductService {
         product.setDescription(request.getDescription());
         product.setCategoryList(categoryRepository.findByIdIn(request.getCategoryIds()));
         product.setImage(imageRepository.findById(request.getImageId()).orElseThrow(()-> new BadRequestException("Không thấy ảnh")));
-
-        List<ProductSize> productSizeList = productSizeRepository.findByProduct(product);
-        productSizeRepository.deleteAll(productSizeList);
-
-        List<ProductSize> productSizeListNew = new ArrayList<>();
-        for (ProductSizeDto n : request.getProductSizeDtoList()){
-            ProductSize productSize = new ProductSize();
-            Size size = sizeRepository.findById(n.getSizeId()).orElseThrow(()-> new BadRequestException("Không có size này"));
-
-            productSize.setProduct(product);
-            productSize.setSize(size);
-            productSize.setPrice(n.getPrice());
-            productSizeRepository.save(productSize);
-            productSizeListNew.add(productSize);
+        Product.Status status = null;
+        switch (request.getStatus()) {
+            case "Đang sử dụng" -> status = Product.Status.ACTIVE;
+            case "Hết hàng" -> status = Product.Status.BLOCK;
         }
-        product.setProductSizeList(productSizeListNew);
+        product.setStatus(status);
+
+//        List<ProductSize> productSizeList = productSizeRepository.findByProduct(product);
+//        productSizeRepository.deleteAll(productSizeList);
+//
+//        List<ProductSize> productSizeListNew = new ArrayList<>();
+//        for (ProductSizeDto n : request.getProductSizeDtoList()){
+//            ProductSize productSize = new ProductSize();
+//            Size size = sizeRepository.findById(n.getSizeId()).orElseThrow(()-> new BadRequestException("Không có size này"));
+//
+//            productSize.setProduct(product);
+//            productSize.setSize(size);
+//            productSize.setPrice(n.getPrice());
+//            productSizeRepository.save(productSize);
+//            productSizeListNew.add(productSize);
+//        }
+//        product.setProductSizeList(productSizeListNew);
         productRepository.save(product);
         return product;
+    }
+    public void deleteProduct(Long id){
+        Product product = productRepository.findById(id)
+                        .orElseThrow(()-> new NotFoundException("không có sản phẩm này"));
+       product.setStatus(Product.Status.BLOCK);
+       productRepository.save(product);
     }
 
 }

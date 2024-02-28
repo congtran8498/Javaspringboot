@@ -5,6 +5,7 @@ import com.example.fastfood.exception.BadRequestException;
 import com.example.fastfood.exception.NotFoundException;
 import com.example.fastfood.repository.VoucherRepository;
 import com.example.fastfood.request.UpsertVoucherRequest;
+import com.example.fastfood.request.VoucherRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,17 @@ public class VoucherService {
     public List<Voucher> getAllVoucher(){
         return voucherRepository.findAll();
     }
+    // tim voucher
+    public Voucher findVoucherByCode(VoucherRequest request){
+        Voucher voucher= voucherRepository.findByCode(request.getCode()).orElseThrow(()->new NotFoundException("không có voucher này"));
+        if(voucher.getExpired_at().isBefore(LocalDateTime.now())){
+            throw new BadRequestException("Voucher đã hết hạn");
+        }
+        return voucher;
+    }
+    public Voucher findById(Long id){
+        return voucherRepository.findById(id).orElseThrow(()-> new NotFoundException("Không có voucher"));
+    }
 
     // tao voucher
     public Voucher createVoucher(UpsertVoucherRequest request){
@@ -42,7 +54,7 @@ public class VoucherService {
         return voucher;
     }
     public LocalDate formatterDate(String dateRequest){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return LocalDate.parse(dateRequest, formatter);
     }
 

@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <!-- Site Metas -->
+  <meta name="keywords" content=""/>
+  <meta name="description" content=""/>
+  <meta name="author" content=""/>
+  <link rel="shortcut icon" href="/web/images/favicon.png" type="">
+
+  <title> Feane </title>
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="/web/css/bootstrap.css"/>
+
+  <!--owl slider stylesheet -->
+  <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"/>
+  <!-- nice select  -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css"
+        integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ=="
+        crossorigin="anonymous"/>
+  <!-- font awesome style -->
+  <link href="/web/css/font-awesome.min.css" rel="stylesheet"/>
+
+  <!-- Custom styles for this template -->
+  <link href="/web/css/style.css" rel="stylesheet"/>
+  <!-- responsive style -->
+  <link href="/web/css/responsive.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+        integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+</head>
+
+<body class="sub_page">
+
+<div class="hero_area">
+  <div class="bg-box">
+    <img src="/web/images/hero-bg.jpg" alt="">
+  </div>
+  header section strats
+  <header class="header_section p-0 d-flex justify-content-center"
+          style="width: 100%;position: fixed;background-color: #626262;z-index: 5">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg custom_nav-container ">
+        <a class="navbar-brand" href="/">
+                    <span>
+                      Feane
+                    </span>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+          <span class=""> </span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav  mx-auto ">
+            <li class="nav-item ">
+              <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active" >
+              <a class="nav-link" href="/menu">Menu</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a id="contact" class="nav-link" href="/contact">Contact Us</a>
+            </li>
+          </ul>
+          <div class="user_option">
+            <div style="position: relative" class="show-user-infor">
+              <button id="user-infor-btn" style="background-color: transparent;
+                                              border: none;
+                                              padding: 2px 4px;
+                                              font-size: 16px;
+                                              cursor: pointer;
+                                              opacity: 0.7; /* Độ trong suốt của button */"
+                      class="user_link" data-toggle="modal" data-target="#modal-default">
+                <i style="font-size: 26px" class="fa fa-user" aria-hidden="true"></i>
+                <th:block sec:authorize="not isAuthenticated()">Thành viên</th:block>
+                <th:block sec:authorize="isAuthenticated()">
+                  Hi
+                  <th:block th:text="${#authentication.principal.getFullName()}"></th:block>
+                </th:block>
+
+              </button>
+              <div class="user-infor" sec:authorize="isAuthenticated()">
+                <ul style="background-color: white;
+                                                    list-style-type: none; padding: 8px 8px; border-radius: 4px">
+                  <li th:attr="data-id=${#authentication.principal.getUserId()}"
+                      class="user-infor-item"><a class="text-dark d-block" href="/myprofile">Thông tin cá nhân</a></li>
+                  <li class="user-infor-item"><a class="text-dark d-block" href="/change-password">Đổi mật khẩu</a></li>
+                  <li class="user-infor-item"><a class="text-dark d-block" href="/order">Đơn hàng của bạn</a></li>
+                  <li class="user-infor-item"><a class="text-dark d-block" href="/logout">Đăng xuất</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="header-cart">
+              <a class="cart_link" style="position: relative; margin: 0 14px" href="#">
+                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                     x="0px" y="0px"
+                     viewBox="0 0 456.029 456.029"
+                     style="enable-background:new 0 0 456.029 456.029;width: 26px"
+                     xml:space="preserve">
+                          <g>
+                            <g>
+                              <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                           c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
+                            </g>
+                          </g>
+                  <g>
+                            <g>
+                              <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                           C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                           c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                           C457.728,97.71,450.56,86.958,439.296,84.91z"/>
+                            </g>
+                          </g>
+                  <g>
+                            <g>
+                              <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                           c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
+                            </g>
+                          </g>
+                  <g>
+                          </g>
+                  <g>
+                          </g>
+                  <g>
+                          </g>
+                  <g>
+                          </g>
+                  <g>
+                          </g>
+                  <g>
+                          </g>
+                  <g>
+                          </g>
+                  <g>
+                          </g>
+                  <g>
+                          </g>
+                  <g>
+                          </g>
+                  <g>
+                          </g>
+                  <g>
+                          </g>
+                  <g>
+                          </g>
+                  <g>
+                          </g>
+                  <g>
+                          </g>
+                        </svg>
+                <span class="cart-notice">0</span>
+              </a>
+              <div class="cart-list">
+                <ul id="header-cart" class="header__cart-list-item">
+                  <!-- cart item  -->
+                  <!--                                            <li class="header__cart-item">-->
+                  <!--                                                <img src="http://localhost:8080/api/v1/admin/image/31" alt=""-->
+                  <!--                                                     class="header__cart-img">-->
+                  <!--                                                <div class="header__cart-item-info">-->
+                  <!--                                                    <div class="header__cart-item-head">-->
+                  <!--                                                        <div class="cart-item-top">-->
+                  <!--                                                            <h5 class="header__cart-item-name">Pizza Phô Mai</h5>-->
+                  <!--                                                            <div class="delete-item">Xóa</div>-->
+                  <!--                                                        </div>-->
+                  <!--                                                        <span class="header__cart-item-price">Kích thước - Nhỏ</span>-->
+                  <!--                                                        <span class="header__cart-item-mutiphy">Đế kéo tay truyền thống</span>-->
+                  <!--                                                        <div class="cart-item-bottom">-->
+                  <!--                                                            <span class="header__cart-item-qnt">Số lượng: 2</span>-->
+                  <!--                                                            <span class="header__cart-item-price font-weight-bolder">280.000</span>-->
+                  <!--                                                        </div>-->
+                  <!--                                                    </div>-->
+                  <!--                                                </div>-->
+
+                  <!--                                            </li>-->
+
+                </ul>
+                <div id="no-item" class="text-center mb-5">
+                  <img src="https://dominos.vn/img/illustration/empty-cart.svg" style="width: 230px;height: 230px">
+                  <p style="width: 240px;margin: auto" class="font-weight-bolder">Giỏ Hàng Chưa Có Sản Phẩm. Xin Mời Bạn Mua Hàng</p>
+                </div>
+
+
+
+                <div id="watch-cart" class="d-flex justify-content-center mx-3">
+                  <!--                                            <a href="/cart" style="margin-bottom: 20px; width: 100%"-->
+                  <!--                                                    class="btn btn-danger">-->
+                  <!--                                                XEM GIỎ HÀNG <span id="totalPrice-cart" style="margin-left: 20px">0</span>-->
+                  <!--                                            </a>-->
+                </div>
+
+
+              </div>
+            </div>
+
+            <!--                        <form class="form-inline">-->
+            <!--                            <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">-->
+            <!--                                <i style="font-size: 24px" class="fa fa-search" aria-hidden="true"></i>-->
+            <!--                            </button>-->
+            <!--                        </form>-->
+            <!--                        <a href="" class="order_online">-->
+            <!--                            Order Online-->
+            <!--                        </a>-->
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <!-- end header section -->
+
+</div>
+
+  <!-- food section -->
+
+  <section class="food_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          Our Menu
+        </h2>
+      </div>
+
+      <ul class="filters_menu">
+        <li class="active" data-filter="*">All</li>
+        <li th:each="category : ${categoryList}" th:attr="data-filter='.'+${category.name}"  th:text="${category.name}">Burger</li>
+      </ul>
+
+      <div class="filters-content">
+        <div class="row grid">
+          <div th:each="product : ${productList.getContent()}"
+               th:class="'col-sm-6 col-lg-4 all pizza'+' '+ ${product.categoryList.get(0).name}">
+            <div class="box">
+              <div>
+                <div class="img-box">
+                  <img th:src="${product.image.id != null ? '/api/v1/admin/image/' + product.image.id : 'https://placehold.co/600x400'}"
+                       alt="">
+                </div>
+                <div class="detail-box">
+                  <h5 th:text="${product.name}">
+                    Delicious Pizza
+                  </h5>
+                  <p class="description-long" th:text="${product.description}">
+                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam
+                    voluptatem repellendus sed eaque
+                  </p>
+                  <div class="options">
+                    <h6 th:text="${#numbers.formatCurrency(product.getProductSizeList().get(0).price)}">
+                      $20
+                    </h6>
+                    <a th:attr="data-id=${product.id}" class="product-option" href="#"
+                    >
+                      <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                           x="0px" y="0px"
+                           viewBox="0 0 456.029 456.029"
+                           style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                        <g>
+                          <g>
+                            <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"/>
+                          </g>
+                        </g>
+                        <g>
+                          <g>
+                            <path d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                         C457.728,97.71,450.56,86.958,439.296,84.91z"/>
+                          </g>
+                        </g>
+                        <g>
+                          <g>
+                            <path d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"/>
+                          </g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                        <g>
+                        </g>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+<!--      <div class="btn-box">-->
+<!--        <a href="">-->
+<!--          View More-->
+<!--        </a>-->
+<!--      </div>-->
+    </div>
+  </section>
+
+  <!-- end food section -->
+
+  <!-- footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 footer-col">
+          <div class="footer_contact">
+            <h4>
+              Contact Us
+            </h4>
+            <div class="contact_link_box">
+              <a href="">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <span>
+                  Location
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                <span>
+                  Call +01 1234567890
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <span>
+                  demo@gmail.com
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 footer-col">
+          <div class="footer_detail">
+            <a href="" class="footer-logo">
+              Feane
+            </a>
+            <p>
+              Necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with
+            </p>
+            <div class="footer_social">
+              <a href="">
+                <i class="fa fa-facebook" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fa fa-twitter" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fa fa-linkedin" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fa fa-instagram" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fa fa-pinterest" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 footer-col">
+          <h4>
+            Opening Hours
+          </h4>
+          <p>
+            Everyday
+          </p>
+          <p>
+            10.00 Am -10.00 Pm
+          </p>
+        </div>
+      </div>
+      <div class="footer-info">
+        <p>
+          &copy; <span id="displayYear"></span> All Rights Reserved By
+          <a href="https://html.design/">Free Html Templates</a><br><br>
+          &copy; <span id="displayYear"></span> Distributed By
+          <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+  <!-- footer section -->
+<!-- Modal Login -->
+<div sec:authorize="not isAuthenticated()" class="modal fade" id="modal-default" tabindex="-1"
+     aria-labelledby="loginModalLabel" aria-hidden="true">
+
+  <div class="modal-dialog" style="max-width: 700px">
+    <div class="modal-content">
+      <button class="p-0" type="button" data-dismiss="modal" style="border: none">
+        <img src="https://cdn.pizzahut.vn/images/Web_V3/Member/close.png"
+             style="width: 30px;
+                        top: -10px;
+                        position: absolute;
+                        right: -15px;
+                        cursor: pointer;">
+      </button>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-5">
+              <div class="h-100 login-background"></div>
+            </div>
+            <div class="col-lg-7">
+              <div class="mt-3">
+                <div class="mb-4"
+                     style="text-align: center; font-weight: bold; color: #A80000; font-size: 25px">
+                  🍕🍕 WELCOME BACK!
+                </div>
+                <form id="form-login">
+                  <div class="form-group mb-3">
+                    <label class="fs-4" for="email">Email <span class="text-danger">*</span></label>
+                    <input
+                            name="email" id="email" type="email"
+                            class="form-control placeholder-text-grey-light placeholder-nomal login-form form-control"
+                            value="">
+                  </div>
+                  <div class="form-group mb-3">
+                    <label class="fs-4" for="password">Password <span
+                            class="text-danger">*</span></label>
+                    <input
+                            name="password" id="password" type="password"
+                            class="form-control placeholder-text-grey-light placeholder-nomal login-form form-control"
+                            value="">
+                    <i class="fas fa-eye" id="togglePassword" style="right: 50px;top: 208px;position: absolute;font-size: 16px;"></i>
+
+                  </div>
+                  <div class="d-flex justify-content-between mt-3 mb-3">
+                    <div class="icheck-primary">
+                      <input type="checkbox" id="remember">
+                      <label for="remember">
+                        Lưu mật khẩu
+                      </label>
+                    </div>
+                    <div>
+                      <a href="/forgot-password">Quên mật khẩu?</a>
+                    </div>
+                  </div>
+                  <div class="row justify-content-center mb-4">
+                    <div id="login-btn" class="col-8">
+                      <button type="submit" class="btn btn-primary btn-block mb-3">Đăng nhập
+                      </button>
+                    </div>
+                    <div id="error-message" style="display: none; color: red;">Email hoặc mật khẩu
+                      không hợp lệ, vui lòng thử lại!
+                    </div>
+                    <div>
+                      Bạn chưa có tài khoản? <a href="/register">Đăng kí ngay</a>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-cart" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 800px">
+    <div class="modal-content">
+      <button class="p-0 cart-close" type="button" data-dismiss="modal" style="border: none">
+        <img src="https://cdn.pizzahut.vn/images/Web_V3/Member/close.png"
+             style="width: 30px;
+                        top: -10px;
+                        position: absolute;
+                        right: -15px;
+                        cursor: pointer;">
+      </button>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-5">
+              <div class="h-100 login-background"></div>
+            </div>
+            <div class="col-lg-7 product-info">
+              <h3 id="product-name" class="font-weight-bolder">Pizza Seoul Bò Xào Bulgogi Viền Khoai Lang
+                Phô Mai - Seoul Beef Bulgogi Cheesy Sweet Potato Crust</h3>
+              <p id="product-description">Phô Mai Mozzarella, Xốt Bulgogi, Bò Bulgogi, Miến Hàn Quốc, Cà
+                Rốt, Nấm, Ớt Chuông Xanh, Mè Trắng, Viền Phô Mai Khoai Lang</p>
+              <div class="mb-4" id="option-product">
+                <p class="font-weight-bolder">Chọn kích cỡ</p>
+                <div class="mb-4" id="size-option">
+                </div>
+                <div class="topping-wraper">
+
+                </div>
+                <!--                                <p class="font-weight-bolder">Tùy chọn thêm</p>-->
+                <!--                                <div id="topping-option">-->
+                <!--                                </div>-->
+              </div>
+              <div class="d-flex justify-content-between">
+                <div class="quantity-field">
+                  <div class="value-button" id="decrease" onclick="decreaseQuantity()">-</div>
+                  <input type="text" class="number" value="1" disabled/>
+                  <div class="value-button" id="increase" onclick="increaseQuantity()">+</div>
+                </div>
+                <button id="addCart" class="btn btn-danger">Thêm vào giỏ hàng</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- jQery -->
+  <script src="/web/js/jquery-3.4.1.min.js"></script>
+  <!-- popper js -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+          integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <!-- bootstrap js -->
+  <script src="/web/js/bootstrap.js"></script>
+  <!-- owl slider -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+  </script>
+  <!-- isotope js -->
+  <script src="https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js"></script>
+  <!-- nice select -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
+  <!-- custom js -->
+  <script src="/web/js/custom.js"></script>
+  <!-- Google Map -->
+  <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">-->
+  <!--</script>-->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <!-- End Google Map -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+          integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"-->
+  <!--        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="-->
+  <!--        crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
+          integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"
+          integrity="sha512-TiQST7x/0aMjgVTcep29gi+q5Lk5gVTUPE9XgN0g96rwtjEjLpod4mlBRKWHeBcvGBAEvJBmfDqh2hfMMmg+5A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+          integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script th:inline="javascript">
+
+    const formLogin = document.querySelector("#form-login")
+    const emailEl = document.querySelector("#email")
+    const passwordEl = document.querySelector("#password")
+    const authentic = [[${#authentication.principal}]]
+
+
+    const togglePassword = document.getElementById('togglePassword');
+
+    if(togglePassword != null){
+      togglePassword.addEventListener('click', function() {
+        if (passwordEl.type === 'password') {
+          passwordEl.type = 'text';
+          togglePassword.classList.remove('fa-eye');
+          togglePassword.classList.add('fa-eye-slash');
+        } else {
+          passwordEl.type = 'password';
+          togglePassword.classList.remove('fa-eye-slash');
+          togglePassword.classList.add('fa-eye');
+        }
+      });
+    }
+
+    //validate
+    $('#form-login').validate({
+      rules: {
+        email: {
+          required: true,
+          email: true
+        },
+        password: {
+          required: true,
+          minlength: 5
+        },
+      },
+      messages: {
+        email: {
+          required: "email không được để trống",
+          email: "email không hợp lệ"
+        },
+        password: {
+          required: "password không được để trống",
+          minlength:"Mật khẩu tối thiểu 5 kí tự"
+        },
+      },
+      errorElement: 'span',
+      errorPlacement: function (error, element) {
+        error.addClass('invalid-feedback');
+        element.closest('.form-group').append(error);
+      },
+      highlight: function (element, errorClass, validClass) {
+        $(element).addClass('is-invalid');
+      },
+      unhighlight: function (element, errorClass, validClass) {
+        $(element).removeClass('is-invalid');
+      }
+    });
+
+    // login
+    if (formLogin !== null) {
+      formLogin.addEventListener("submit", async (e) => {
+        e.preventDefault()
+
+        const data = {
+          email: emailEl.value,
+          password: passwordEl.value
+        }
+        try {
+          const res = await axios.post("/api/v1/auth/login", data)
+          console.log(res)
+          if (res.status === 200) {
+            try {
+              const resCart = await axios.get("/api/v1/cart")
+              console.log(resCart)
+              if (resCart.data !== '') {
+                localStorage.setItem('apiData', JSON.stringify(resCart.data));
+              }
+            } catch (e) {
+              showErrorMessage()
+            }
+            setTimeout(() => {
+              window.location.href = "/"
+            }, 1000)
+          } else {
+            console.log("abc")
+          }
+        } catch (e) {
+          console.log(e)
+          showErrorMessage("Sai email hoặc mật khẩu")
+        }
+      })
+    }
+
+    const cardEl = document.querySelectorAll(".product-option")
+    let productName = document.querySelector("#product-name")
+    let productDes = document.querySelector("#product-description")
+
+    const sizeOption = document.querySelector("#size-option")
+    const quantityInput = document.querySelector('.number');
+    const decreaseButton = document.querySelector("#decrease")
+    let quantity
+    cardEl.forEach((card) => {
+      card.addEventListener("click", async () => {
+        if (authentic === "anonymousUser") {
+          $('#modal-default').modal('show');
+        }
+        else {
+          card.setAttribute("data-toggle", "modal")
+          card.setAttribute("data-target", "#modal-cart")
+          quantityInput.value = 1
+          let productId = card.getAttribute("data-id")
+          quantity = parseInt(quantityInput.value);
+
+          try {
+            const res = await axios.get(`/api/v1/admin/product/${productId}`)
+            productName.textContent = res.data.name
+            productName.setAttribute("data-id", res.data.id)
+            productDes.textContent = res.data.description
+            let html = ""
+            for (let i = 0; i < res.data.productSizeList.length; i++) {
+              let size = res.data.productSizeList[i].size
+              let price = res.data.productSizeList[i].price
+              let sizeId = size.id
+              let checked = i === 0 ? 'checked' : '';
+              const formatPrice = formatCurrency(price)
+              html +=
+                      `<div class="form-check">
+                                        <input data-id="${res.data.id}" class="form-check-input" type="radio" name="sizeRadios" id="sizeRadio${sizeId}" value="${sizeId}" ${checked}>
+                                        <label class="form-check-label" for="sizeRadio${sizeId}">
+                                            ${size.name} - ${formatPrice}
+                                        </label>
+                                    </div>`
+
+            }
+            sizeOption.innerHTML = html
+          } catch (e) {
+            console.log(e)
+          }
+          //topping option
+          const sizeRadios = document.getElementsByName('sizeRadios');
+
+          const firstSizeId = sizeRadios[0].value
+          await renderTopping(firstSizeId)
+          for (let i = 0; i < sizeRadios.length; i++) {
+            sizeRadios[i].addEventListener("change", async () => {
+              if (sizeRadios[i].checked) {
+                const sizeId = sizeRadios[i].value
+                await renderTopping(sizeId)
+              }
+            })
+          }
+        }
+      })
+    })
+    const optionEl = document.querySelector(".topping-wraper")
+    async function renderTopping(sizeId) {
+      try {
+        const res = await axios.get(`/api/v1/admin/size/${sizeId}`)
+        optionEl.innerHTML = ''
+        if (res.data.sizeToppingList.length > 0) {
+
+          const pEl = document.createElement('p')
+          pEl.classList.add("font-weight-bolder")
+          pEl.textContent = "Tùy chọn thêm"
+          const divEl = document.createElement('div')
+          divEl.id = "topping-option"
+
+          optionEl.appendChild(pEl)
+          optionEl.appendChild(divEl)
+          const toppingOption = document.querySelector("#topping-option")
+          let html = ""
+          toppingOption.innerHTML = ""
+          for (let i = 0; i < res.data.sizeToppingList.length; i++) {
+            let topping = res.data.sizeToppingList[i].topping
+            let price = res.data.sizeToppingList[i].price
+            let toppingId = topping.id
+            let checked = i === 0 ? 'checked' : '';
+            const formatPrice = formatCurrency(price)
+            html +=
+                    `<div class="form-check">
+                          <input data-name="${topping.name}" data-price="${price}" class="form-check-input" type="radio" name="toppingRadios" id="toppingRadio${toppingId}" value="${toppingId}" ${checked}>
+                          <label class="form-check-label" for="toppingRadio${toppingId}">
+                                 ${topping.name} - ${formatPrice}
+                          </label>
+                    </div>`
+          }
+          toppingOption.innerHTML = html
+        } else {
+          optionEl.innerHTML = ''
+        }
+
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    // add to cart
+    const addCartBtn = document.querySelector("#addCart")
+    const cartNotice = document.querySelector(".cart-notice")
+    const headerCart = document.querySelector("#header-cart")
+
+    const cartItems = document.getElementsByClassName('header__cart-item');
+    const cartClose = document.querySelector(".cart-close")
+    const firstTotalPrice = document.querySelector("#first-totalPrice")
+    const salePrice = document.querySelector("#sale-Price")
+
+    addCartBtn.addEventListener('click', async () => {
+      const selectedRadioSize = document.querySelector('input[name="sizeRadios"]:checked');
+      const selectedRadioTopping = document.querySelector('input[name="toppingRadios"]:checked');
+      cartClose.click()
+      let productId
+      let sizeId;
+      let toppingId;
+      let quantityEl = document.querySelector(".number").value
+      // salePrice.innerText = formatCurrency(0)
+
+      productId = selectedRadioSize.getAttribute("data-id")
+      sizeId = selectedRadioSize.value
+      if (selectedRadioTopping) {
+        toppingId = Number(selectedRadioTopping.value)
+      } else {
+        toppingId = null
+      }
+      const data = {
+        productId: Number(productId),
+        sizeId: Number(sizeId),
+        toppingId: toppingId,
+        quantity: Number(quantityEl)
+      }
+      console.log(data)
+      try {
+        const res = await axios.post("/api/v1/cart/addToCart", data)
+        console.log(res)
+        toastr.success("Thêm vào giỏ hàng thành công")
+        cartNotice.innerHTML = res.data.totalItem
+
+        localStorage.setItem('apiData', JSON.stringify(res.data));
+        const apiData = JSON.parse(localStorage.getItem('apiData'));
+        renderCartItem(apiData)
+      } catch (e) {
+        console.log(e)
+      }
+    })
+
+
+    const cartList = document.querySelector(".cart-list")
+    const noItem = document.querySelector("#no-item")
+    const watchCart = document.querySelector("#watch-cart")
+    function renderCartItem(data) {
+      console.log(data)
+      if(data.totalItem === 0){
+
+        watchCart.innerHTML = ''
+
+        headerCart.innerHTML = ''
+        noItem.innerHTML = `<img src="https://dominos.vn/img/illustration/empty-cart.svg" style="width: 230px;height: 230px">
+                                <p style="width: 240px;margin: auto" class="font-weight-bolder">Giỏ Hàng Chưa Có Sản Phẩm. Xin Mời Bạn Mua Hàng</p>`
+        return
+      }
+      noItem.innerHTML = ''
+      let html = ''
+      const itemList = data.shoppingCartDetailList
+      itemList.forEach((item) => {
+        let formatPrice = formatCurrency(item.unitPrice)
+        let toppingName = ''
+        const sizeToppingList = item.size.sizeToppingList
+        if (item.toppingId != null) {
+          for (let i = 0; i < sizeToppingList.length; i++) {
+            if (item.toppingId === sizeToppingList[i].topping.id) {
+              toppingName = sizeToppingList[i].topping.name
+            }
+          }
+        }
+        html += `<li class="header__cart-item">
+                      <img src="http://localhost:8080/api/v1/admin/image/${item.product.image.id}" alt=""
+                      class="header__cart-img">
+                   <div class="header__cart-item-info">
+                       <div class="header__cart-item-head">
+                           <div class="cart-item-top">
+                               <h5 data-id="${item.product.id}" class="header__cart-item-name">${item.product.name}</h5>
+<!--                               <div class="delete-item">Xóa</div>-->
+                           </div>
+                           <span data-id="${item.size.id}" class="header__cart-item-size">Kích thước : ${item.size.name}</span>
+                           <span data-id="${item.toppingId}" class="header__cart-item-topping">${toppingName}</span>
+                           <div class="cart-item-bottom">
+                               <span data-id="${item.quantity}" class="header__cart-item-qnt">Số lượng: <span class="item-quantity">${item.quantity}</span> </span>
+                               <span class="header__cart-item-price font-weight-bolder">${formatPrice}</span>
+
+                           </div>
+                       </div>
+                   </div>
+
+                  </li>`
+      })
+
+      headerCart.innerHTML = html
+
+
+      let html1 = ''
+      html1 = `<a href="/cart" style="margin-bottom: 20px; width: 100%" class="btn btn-danger">
+                        XEM GIỎ HÀNG <span id="totalPrice-cart" style="margin-left: 20px">0</span>
+                     </a`
+      watchCart.innerHTML = html1
+      const totalPrice = document.querySelector("#totalPrice-cart")
+      totalPrice.innerHTML = formatCurrency(data.totalPrice)
+
+
+    }
+    window.addEventListener('load', () => {
+      let params = new URLSearchParams(document.location.search);
+      let openLogin = params.get("openLogin");
+      if(openLogin === 'true'){
+        $('#modal-default').modal('show');
+      }
+      const apiData = JSON.parse(localStorage.getItem('apiData'));
+      if (authentic === "anonymousUser") {
+        localStorage.removeItem('apiData')
+        localStorage.removeItem('voucher')
+        cartNotice.innerHTML = '0'
+        headerCart.innerHTML = ''
+      }
+      if (apiData !== null) {
+        cartNotice.innerHTML = apiData.totalItem;
+        renderCartItem(apiData)
+      }
+      if(localStorage.length === 0){
+        cartNotice.innerHTML = '0'
+        headerCart.innerHTML = ''
+      }
+
+      console.log(localStorage)
+    });
+
+    function formatCurrency(price) {
+      // Kiểm tra nếu price không phải là một số
+      if (typeof price !== 'number') {
+        return price; // Trả về giá trị ban đầu
+      }
+
+      // Định dạng tiền tệ
+      return price.toLocaleString('vi-VN', {
+        style: 'currency',
+        currency: 'VND'
+      });
+    }
+    function updateButtonStatus() {
+      if (quantity <= 1) {
+        decreaseButton.classList.add("disabledbutton")
+      } else {
+        decreaseButton.classList.remove("disabledbutton")
+      }
+    }
+    function decreaseQuantity() {
+      if (quantity > 1) {
+        quantity--;
+        quantityInput.value = quantity;
+        updateButtonStatus();
+      }
+    }
+
+    function increaseQuantity() {
+      quantity++;
+      quantityInput.value = quantity;
+      updateButtonStatus();
+    }
+
+    updateButtonStatus();
+  </script>
+</body>
+
+</html>

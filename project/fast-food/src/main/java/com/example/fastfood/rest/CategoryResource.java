@@ -30,4 +30,11 @@ public class CategoryResource {
         categoryService.deleteCategory(id);
         return ResponseEntity.noContent().build();
     }
+
+    //Cap nhat
+    @PutMapping("/status/{id}")
+    public ResponseEntity<?> updateStatusCategory(@PathVariable Long id){
+        categoryService.openCategory(id);
+        return ResponseEntity.noContent().build();
+    }
 }

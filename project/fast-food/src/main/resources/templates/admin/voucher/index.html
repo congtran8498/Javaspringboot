@@ -3,7 +3,7 @@
       th:replace="~{/admin/layout/admin-layout :: admin-layout(~{:: title}, ~{}, ~{:: #content}, ~{:: #js})}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Voucher</title>
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -18,7 +18,7 @@
                                 <a href="#">Dashboard</a>
                             </li>
                             <li class="breadcrumb-item active">
-                                Danh sách category
+                                Danh sách voucher
                             </li>
                         </ol>
                     </div>
@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-12">
                         <div class="card">
                             <div class="card-body">
                                 <table class="table table-bordered table-hover">
@@ -50,6 +50,7 @@
                                         <th>Voucher code</th>
                                         <th>Giá trị(%)</th>
                                         <th>Ngày hết hạn</th>
+                                        <th>Trạng thái</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -63,6 +64,14 @@
                                         <td th:text="${voucher.discount}">50
                                         </td>
                                         <td th:text="${#temporals.format(voucher.expired_at, 'dd/MM/yyyy')}">
+                                        </td>
+<!--                                        th:text="${T(com.example.fastfood.utils.DateUtil).checkDateIsExpired(voucher.expired_at) == true ? 'Đang sử dụng' : 'Hết hạn'}"-->
+                                        <td style="text-align: center">
+                                            <span th:switch="${T(com.example.fastfood.utils.DateUtil).checkDateIsExpired(voucher.expired_at)}">
+                                                <span th:case="true" class="badge badge-success" >Đang sử dụng</span>
+                                                <span th:case="false" class="badge badge-danger" >Hết hạn</span>
+                                            </span>
+
                                         </td>
                                         <td>
                                             <button class="btn btn-warning" data-toggle="modal"
@@ -101,7 +110,7 @@
                     <label>Ngày hết hạn:</label>
                     <div class=" input-group">
 <!--                        <span id="old-expired" class="input-group-text"></span>-->
-                        <input id="new-expired" type="text" class="form-control">
+                        <input id="new-expired" type="date" class="form-control">
                     </div>
 
                 </div>
@@ -125,7 +134,7 @@
                 </div>
                 <div class="modal-body">
                     <label>Ngày hết hạn</label>
-                    <input id="expired"  type="text" class="form-control">
+                    <input id="expired"  type="date" class="form-control">
                     <label>Giá trị(%)</label>
                     <input id="discountValue" type="text" class="form-control">
                 </div>
@@ -171,7 +180,7 @@
                 const res = await axios.put(`/api/v1/admin/voucher/${idVoucher}`, request)
                 console.log(res)
                 if (res.status === 200) {
-                    toastr.success("Thay doi thanh cong")
+                    toastr.success("Thay đổi thành công")
                     setTimeout(() => {
                         window.location.href = "/admin-page/voucher"
                     }, 1500)
@@ -202,7 +211,7 @@
                 const res = await axios.post(`/api/v1/admin/voucher`, request)
                 console.log(res)
                 if (res.status === 201) {
-                    toastr.success("Thay doi thanh cong")
+                    toastr.success("Tạo thành công")
                     setTimeout(() => {
                         window.location.href = "/admin-page/voucher"
                     }, 1500)
@@ -221,7 +230,7 @@
                 const res = await axios.delete(`/api/v1/admin/voucher/${id}`)
                 console.log(res)
                 if (res.status === 204) {
-                    toastr.success("Xoa thanh cong")
+                    toastr.success("Xóa thành công")
                     setTimeout(() => {
                         window.location.href = "/admin-page/voucher"
                     }, 1500)

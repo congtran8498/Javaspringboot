@@ -57,4 +57,9 @@ public class SizeToppingService {
 
         sizeToppingRepository.delete(sizeTopping);
     }
+
+    // lay size Topping
+    public List<SizeTopping> findBySizeId(Long id){
+        return sizeToppingRepository.findBySize_Id(id);
+    }
 }

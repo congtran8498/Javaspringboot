@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/admin/layout/admin-layout :: admin-layout(~{:: title}, ~{}, ~{:: #content}, ~{:: #js})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Order</title>
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<th:block id="content">
+    <div class="content-wrapper">
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="#">Dashboard</a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                Danh sách order
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!--               -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Ngày mua hàng</th>
+                                        <th>Ghi chú</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Thông tin khách hàng</th>
+                                        <th>Sản phẩm</th>
+                                        <th>Tình trạng</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="order : ${pageData.getContent()}">
+                                        <td class="id-order" th:text="${order.id}">
+                                            1
+                                        </td>
+                                        <td th:text="${#temporals.format(order.orderDate, 'dd/MM/yyyy')}">piZZA
+                                        </td>
+                                        <td th:text="${order.note}">50
+                                        </td>
+                                        <td th:text="${#numbers.formatCurrency(order.totalPrice - order.discountValue)}">
+                                        </td>
+                                        <td>
+                                            <span th:text="${order.name}"></span>
+                                            <br>
+                                            <span th:text="${order.phone}"></span>
+                                            <br>
+                                            <span th:text="${order.address}"></span>,
+                                            <span th:text="${order.ward}"></span>,
+                                            <span th:text="${order.district}"></span>,
+                                            <span th:text="${order.provine}"></span>
+                                        </td>
+                                        <td>
+                                            <a th:href="@{/product-detail/{id}(id = ${order.id})}" target="_blank">Chi tiết sản phẩm</a>
+<!--                                            <span th:each="item : ${order.getOrderDetailList()}">-->
+<!--                                                -<span th:text="${item.product.name}"></span>,-->
+
+<!--                                                <span th:text="${item.size.name}"></span>,-->
+
+<!--                                                <span th:text="${item.toppingName}"></span>-->
+<!--                                                <br>-->
+<!--                                            </span>-->
+                                        </td>
+<!--                                        <span class="badge badge-success" th:text="${order.status.value}"></span>-->
+                                        <td class="statusValue" style="text-align: center">
+                                              <span th:switch="${order.status.value}">
+                                                    <span th:case="'Chờ xác nhận'" class="badge badge-warning" th:text="${order.status.value}"></span>
+                                                    <span th:case="'Đang đóng gói'" class="badge badge-info" th:text="${order.status.value}"></span>
+                                                    <span th:case="'Đang giao hàng'" class="badge badge-success" th:text="${order.status.value}"></span>
+                                                    <span th:case="'Đã giao'" class="badge badge-danger" th:text="${order.status.value}"></span>
+                                                    <span th:case="'Hủy đơn'" class="badge badge-secondary" th:text="${order.status.value}"></span>
+                                                    <span th:case="*" class="badge" th:text="${order.status.value}"></span>
+                                              </span>
+                                        </td>
+                                        <td class="">
+                                            <select class="status">
+                                                <option th:each="status : ${statusList}" th:value="${status}"
+                                                        th:text="${status}" th:selected="${status == order.status.value}"></option>
+                                            </select>
+                                            <br>
+                                            <button class="btn btn-danger mt-2"
+                                                    th:classappend="${order.status.value == 'Hủy đơn'} ? 'disabledbutton' : ''"
+                                                    onclick="saveOrderStatus(this.parentNode.parentNode)">
+                                                Lưu
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="d-flex justify-content-center mt-3" id="pagination" th:if="${pageData.getTotalPages() != 1}">
+                                    <ul class="pagination mb-0">
+                                        <li class="paginate_button page-item previous"
+                                            th:classappend="${currentPage == 1 ? 'disabled' : ''}"
+                                            id="example2_previous">
+                                            <a th:href="@{/admin-page/order (page=${currentPage - 1})}"
+                                               class="page-link">Previous</a>
+                                        </li>
+                                        <li class="paginate_button page-item"
+                                            th:classappend="${number == currentPage ? 'active' : ''}"
+                                            th:each="number : ${#numbers.sequence(1, pageData.totalPages)}">
+                                            <a th:href="@{/admin-page/order (page=${number})}"
+                                               class="page-link"
+                                               th:text="${number}">1</a>
+                                        </li>
+                                        <li class="paginate_button page-item next"
+                                            th:classappend="${currentPage == pageData.totalPages ? 'disabled' : ''}"
+                                            id="example2_next">
+                                            <a th:href="@{/admin-page/order (page=${currentPage + 1})}"
+                                               class="page-link">Next</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+</th:block>
+<th:block id="js">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script th:inline="javascript">
+        const order = [[${orders}]]
+        console.log(order)
+
+
+        async function saveOrderStatus(row) {
+            let idOrder = row.querySelector('.id-order').textContent;
+            let status = row.querySelector('.status').value;
+            const data = {
+                orderId: Number(idOrder),
+                status: status
+            }
+            try {
+                const res = await axios.post('/api/v1/order/updateStatus', data)
+                console.log(res.data)
+                toastr.success("Thay đổi thành công")
+                setTimeout(() => {
+                    window.location.href = "/admin-page/order"
+                }, 1000)
+            } catch (e) {
+                console.log(e)
+                toastr.error(e.response.data.message)
+            }
+        }
+
+
+    </script>
+</th:block>
+</body>
+</html>

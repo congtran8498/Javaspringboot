@@ -28,9 +28,12 @@ public class Size {
     @JsonIgnore
     private List<ProductSize> productSizeList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "size", cascade = CascadeType.ALL)
-    @JsonIgnore
+    @OneToMany(mappedBy = "size", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<SizeTopping> sizeToppingList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "size",cascade=CascadeType.ALL)
+    @JsonIgnore
+    private List<OrderDetail> orderDetailList = new ArrayList<>();
 
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)

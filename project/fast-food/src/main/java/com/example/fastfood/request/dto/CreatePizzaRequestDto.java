@@ -17,4 +17,5 @@ public class CreatePizzaRequestDto {
     private List<Long> categoryIds;
     private Long imageId;
     private List<ProductSizeDto> productSizeDtoList;
+    private String status;
 }

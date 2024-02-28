@@ -1,11 +1,13 @@
 package com.example.fastfood.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,16 +21,18 @@ public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Float totalPrice;
+    private Double totalPrice;
     private Integer totalItem;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
 
-    @OneToMany(mappedBy = "shoppingCart")
-    private List<ShoppingCartDetail> shoppingCartDetailList;
+    @OneToMany(mappedBy = "shoppingCart",fetch = FetchType.EAGER, cascade = CascadeType.ALL,orphanRemoval = true)
+//    @JsonIgnore
+    private List<ShoppingCartDetail> shoppingCartDetailList = new ArrayList<>();
 
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)

@@ -1,5 +1,6 @@
 package com.example.fastfood.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,12 +22,13 @@ public class SizeTopping implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "size_id")
+    @JsonIgnore
     private Size size;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "topping_id")
     private Topping topping;
 
     @Column(name = "price")
-    private double price;
+    private Double price;
 }
